@@ -41,13 +41,30 @@ router.delete('/:id', async (req, res) => {
 })
 
 // get single user
+router.get('/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+    const { password, updatedAt, ...other } = user._doc
+    res.status(200).json(other)
+    // this will get everthing but password and updated at since they are unnecessary
+    // res.status(200).json(user)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+})
+
+// get all users
+router.get('/', async (req, res) => {
+  try {
+    const users = await User.find()
+    return res.send(users)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+})
 
 //follow a user
 
 //unfollow a user
-
-
-
-// ! get all users
 
 module.exports = router
