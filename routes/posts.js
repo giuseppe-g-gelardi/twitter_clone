@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Post = require('../models/Post')
+const Reply = require('../models/Reply')
 
 // create a post
 router.post('/', async (req, res) => {
@@ -100,9 +101,43 @@ router.get('/', async (req, res) => {
 
 // TODO replies ?
 
-// router.put('/:id/comment', async (req, res) => {
+//post a reply
+router.post("/:postId/replies/", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    if (!post)
+      return res
+        .status(400)
+        .send(`The post with id "${req.params.postId}" does not exist.`);
 
-// })
+    const reply = new Reply({
+        text: req.body.text,
+    });
+
+    post.replies.push(reply);
+
+    await post.save();
+    return res.send(post.replies);
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+//gets all replies of a comment
+router.get("/:postId/replies/", async (req, res) => {
+  try {
+      const post = await Post.findById(req.params.postId);
+      if (!post)
+        return res
+          .status(400)
+          .send(`The post with id "${req.params.postId}" does not exist.`);
+  const reply = await Reply.find();
+    return res.send(post.replies);
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
 
 module.exports = router
 
