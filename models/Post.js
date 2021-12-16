@@ -1,12 +1,14 @@
 const mongoose = require('mongoose')
+const { replySchema } = require('./Reply')
 
 const postSchema = new mongoose.Schema({
-  userId: { type: String, required: true },
   description: { type: String, maxlength: 140 },
-  replies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reply' }],
-  likes: { type: Array, default: [] },
+  replies: { type: [replySchema] },
+  likes: { type: [ mongoose.Types.ObjectId ], default: [] },
   img: { type: String }
 }, { timestamps: true })
 
-module.exports = mongoose.model('Post', postSchema)
+const Post = mongoose.model('Post', postSchema)
 
+exports.Post = Post
+exports.postSchema = postSchema

@@ -5,4 +5,7 @@ const replySchema = new mongoose.Schema({
   likes: { type: Number, default: 0 },
 });
 
-module.exports = mongoose.model('Reply', replySchema)
+const Reply = mongoose.model('Reply', replySchema)
+
+exports.Reply = Reply
+exports.replySchema = replySchema

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { postSchema } = require('./Post')
 
 const UserSchema = new mongoose.Schema({
   username: { type: String, required: true, minlength: 3, maxlength: 16, unique: true },
@@ -15,7 +16,11 @@ const UserSchema = new mongoose.Schema({
   following: { type: Array, default: [] },
   isAdmin: { type: Boolean, default: false },
   isVerified: { type: Boolean, default: false },
+  posts: { type: [ postSchema ], default: [] },
   createdAt: { type: String }
 }, {timestamps: true})
 
-module.exports = mongoose.model('User', UserSchema)
+const User = mongoose.model('User', UserSchema)
+
+exports.User = User
+exports.UserSchema = UserSchema

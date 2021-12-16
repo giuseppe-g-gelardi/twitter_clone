@@ -1,33 +1,70 @@
 const router = require('express').Router()
-const Post = require('../models/Post')
-const Reply = require('../models/Reply')
+const { Post } = require('../models/Post')
+const { Reply } = require('../models/Reply')
+const { User } = require('../models/User')
 
-// create a post
-router.post('/', async (req, res) => {
-  const newPost = new Post(req.body)
-  try{
-    const savedPost = await newPost.save()
-    res.status(200).json(savedPost)
-  } catch (err) {
-    res.status(500).json(err)
-  }
-})
+//post a reply
+// router.post("/:userId/:postId", async (req, res) => {
+//   try {
 
-// update a post
-// ! may remove function to keep in like with twitter 
-router.put('/:id', async (req, res) => {
+//     const post = await Post.findById(req.params.postId);
+//     if (!post)
+//       return res
+//         .status(400)
+//         .send(`The post with id "${req.params.postId}" does not exist.`);
+
+//     const reply = new Reply({
+//         text: req.body.text,
+//     });
+
+//     post.replies.push(reply);
+
+//     await post.save();
+//     return res.send(post.replies);
+//   } catch (ex) {
+//     return res.status(500).send(`Internal Server Error: ${ex}`);
+//   }
+// });
+
+
+// new post
+router.post('/:userId', async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id)
-    if (post.userId === req.body.userId) {
-      await post.updateOne({ $set: req.body })
-      res.status(200).json('your post has been updated')
-    } else {
-      res.status(403).json('you can only update your posts')
-    }
-  } catch(err) {
-    res.status(500).json(err)
+    const user = await User.findById(req.params.userId)
+    if (!user)
+      return res
+        .status(400)
+        .send(`The user with id "${req.params.userId}" does not exist`)
+
+    const post = new Post({
+      description: req.body.description
+    })
+
+    user.posts.push(post)
+
+    await user.save()
+    return res.send(user.posts)
+
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
   }
 })
+
+// // update a post
+// // ! may remove function to keep in like with twitter 
+// router.put('/:id', async (req, res) => {
+//   try {
+//     const post = await Post.findById(req.params.id)
+//     if (post.userId === req.body.userId) {
+//       await post.updateOne({ $set: req.body })
+//       res.status(200).json('your post has been updated')
+//     } else {
+//       res.status(403).json('you can only update your posts')
+//     }
+//   } catch(err) {
+//     res.status(500).json(err)
+//   }
+// })
 
 // delete a post
 router.delete('/:id', async (req, res) => {
@@ -70,24 +107,6 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-// ! not currently working as intended
-// * will likely sort on the front end
-// // get all posts that a user is following // timeline posts
-// router.get("/timeline/all", async (req, res) => {
-//   try {
-//     const currentUser = await User.findById(req.body.userId);
-//     const userPosts = await Post.find({ userId: currentUser._id });
-//     const friendPosts = await Promise.all(
-//       currentUser.following.map((friendId) => {
-//         return Post.find({ userId: friendId });
-//       })
-//     );
-//     res.json(userPosts.concat(...friendPosts))
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
-
 
 // * get all posts
 router.get('/', async (req, res) => {
@@ -124,19 +143,19 @@ router.post("/:postId/replies/", async (req, res) => {
 });
 
 //gets all replies of a comment
-router.get("/:postId/replies/", async (req, res) => {
-  try {
-      const post = await Post.findById(req.params.postId);
-      if (!post)
-        return res
-          .status(400)
-          .send(`The post with id "${req.params.postId}" does not exist.`);
-  const reply = await Reply.find();
-    return res.send(post.replies);
-  } catch (ex) {
-    return res.status(500).send(`Internal Server Error: ${ex}`);
-  }
-});
+// router.get("/:postId/replies/", async (req, res) => {
+//   try {
+//       const post = await Post.findById(req.params.postId);
+//       if (!post)
+//         return res
+//           .status(400)
+//           .send(`The post with id "${req.params.postId}" does not exist.`);
+//   const reply = await Reply.find();
+//     return res.send(post.replies);
+//   } catch (ex) {
+//     return res.status(500).send(`Internal Server Error: ${ex}`);
+//   }
+// });
 
 
 module.exports = router
