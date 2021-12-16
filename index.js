@@ -1,24 +1,19 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const helmet = require('helmet')
-const morgan = require('morgan')
 const userRoute = require('./routes/users')
 const authRoute = require('./routes/auth')
 const postRoute = require('./routes/posts')
 const dbConnect = require('./connect/dbConnect')
+const cors = require('cors')
 
 const app = express()
 
 dbConnect()
 
 
-
 // middleware
+app.use(cors())
 app.use(express.json())
-app.use(helmet())
-app.use(morgan('common'))
-
-
 
 // routes
 app.use('/api/auth', authRoute)
