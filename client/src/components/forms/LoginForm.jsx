@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 
 export default function LoginForm (props) {
 
-  const { setOpenPopup } = props
+  // const { setOpenPopup } = props
   const [userEmail, setUserEmail] = useState('')
   const [userPassword, setUserPassword] = useState('')
   const classes = useStyles()
@@ -44,7 +44,6 @@ export default function LoginForm (props) {
       .post(api, user)
       .then(response => {
         localStorage.setItem('token', response.data)
-        setOpenPopup(false)
         // setOpenPopup(false)
         navigate('/home')
         refreshPage()

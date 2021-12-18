@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 
 export default function RegisterForm (props) {
 
-  const { setOpenPopup } = props
+  // const { setOpenPopup } = props
   const navigate = useNavigate()
   const [username, setUsername] = useState('')
   const [userEmail, setUserEmail] = useState('')
@@ -45,7 +45,7 @@ export default function RegisterForm (props) {
       .post(api, user)
       .then(response => {
         localStorage.setItem('token', response.headers['x-auth-token'])
-        setOpenPopup(false)
+        // setOpenPopup(false)
         navigate('/home')
         refreshPage()
       })
