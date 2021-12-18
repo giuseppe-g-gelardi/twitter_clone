@@ -7,10 +7,6 @@ const UserContext = createContext({})
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({})
 
-  useEffect(() => {
-    getUserFromToken()
-  }, [])
-
   const getUserFromToken = () => {
     const token = localStorage.getItem('token')
 
@@ -19,15 +15,19 @@ export const UserProvider = ({ children }) => {
  
       axios.get(`http://localhost:8000/api/users/${userid}`, 
         {headers: { 'x-auth-token': token }})
-        .then(response => {setUser(response.data)})
+        .then(response => `${console.log(response.data)} ${setUser(response.data)}`)
         .catch(error => {console.log(`Axios error: `, error)})
     } else {
       return;
     }
   }
-  
+
+  useEffect(() => {
+    getUserFromToken()
+  }, [])
+
   return (
-    <UserContext.Provider value={{user}}>
+    <UserContext.Provider value={{ user }}>
       {children}
     </UserContext.Provider>
   )
