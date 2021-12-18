@@ -1,26 +1,22 @@
 import { useContext, useState } from 'react'
 import axios from 'axios'
-import {
-  FormControl,
-  Button,
-  Container,
-  TextField,
-} from '@material-ui/core'
+import { FormControl, Button, Container, TextField } from '@material-ui/core'
 import UpdateIcon from '@material-ui/icons/Update'
 
-import UserContext from '../../context/UserContext'
+import UserContext from '../../../context/UserContext'
 
-export default function UpdateEmailForm () {
+export default function UpdateUserTheme() {
   const { user } = useContext(UserContext)
-  const userId = user._id.toString()
-  const [email, setEmail] = useState('')
+  const userId = user._id
+  const [theme, setTheme] = useState('')
 
   const handleUpdate = async () => {
     let update = {
-      email: email,
-      userId: userId
+      "theme": theme,
+      "userId": userId
     }
     try {
+      
       await axios
         .put(`http://localhost:8000/api/users/${userId}`, update)
         .then(update => {
@@ -32,16 +28,16 @@ export default function UpdateEmailForm () {
   }
 
   return (
-    <Container>
+<Container>
       <FormControl>
         <form noValidate autoComplete='off' onSubmit={handleUpdate}>
           <TextField
             style={{ marginBottom: 20 }}
-            onChange={e => setEmail(e.target.value)}
-            label='Email'
-            placeholder={user.email}
+            onChange={e => setTheme(e.target.value)}
+            label='Change Theme'
+            placeholder={user.theme}
             variant='outlined'
-            fullWidth
+            autoWidth
             required
           />
 
@@ -51,10 +47,11 @@ export default function UpdateEmailForm () {
             variant='contained'
             endIcon={<UpdateIcon />}
           >
-            Update Email
+            Change Theme
           </Button>
         </form>
       </FormControl>
     </Container>
   )
 }
+

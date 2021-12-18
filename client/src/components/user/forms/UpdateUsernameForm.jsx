@@ -3,19 +3,17 @@ import axios from 'axios'
 import { FormControl, Button, Container, TextField } from '@material-ui/core'
 import UpdateIcon from '@material-ui/icons/Update'
 
-import UserContext from '../../context/UserContext'
+import UserContext from '../../../context/UserContext'
 
-export default function UpdateNameForm () {
+export default function UpdateUsernameForm() {
   const { user } = useContext(UserContext)
   const userId = user._id.toString()
 
-  const [firstname, setFirstname] = useState('')
-  const [lastname, setLastname] = useState('')
+  const [username, setUsername] = useState('')
 
   const handleUpdate = async () => {
     let update = {
-      firstname,
-      lastname,
+      username,
       userId
     }
 
@@ -30,25 +28,16 @@ export default function UpdateNameForm () {
     }
   }
 
+
   return (
     <Container>
       <FormControl>
         <form noValidate autoComplete='off' onSubmit={handleUpdate}>
           <TextField
             style={{ marginBottom: 20 }}
-            onChange={e => setFirstname(e.target.value)}
-            label='First Name'
+            onChange={e => setUsername(e.target.value)}
+            label='Username'
             placeholder={user.firstname}
-            variant='outlined'
-            autoWidth
-            required
-          />
-
-          <TextField
-            style={{ marginBottom: 20 }}
-            onChange={e => setLastname(e.target.value)}
-            label='First Name'
-            placeholder={user.lastname}
             variant='outlined'
             fullWidth
             required
