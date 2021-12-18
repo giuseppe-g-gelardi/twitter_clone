@@ -13,7 +13,7 @@ export default function Followers() {
       )
       setFollowers(followers => [followers, response.data])
     })
-    console.log('followers: ', followers)
+    // console.log('followers: ', followers)
     return followers
   }
 

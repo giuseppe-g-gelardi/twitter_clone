@@ -9,6 +9,7 @@ import Following from "../components/Following"
 
 import UpdateEmailForm from "../components/user/UpdateEmailForm";
 import UpdateNameForm from "../components/user/UpdateNameForm";
+import UpdateUserTheme from "../components/user/UpdateUserTheme";
 
 export default function Settings() {
   const { user } = useContext(UserContext)
@@ -62,6 +63,8 @@ export default function Settings() {
         </h2>
         <h2>verified user: {user.isVerified ? 'verified' : 'you are not verified'}</h2>
         <h2>Profile Banner: {user.profileBanner ? user.profileBanner : 'you have not set a banner image yet'}
+        <h2>Location: {user.location ? user.location : 'you have not set your location'}</h2>
+        <h2>Bio: {user.bio ? user.bio : 'you have not filled out your bio'}</h2>
           {/* if image make src the pb string */}
         </h2>
         <h2>Profile Picture: {user.profilePicture ? user.profilePicture : 'you have not set a profile picture yet'}
@@ -69,6 +72,7 @@ export default function Settings() {
         </h2>
         <h2>Protected profile: {user.protected ? 'protected' : 'public'}</h2>
         <h2>Theme preference: {user.theme === 'light' ? 'light theme' : 'dark theme'}</h2>
+        <UpdateUserTheme />
       </div>
     </div>
   )

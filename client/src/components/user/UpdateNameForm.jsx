@@ -40,7 +40,7 @@ export default function UpdateNameForm () {
             label='First Name'
             placeholder={user.firstname}
             variant='outlined'
-            fullWidth
+            autoWidth
             required
           />
 
