@@ -1,6 +1,37 @@
 const router = require('express').Router()
-const { User } = require('../models/User')
+const { User, validateUser } = require('../models/User')
 const bcrypt = require('bcrypt')
+
+// ! add new user
+router.post('/register', async (req, res) => {
+  try {
+    const { error } = validateUser(req.body)
+
+    if (error) return res.status(400).send(error.details[0].message)
+
+    let user = await User.findOne({ email: req.body.email })
+    if (user) return res.status(400).send('User already registered.')
+
+    const salt = await bcrypt.genSalt(10)
+    user = new User({
+      username: req.body.username,
+      email: req.body.email,
+      password: await bcrypt.hash(req.body.password, salt),
+    })
+
+    await user.save()
+
+    const token = user.generateAuthToken()
+    // const token = jwt.sign({ _id: user._id, name: user.name }, process.env.JWT);
+      return res
+      .header('x-auth-token', token)
+      .header('access-control-expose-headers', 'x-auth-token')
+      .send({ _id: user._id, username: user.username, email: user.email });
+
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`)
+  }
+}) 
 
 // update user
 router.put('/:id', async (req, res) => {
