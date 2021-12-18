@@ -12,7 +12,7 @@ export const UserProvider = ({ children }) => {
 
     if (token) {
       const userid = jwtDecode(localStorage.getItem('token'))._id
- 
+
       axios.get(`http://localhost:8000/api/users/${userid}`, 
         {headers: { 'x-auth-token': token }})
         .then(response => `${console.log(response.data)} ${setUser(response.data)}`)
