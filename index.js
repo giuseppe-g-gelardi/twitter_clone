@@ -1,5 +1,4 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const userRoute = require('./routes/users')
 const authRoute = require('./routes/auth')
 const postRoute = require('./routes/posts')
