@@ -33,4 +33,8 @@ export const UserProvider = ({ children }) => {
   )
 }
 
+export const useAuth = () => {
+  return localStorage.getItem('token') ? true : false
+}
+
 export default UserContext

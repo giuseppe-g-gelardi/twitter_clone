@@ -1,8 +1,5 @@
 import { Navigate } from 'react-router-dom'
-
-export const useAuth = () => {
-  return localStorage.getItem('token') ? true : false
-}
+import { useAuth } from '../context/UserContext'
 
 export default function PrivateRoute({ children }) {
   const auth = useAuth()
