@@ -28,7 +28,6 @@ export default function GetUserPosts () {
     }
   }
 
-  // http://localhost:8000/api/posts/:userId/posts/:postId
   const deletePost = async postId => {
     try {
       await axios.delete(

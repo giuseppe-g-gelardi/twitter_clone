@@ -1,5 +1,4 @@
-import { Container, Grid, Paper, makeStyles } from '@material-ui/core'
-
+import { Container, Grid, Paper } from '@material-ui/core'
 // const useStyles = makeStyles(theme => ({
 //   page: {
 //     width: '100%',
@@ -15,7 +14,9 @@ export default function Layout ({ children }) {
   // const classes = useStyles()
 
   return (
+    <>
     <Container>
+      
       <Grid container spacing={3} justify='space-around'>
 
         <Grid item sx>
@@ -33,5 +34,6 @@ export default function Layout ({ children }) {
 
       </Grid>
     </Container>
+    </>
   )
 }
