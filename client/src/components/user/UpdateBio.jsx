@@ -55,6 +55,7 @@ export default function UpdateBio () {
                 label='Bio'
                 placeholder={user.bio}
                 variant='outlined'
+                multiline
                 rows={4}
                 fullWidth
                 required
