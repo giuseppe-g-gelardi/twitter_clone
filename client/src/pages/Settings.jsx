@@ -4,12 +4,12 @@ import UserContext from '../context/UserContext'
 // import Followers from "../components/Followers"
 // import Following from "../components/Following"
 
-import UpdateTheme from "../components/user/components/UpdateTheme";
-import UpdateEmail from "../components/user/components/UpdateEmail";
-import UpdateName from "../components/user/components/UpdateName";
-import UpdateUsername from "../components/user/components/UpdateUsername";
-import UpdateLocation from "../components/user/components/UpdateLocation";
-import UpdateBio from "../components/user/components/UpdateBio";
+import UpdateTheme from "../components/user/UpdateTheme";
+import UpdateEmail from "../components/user/UpdateEmail";
+import UpdateName from "../components/user/UpdateName";
+import UpdateUsername from "../components/user/UpdateUsername";
+import UpdateLocation from "../components/user/UpdateLocation";
+import UpdateBio from "../components/user/UpdateBio";
 
 export default function Settings() {
   const { user } = useContext(UserContext)
@@ -25,8 +25,8 @@ export default function Settings() {
         <UpdateTheme />
         <UpdateLocation />
         <UpdateBio />
-        <h4>Followers: {user.followers.length}</h4>
-        <h4>following: {user.following.length}</h4>
+        <h4>Followers: {user?.followers?.length}</h4>
+        <h4>following: {user?.following?.length}</h4>
         {/* <Followers />
         <Following /> */}
         <h2>verified user: {user.isVerified ? 'verified' : 'you are not verified'}</h2>
