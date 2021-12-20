@@ -1,4 +1,6 @@
 import { Container, Grid, Paper } from '@material-ui/core'
+import '../Layout.css'
+import Nav from './Nav'
 // const useStyles = makeStyles(theme => ({
 //   page: {
 //     width: '100%',
@@ -11,29 +13,33 @@ import { Container, Grid, Paper } from '@material-ui/core'
 // }))
 
 export default function Layout ({ children }) {
-  // const classes = useStyles()
 
   return (
-    <>
-    <Container>
-      
-      <Grid container spacing={3} justify='space-around'>
+    <div>
+      <Nav /> 
+      <div className='container'>{children}</div>
+    </div>
 
-        <Grid item sx>
-          <Paper >LEFT</Paper>
-
-        </Grid>
-
-        <Grid item sx={4}>
-          <Paper>{children}</Paper>
-        </Grid>
-
-        <Grid item sx>
-          <Paper>RIGHT</Paper>
-        </Grid>
-
-      </Grid>
-    </Container>
-    </>
   )
 }
+{/* <>
+<Container>
+  
+  <Grid container spacing={3} justify='space-around'>
+
+    <Grid item sx>
+      <Paper >LEFT</Paper>
+
+    </Grid>
+
+    <Grid item sx={4}>
+      <Paper>{children}</Paper>
+    </Grid>
+
+    <Grid item sx>
+      <Paper>RIGHT</Paper>
+    </Grid>
+
+  </Grid>
+</Container>
+</> */}

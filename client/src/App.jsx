@@ -26,7 +26,6 @@ export default function App() {
       <StylesProvider injectFirst>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-            <h1>app lol</h1>
             <Routing />
         </ThemeProvider>
       </StylesProvider>
