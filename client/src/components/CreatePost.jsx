@@ -1,11 +1,17 @@
-import { useContext, useState } from "react"
+import { useContext, useState } from 'react'
 import axios from 'axios'
-import { Button, Card, Container, FormControl, TextField } from "@material-ui/core"
+import {
+  Button,
+  Card,
+  Container,
+  FormControl,
+  TextField
+} from '@material-ui/core'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 
 import UserContext from '../context/UserContext'
 
-export default function CreatePost() {
+export default function CreatePost () {
   const { user } = useContext(UserContext)
   const userId = user._id
   const [description, setDescription] = useState([])
@@ -19,7 +25,7 @@ export default function CreatePost() {
     e.preventDefault()
 
     const newPost = {
-      description: description,
+      description: description
     }
     try {
       await axios
@@ -39,29 +45,29 @@ export default function CreatePost() {
   return (
     <Container>
       <Card>
-      <form onSubmit={handleSubmit}>
-        <FormControl>
-        <TextField
-            style={{ marginBottom: 20 }}
-            onChange={e => setDescription(e.target.value)}
-            label='Create a new post'
-            variant='outlined'
-            type='text'
-            fullWidth
-            required
+        <form onSubmit={handleSubmit}>
+          <FormControl>
+            <TextField
+              style={{ marginBottom: 20 }}
+              onChange={e => setDescription(e.target.value)}
+              label='Create a new post'
+              variant='outlined'
+              type='text'
+              disableElevation={true}
+              fullWidth={true}
+              required={true}
             />
-          <Button
-            type='submit'
-            color='primary'
-            variant='contained'
-            endIcon={<KeyboardArrowRightIcon />}
-          >
-            Add new Post
-          </Button>
-        </FormControl>
-
-      </form>
-            </Card>
+            <Button
+              type='submit'
+              color='primary'
+              variant='contained'
+              endIcon={<KeyboardArrowRightIcon />}
+            >
+              Add new Post
+            </Button>
+          </FormControl>
+        </form>
+      </Card>
     </Container>
   )
 }
