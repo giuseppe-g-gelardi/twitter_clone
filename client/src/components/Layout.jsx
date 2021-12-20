@@ -1,24 +1,15 @@
-// import { Container, Grid, Paper } from '@material-ui/core'
+import { Container } from '@material-ui/core'
 import '../Layout.css'
 import Nav from './Nav'
-// const useStyles = makeStyles(theme => ({
-//   page: {
-//     width: '100%',
-//     padding: theme.spacing(3)
-//   },
-//   paper: {
-//     padding: theme.spacing(2),
-//     textAlign: 'left',
-//   }
-// }))
+
 
 export default function Layout ({ children }) {
 
   return (
-    <div>
+    <Container>
       <Nav /> 
-      <div className='container'>{children}</div>
-    </div>
+      <Container className='container'>{children}</Container>
+    </Container>
 
   )
 }
@@ -44,3 +35,13 @@ export default function Layout ({ children }) {
 //   </Grid>
 // </Container>
 // </> */}
+// const useStyles = makeStyles(theme => ({
+//   page: {
+//     width: '100%',
+//     padding: theme.spacing(3)
+//   },
+//   paper: {
+//     padding: theme.spacing(2),
+//     textAlign: 'left',
+//   }
+// }))

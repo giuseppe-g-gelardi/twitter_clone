@@ -61,7 +61,7 @@ export default function UpdateName () {
                 label='First Name'
                 placeholder={user.firstname}
                 variant='outlined'
-                fullWidth
+                fullWidth={true}
                 required
               />
 
@@ -71,7 +71,7 @@ export default function UpdateName () {
                 label='Last Name'
                 placeholder={user.lastname}
                 variant='outlined'
-                fullWidth
+                fullWidth={true}
                 required
               />
 

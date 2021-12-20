@@ -62,7 +62,7 @@ export default function UpdatePicture() {
                 placeholder={user.profilePicture}
                 variant='outlined'
                 rows={4}
-                fullWidth
+                fullWidth={true}
                 required
               />
 

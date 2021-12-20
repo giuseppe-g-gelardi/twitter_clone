@@ -13,7 +13,6 @@ export default function Following() {
       )
       setFollowing(following => [following, response.data])
     })
-    // console.log('following: ', following)
     return following
   }
 

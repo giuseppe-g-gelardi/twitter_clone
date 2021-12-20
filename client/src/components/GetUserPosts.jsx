@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from 'react'
 import axios from 'axios'
 import UserContext from '../context/UserContext'
 import CommentCard from './CommentCard'
+import { Button, Container } from '@material-ui/core'
 
 export default function GetUserPosts () {
   const { user } = useContext(UserContext)
@@ -33,12 +34,12 @@ export default function GetUserPosts () {
   }, [user])
 
   return (
-    <div>
-      <button onClick={() => console.log(posts)}>log posts</button>
+    <Container>
+      <Button onClick={() => console.log(posts)}>log posts</Button>
       <h2>my posts: </h2>
       {posts.map(post => (
-        <CommentCard user={user} post={post} deletePost={deletePost} />
+        <CommentCard key={post._id} user={user} post={post} deletePost={deletePost} />
       ))}
-    </div>
+    </Container>
   )
 }

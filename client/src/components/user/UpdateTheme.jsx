@@ -55,7 +55,7 @@ export default function UpdateTheme () {
                 label='Change Theme'
                 placeholder={user.theme}
                 variant='outlined'
-                autoWidth
+                autoWidth={true}
                 required
               />
 

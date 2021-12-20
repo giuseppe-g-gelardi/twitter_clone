@@ -55,7 +55,7 @@ export default function UpdateLocation () {
                 label='Location'
                 placeholder={user.location}
                 variant='outlined'
-                fullWidth
+                fullWidth={true}
                 required
               />
 

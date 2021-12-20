@@ -56,7 +56,7 @@ export default function UpdateUsername () {
                 label='Username'
                 placeholder={user.firstname}
                 variant='outlined'
-                fullWidth
+                fullWidth={true}
                 required
               />
 

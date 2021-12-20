@@ -60,7 +60,7 @@ export default function UpdateBanner() {
                 placeholder={user.profileBanner}
                 variant='outlined'
                 rows={4}
-                fullWidth
+                fullWidth={true}
                 required
               />
 

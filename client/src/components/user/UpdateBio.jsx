@@ -57,7 +57,7 @@ export default function UpdateBio () {
                 variant='outlined'
                 multiline
                 rows={4}
-                fullWidth
+                fullWidth={true}
                 required
               />
 

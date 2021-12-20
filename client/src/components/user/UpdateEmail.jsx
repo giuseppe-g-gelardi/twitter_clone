@@ -56,7 +56,7 @@ export default function UpdateEmail () {
                 label='Email'
                 placeholder={user.email}
                 variant='outlined'
-                fullWidth
+                fullWidth={true}
                 required
               />
 

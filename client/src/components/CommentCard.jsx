@@ -3,10 +3,11 @@ import {
   CardHeader,
   Avatar,
   IconButton,
-  ButtonGroup
+  ButtonGroup,
 } from '@material-ui/core'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import { DeleteOutline } from '@material-ui/icons'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import DeleteIcon from '@mui/icons-material/Delete'
+import CommentIcon from '@mui/icons-material/Comment'
 
 export default function CommentCard (props) {
   const { user, post, deletePost } = props
@@ -18,11 +19,17 @@ export default function CommentCard (props) {
         action={
           <ButtonGroup>
             <IconButton>
-              <FavoriteIcon />
+              <FavoriteIcon fontSize='small'>
+                {post.likes.length}
+              </FavoriteIcon>
             </IconButton>
 
             <IconButton onClick={() => deletePost(post._id)}>
-              <DeleteOutline style={{ color: '#f07178' }} />
+              <DeleteIcon style={{ color: '#f07178' }} fontSize='small' />
+            </IconButton>
+
+            <IconButton>
+              <CommentIcon fontSize='small' />
             </IconButton>
           </ButtonGroup>
         }
