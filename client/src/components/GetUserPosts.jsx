@@ -1,27 +1,16 @@
 import { useContext, useState, useEffect } from 'react'
 import axios from 'axios'
-import {
-  Card,
-  CardHeader,
-  Avatar,
-  IconButton,
-  ButtonGroup
-} from '@material-ui/core'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import { DeleteOutline } from '@material-ui/icons'
-
 import UserContext from '../context/UserContext'
+import CommentCard from './CommentCard'
 
 export default function GetUserPosts () {
   const { user } = useContext(UserContext)
-  const userId = user._id
   const [posts, setPosts] = useState([])
-  const avatar = user.profilePicture
 
   const getPosts = async () => {
     try {
       await axios
-        .get(`http://localhost:8000/api/posts/${userId}/posts`)
+        .get(`http://localhost:8000/api/posts/${user._id}/posts`)
         .then(response => setPosts(response.data))
     } catch (error) {
       throw new Error(error)
@@ -31,7 +20,7 @@ export default function GetUserPosts () {
   const deletePost = async postId => {
     try {
       await axios.delete(
-        `http://localhost:8000/api/posts/${userId}/posts/${postId}`
+        `http://localhost:8000/api/posts/${user._id}/posts/${postId}`
       )
       getPosts()
     } catch (error) {
@@ -48,25 +37,7 @@ export default function GetUserPosts () {
       <button onClick={() => console.log(posts)}>log posts</button>
       <h2>my posts: </h2>
       {posts.map(post => (
-        <Card key={post._id} style={{ padding: 2, marginTop: 2 }}>
-          <CardHeader
-            key={post._id}
-            avatar={<Avatar alt='' src={avatar} />}
-            action={
-              <ButtonGroup>
-                <IconButton>
-                  <FavoriteIcon />
-                </IconButton>
-
-                <IconButton onClick={() => deletePost(post._id)}>
-                  <DeleteOutline style={{ color: '#f07178' }} />
-                </IconButton>
-              </ButtonGroup>
-            }
-            title={user.username}
-            subheader={post.description}
-          />
-        </Card>
+        <CommentCard user={user} post={post} deletePost={deletePost} />
       ))}
     </div>
   )

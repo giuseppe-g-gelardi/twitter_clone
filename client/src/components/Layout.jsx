@@ -1,4 +1,4 @@
-import { Container, Grid, Paper } from '@material-ui/core'
+// import { Container, Grid, Paper } from '@material-ui/core'
 import '../Layout.css'
 import Nav from './Nav'
 // const useStyles = makeStyles(theme => ({
@@ -22,24 +22,25 @@ export default function Layout ({ children }) {
 
   )
 }
-{/* <>
-<Container>
+
+// {/* <>
+// <Container>
   
-  <Grid container spacing={3} justify='space-around'>
+//   <Grid container spacing={3} justify='space-around'>
 
-    <Grid item sx>
-      <Paper >LEFT</Paper>
+//     <Grid item sx>
+//       <Paper >LEFT</Paper>
 
-    </Grid>
+//     </Grid>
 
-    <Grid item sx={4}>
-      <Paper>{children}</Paper>
-    </Grid>
+//     <Grid item sx={4}>
+//       <Paper>{children}</Paper>
+//     </Grid>
 
-    <Grid item sx>
-      <Paper>RIGHT</Paper>
-    </Grid>
+//     <Grid item sx>
+//       <Paper>RIGHT</Paper>
+//     </Grid>
 
-  </Grid>
-</Container>
-</> */}
+//   </Grid>
+// </Container>
+// </> */}

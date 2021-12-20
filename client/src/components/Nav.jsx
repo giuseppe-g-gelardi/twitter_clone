@@ -1,18 +1,17 @@
-import { useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+// import { useContext } from 'react'
+import { Link } from 'react-router-dom'
 
-import UserContext from '../context/UserContext'
+// import UserContext from '../context/UserContext'
 import '../Header.css'
 
 export default function Nav() {
-  const { user } = useContext(UserContext)
-  const navigate = useNavigate()
+  // const { user } = useContext(UserContext)
 
   return (
     <header className='header'>
       <div className='logo'>
         <Link to='/'>
-          <a>Hey</a>
+          Hey
         </Link>
       </div>
 
@@ -20,31 +19,31 @@ export default function Nav() {
         <ul>
           <li>
             <Link to='/home'>
-              <a>Home</a>
+              Home
             </Link>
           </li>
 
           <li>
             <Link to='/login'>
-              <a>Login</a>
+              Login
             </Link>
           </li>
 
           <li>
             <Link to='/register'>
-              <a>Register</a>
+              Register
             </Link>
           </li>
 
           <li>
             <Link to='/settings'>
-              <a>Settings</a>
+              Settings
             </Link>
           </li>
 
           <li>
             <Link to='/' onClick={() => localStorage.removeItem('token')}>
-              <a>Logout</a>
+              Logout
             </Link>
           </li>
         </ul>
