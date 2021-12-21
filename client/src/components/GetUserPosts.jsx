@@ -1,13 +1,16 @@
 import { useContext, useState, useEffect } from 'react'
 import axios from 'axios'
-import { Container } from '@material-ui/core'
+import { Button, Container } from '@material-ui/core'
 
 import UserContext from '../context/UserContext'
 import CommentCard from './CommentCard'
+import CommentDisplay from './CommentDisplay'
 
 export default function GetUserPosts () {
   const { user } = useContext(UserContext)
   const [posts, setPosts] = useState([])
+  const [displaySinglePost, setDisplaySinglePost] = useState(false)
+  const [displayPost, setDisplayPost] = useState('')
 
   const getPosts = async () => {
     try {
@@ -58,11 +61,36 @@ export default function GetUserPosts () {
   useEffect(() => getPosts())
 
   return (
-    <Container>
-      <h2>my posts: </h2>
-      {posts.map(post => (
-        <CommentCard key={post._id} user={user} post={post} deletePost={deletePost} />
-      ))}
-    </Container>
+    <>
+      {displaySinglePost ? (
+        <>
+          <Button onClick={() => setDisplaySinglePost(false)}>Go Back</Button>
+          <Button onClick={() => console.log(displayPost)}>Log Post</Button>
+          <Container>
+            <CommentDisplay 
+              key={user._id}
+              user={user}
+              post={displayPost}
+              setDisplaySinglePost={setDisplaySinglePost}
+            />
+
+          </Container>
+        </>
+      ) : (
+        <Container>
+          <h2>my posts: </h2>
+          {posts.map(post => (
+            <CommentCard
+              key={post._id}
+              user={user}
+              post={post}
+              deletePost={deletePost}
+              setDisplaySinglePost={setDisplaySinglePost}
+              setDisplayPost={setDisplayPost}
+            />
+          ))}
+        </Container>
+      )}
+    </>
   )
 }
