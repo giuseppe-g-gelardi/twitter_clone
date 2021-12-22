@@ -14,7 +14,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import CommentIcon from '@mui/icons-material/Comment'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
-import ReplyCard from './ReplyCard'
+import CreateReply from './CreateReply'
+// import ReplyCard from './ReplyCard'
 
 export default function CommentCard (props) {
   const { user, post, setDisplaySinglePost, likeUnlike } = props
@@ -49,10 +50,13 @@ export default function CommentCard (props) {
     replies.map(reply => console.log(reply.user[0]))
   }
 
-  useEffect(() => post, [post.likes])
+  useEffect(() => {
+    getReplies()
+  }, [user])
 
   return (
     <>
+
       <button onClick={() => getReplies()}>getReplies()</button>
       <button onClick={() => mapReplies()}>mapReplies()</button>
       <Card key={post._id} style={{ padding: 2, marginTop: 2, width: '100%' }}>
@@ -68,7 +72,7 @@ export default function CommentCard (props) {
           }
           title={user.username}
           subheader={post.description}
-        />
+          />
         <CardContent
           style={{
             display: 'flex',
@@ -78,7 +82,7 @@ export default function CommentCard (props) {
             marginBottom: '-25px',
             marginTop: '-25px'
           }}
-        >
+          >
           {likeIcons}
           <IconButton>
             <CardActionArea onClick={() => `${setDisplaySinglePost(false)}`}>
@@ -87,12 +91,23 @@ export default function CommentCard (props) {
           </IconButton>
           <IconButton
             onClick={() => post.replies.map(reply => console.log(reply))}
-          >
+            >
             <CommentIcon fontSize='small' />
             {post.replies.length ? post.replies.length : null}
           </IconButton>
         </CardContent>
       </Card>
+      <Container>
+        <CreateReply post={post} />
+      </Container>
+        {replies.length > 0 ? (
+        replies.map(reply => (
+          <ul key={reply._id}>
+            <li>{reply.user[0]} says: {reply.text}</li>
+          </ul>
+        ))
+        
+        ) : null}
     </>
   )
 }
