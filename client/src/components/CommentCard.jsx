@@ -13,16 +13,15 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 export default function CommentCard (props) {
-  const { user, post, setDisplaySinglePost, setDisplayPost } = props
+  const { user, post, setDisplaySinglePost, setDisplayPost, likeUnlike } = props
 
-  const likeIcons = post.likes.length ? (
-    <IconButton>
-      <FavoriteIcon fontSize='small' color='primary' />
-      {post.likes.length ? post.likes.length : null}
-    </IconButton>
-  ) : (
-    <IconButton>
-      <FavoriteBorderIcon fontSize='small' color='primary' />
+  const likeIcons = (
+    <IconButton onClick={() => likeUnlike(post._id)}>
+      {post.likes.length 
+      ? (<FavoriteIcon fontSize='small' color='primary' />) 
+      : (<FavoriteBorderIcon fontSize='small' color='primary' />
+      )}
+
       {post.likes.length ? post.likes.length : null}
     </IconButton>
   )
@@ -54,7 +53,11 @@ export default function CommentCard (props) {
       >
         {likeIcons}
         <IconButton>
-          <CardActionArea onClick={() => `${setDisplaySinglePost(true)} ${setDisplayPost(post)}`}>
+          <CardActionArea
+            onClick={() =>
+              `${setDisplaySinglePost(true)} ${setDisplayPost(post)}`
+            }
+          >
             <ExpandMoreIcon />
           </CardActionArea>
         </IconButton>

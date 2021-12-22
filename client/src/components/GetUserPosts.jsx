@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react'
 import axios from 'axios'
-import { Button, Container, Paper } from '@material-ui/core'
+import { Button, Container } from '@material-ui/core'
 
 import UserContext from '../context/UserContext'
 import CommentCard from './CommentCard'
@@ -22,14 +22,6 @@ export default function GetUserPosts () {
     }
   }
 
-  const getReplies = async () => {
-    try {
-
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
-
   const deletePost = async postId => {
     try {
       await axios.delete(
@@ -41,30 +33,19 @@ export default function GetUserPosts () {
     }
   }
 
-  // ? also maybe no need!!
-  // const getReplies = async postId => {
-  //   try {
-  //     await axios.get(
-  //       `http://localhost:8000/api/posts/${user._id}/posts/${postId}/replies`
-  //       // `http://localhost:8000/api/posts/61baaced780cf3e51957becb/posts/61bfa551daf8c37fc5403ae0/replies`
-  //     ) // hardcoded url /userId/posts/postId/replies
-  //     .then (response => console.log(response))
-
-  //   } catch (error) {
-  //     throw new Error(error)
-  //   }
-  // }
-
-  // ? maybe no need
-  // const getSinglePost = async postId => {
-  //   try {
-  //     await axios.get(
-  //       `http://localhost:8000/api/posts/${user._id}/posts/${postId}`
-  //     )
-  //   } catch (error) {
-  //     throw new Error(error)
-  //   }
-  // }
+  const likeUnlike = async postId => {
+    let update = {
+      userId: '61b915a14981289923106651'
+    }
+    try {
+      await axios.put(
+        `http://localhost:8000/api/posts/${user._id}/posts/${postId}/likes`,
+        update
+      )
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
 
   useEffect(() => getPosts())
 
@@ -74,15 +55,15 @@ export default function GetUserPosts () {
         <>
           <Button onClick={() => setDisplaySinglePost(false)}>Go Back</Button>
           <Button onClick={() => console.log(displayPost)}>Log Post</Button>
-          <Button onClick={() => console.log(displayPost.replies)}>log replies?</Button>
+          {/* <Button onClick={() => console.log(displayPost.replies)}>log replies?</Button> */}
           <Container>
-            <CommentDisplay 
+            <CommentDisplay
               key={user._id}
               user={user}
               post={displayPost}
               setDisplaySinglePost={setDisplaySinglePost}
+              likeUnlike={likeUnlike}
             />
-
           </Container>
         </>
       ) : (
@@ -96,6 +77,7 @@ export default function GetUserPosts () {
               deletePost={deletePost}
               setDisplaySinglePost={setDisplaySinglePost}
               setDisplayPost={setDisplayPost}
+              likeUnlike={likeUnlike}
             />
           ))}
         </Container>
@@ -103,3 +85,38 @@ export default function GetUserPosts () {
     </>
   )
 }
+
+// ? also maybe no need!!
+// const getReplies = async postId => {
+//   try {
+//     await axios.get(
+//       `http://localhost:8000/api/posts/${user._id}/posts/${postId}/replies`
+//       // `http://localhost:8000/api/posts/61baaced780cf3e51957becb/posts/61bfa551daf8c37fc5403ae0/replies`
+//     ) // hardcoded url /userId/posts/postId/replies
+//     .then (response => console.log(response))
+
+//   } catch (error) {
+//     throw new Error(error)
+//   }
+// }
+
+// ? maybe no need
+// const getSinglePost = async postId => {
+//   try {
+//     await axios.get(
+//       `http://localhost:8000/api/posts/${user._id}/posts/${postId}`
+//     )
+//   } catch (error) {
+//     throw new Error(error)
+//   }
+// }
+// const getReplies = async postId => {
+//   try {
+//     await axios
+//       .get(`http://localhost:8000/api/posts/${user._id}/posts/${postId}/replies`)
+//       .then(response => setReplies(response.data))
+
+//   } catch (error) {
+//     throw new Error(error)
+//   }
+// }
