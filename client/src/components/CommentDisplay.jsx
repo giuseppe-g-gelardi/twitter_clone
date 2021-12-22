@@ -4,7 +4,8 @@ import {
   Avatar,
   IconButton,
   CardActionArea,
-  CardContent
+  CardContent,
+  Container
 } from '@material-ui/core'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'

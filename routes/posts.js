@@ -163,7 +163,8 @@ router.post('/:userId/posts/:postId/replies', async (req, res) => {
         .send(`The post with id "${req.params.postId}" does not exist`)
 
     let reply = new Reply({
-      text: req.body.text
+      text: req.body.text,
+      user: req.body.user
     })
     
     post = await post.replies.push(reply)
@@ -172,7 +173,7 @@ router.post('/:userId/posts/:postId/replies', async (req, res) => {
     return res.send(user)
   
   } catch(err) {
-    return res.status(500).send(`Internal Server Error: ${ex}`);
+    return res.status(500).send(`Internal Server Error: ${err}`);
   }
 })
 

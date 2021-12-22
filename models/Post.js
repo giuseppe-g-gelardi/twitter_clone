@@ -3,7 +3,7 @@ const { replySchema } = require('./Reply')
 
 const postSchema = new mongoose.Schema({
   description: { type: String, maxlength: 140 },
-  replies: { type: [replySchema] },
+  replies: { type: [replySchema], default: [] },
   likes: { type: [ mongoose.Types.ObjectId ], default: [] },
   img: { type: String }
 }, { timestamps: true })

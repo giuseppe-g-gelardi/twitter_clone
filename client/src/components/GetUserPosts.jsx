@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react'
 import axios from 'axios'
-import { Button, Container } from '@material-ui/core'
+import { Button, Container, Paper } from '@material-ui/core'
 
 import UserContext from '../context/UserContext'
 import CommentCard from './CommentCard'
@@ -17,6 +17,14 @@ export default function GetUserPosts () {
       await axios
         .get(`http://localhost:8000/api/posts/${user._id}/posts`)
         .then(response => setPosts(response.data))
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
+  const getReplies = async () => {
+    try {
+
     } catch (error) {
       throw new Error(error)
     }
@@ -66,6 +74,7 @@ export default function GetUserPosts () {
         <>
           <Button onClick={() => setDisplaySinglePost(false)}>Go Back</Button>
           <Button onClick={() => console.log(displayPost)}>Log Post</Button>
+          <Button onClick={() => console.log(displayPost.replies)}>log replies?</Button>
           <Container>
             <CommentDisplay 
               key={user._id}
