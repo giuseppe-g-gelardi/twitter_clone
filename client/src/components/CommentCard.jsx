@@ -7,28 +7,25 @@ import {
   CardContent
 } from '@material-ui/core'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import CommentIcon from '@mui/icons-material/Comment'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-// import DeleteIcon from '@mui/icons-material/Delete'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 export default function CommentCard (props) {
   const { user, post, setDisplaySinglePost, setDisplayPost } = props
-  // TODO add conditional deletePost()
 
-    const likeIcons =  post.likes.length ? (
-      <IconButton>
-        <FavoriteIcon fontSize='small' color='primary' />
-        {post.likes.length ? post.likes.length : null}
-      </IconButton>
-    ) : (
-      <IconButton>
-        <FavoriteBorderIcon fontSize='small' color='primary' />
-        {post.likes.length ? post.likes.length : null}
-      </IconButton>
-    )
-      
+  const likeIcons = post.likes.length ? (
+    <IconButton>
+      <FavoriteIcon fontSize='small' color='primary' />
+      {post.likes.length ? post.likes.length : null}
+    </IconButton>
+  ) : (
+    <IconButton>
+      <FavoriteBorderIcon fontSize='small' color='primary' />
+      {post.likes.length ? post.likes.length : null}
+    </IconButton>
+  )
 
   return (
     <Card key={post._id} style={{ padding: 2, marginTop: 2, width: '100%' }}>
@@ -38,9 +35,9 @@ export default function CommentCard (props) {
           <Avatar alt='/images/profilePicture' src={user.profilePicture} />
         }
         action={
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
+          <IconButton>
+            <MoreVertIcon />
+          </IconButton>
         }
         title={user.username}
         subheader={post.description}
@@ -57,7 +54,7 @@ export default function CommentCard (props) {
       >
         {likeIcons}
         <IconButton>
-          <CardActionArea onClick={() => `${setDisplaySinglePost(true)} ${setDisplayPost(post)}`} >
+          <CardActionArea onClick={() => `${setDisplaySinglePost(true)} ${setDisplayPost(post)}`}>
             <ExpandMoreIcon />
           </CardActionArea>
         </IconButton>
@@ -69,4 +66,3 @@ export default function CommentCard (props) {
     </Card>
   )
 }
-
