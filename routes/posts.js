@@ -209,40 +209,8 @@ router.delete('/:userId/posts/:postId/replies/:replyId', async (req, res) => {
   }
 })
 
-// ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // 
-// ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // 
-// ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // 
-// ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // 
-// ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // 
-// ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // 
-// ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // 
-
-// * like / unlike post
-
-// // like a post
-router.put("/:userId/posts/:postId/likes", async (req, res) => {
-  try {
-    // need to find the user first
-    const post = await Post.findById(req.params.id);
-    if (!post.likes.includes(req.body.userId)) {
-      await post.updateOne({ $push: { likes: req.body.userId } });
-      res.status(200).json("The post has been liked");
-    } else {
-      await post.updateOne({ $pull: { likes: req.body.userId } });
-      res.status(200).json("The post has been disliked");
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// ? likes
-// ? likes
-// ? likes
-
 // ! get all likes to a post
-// TODO double check working, 
-// * 200 response but no likes to verifiy
+// * VERIFIED WORKING
 router.get('/:userId/posts/:postId/likes', async (req, res) => {
   try {
     const user = await User.findById(req.params.userId)
@@ -265,38 +233,32 @@ router.get('/:userId/posts/:postId/likes', async (req, res) => {
   }
 })
 
-// // ! get likes on a reply
-// // ! keeps getting 500 status code. not sure why
-// // TODO FICKS DIS
-// router.get('/:userId/posts/:postId/replies/:replyId/likes', async (req, res) => {
-//   try {
-//     const user = await User.findById(req.params.userId)
-//     if (!user)
-//       return res
-//         .status(400)
-//         .send(`The user with id "${req.params.userId}" does not exist`)
+// ! like/unlike post
+// * VERIFIED WORKING
+router.put('/:userId/posts/:postId/likes', async (req, res) => {
+  try{
+    const user = await User.findById(req.params.userId)
+    if (!user) return res.status(400)
+        .send(`The user with id "${req.params.userId}" does not exist`)
+    let post = user.posts.id(req.params.postId)
+    if (!post) return res.status(400)
+        .send(`The post with id "${req.params.postId}" does not exist`)
 
-//     let post = user.posts.id(req.params.postId)
-//     if (!post)
-//       return res
-//         .status(400)
-//         .send(`The post with id "${req.params.postId}" does not exist`)    
-
-//     let reply = post.replies.id(req.params.replyId)
-//     if (!reply)
-//       return res
-//         .status(400)
-//         .send(`The reply with id "${req.params.replyId}" does not exist`)
-
-//     let likes = reply.likes
-//     res.status(200).send(likes)
-    
-//   } catch (err) {
-//     res.status(500).json(err)
-//   }
-// })
+    let message;
+    if (post.likes.includes(req.body.userId)) {
+      post.likes.pull(req.body.userId)
+      message = 'disliked'
+    } else { 
+      post.likes.push(req.body.userId)
+      message = 'liked'
+    }
+    await user.save()
+    return res.status(200).json(message)
 
 
-
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
 
 module.exports = router
