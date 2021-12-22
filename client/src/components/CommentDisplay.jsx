@@ -8,6 +8,7 @@ import {
   CardContent
 } from '@material-ui/core'
 import FavoriteIcon from '@mui/icons-material/Favorite'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // import DeleteIcon from '@mui/icons-material/Delete'
 import CommentIcon from '@mui/icons-material/Comment'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -17,6 +18,18 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 export default function CommentCard (props) {
   const { user, post, setDisplaySinglePost } = props
   // TODO add deletePost() to menu
+
+  const likeIcons =  post.likes.length ? (
+    <IconButton>
+      <FavoriteIcon fontSize='small' color='primary' />
+      {post.likes.length ? post.likes.length : null}
+    </IconButton>
+  ) : (
+    <IconButton>
+      <FavoriteBorderIcon fontSize='small' color='primary' />
+      {post.likes.length ? post.likes.length : null}
+    </IconButton>
+  )
 
   return (
 <Card key={post._id} style={{ padding: 2, marginTop: 2, width: '100%' }}>
@@ -43,10 +56,7 @@ export default function CommentCard (props) {
     marginTop: '-25px'
   }}
 >
-  <IconButton>
-    <FavoriteIcon fontSize='small' color='primary' />
-    {post.likes.length ? post.likes.length : ''}
-  </IconButton>
+  {likeIcons}
   <IconButton>
     <CardActionArea onClick={() => `${setDisplaySinglePost(false)}`} >
       <ExpandLessIcon />
