@@ -10,8 +10,8 @@ export default function Home() {
   return (
     <div>
       <Profile />
-      <CreatePost />
-      <GetUserPosts />
+      {/* <CreatePost />
+      <GetUserPosts /> */}
     </div>
   )
 }

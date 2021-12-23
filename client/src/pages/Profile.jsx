@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import axios from "axios"
 import { useParams } from "react-router-dom"
+import CommentCard from '../components/CommentCard'
+import { Container } from '@material-ui/core'
 
 export default function Profile() {
   const { userid } = useParams()
@@ -42,6 +44,20 @@ export default function Profile() {
       <p>you can call me {user.firstname}</p>
       <p>i live in {user.location}</p>
       <h3>bio: {user.bio}</h3>
+      <Container>
+          <h2>my posts: </h2>
+          {user?.posts?.map(post => (
+            <CommentCard
+              key={post._id}
+              user={user}
+              post={post}
+              // deletePost={deletePost}
+              // setDisplaySinglePost={setDisplaySinglePost}
+              // setDisplayPost={setDisplayPost}
+              // likeUnlike={likeUnlike}
+            />
+          ))}
+        </Container>
     </div>
   )
 }
