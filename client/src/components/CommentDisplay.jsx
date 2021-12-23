@@ -15,7 +15,6 @@ import CommentIcon from '@mui/icons-material/Comment'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import CreateReply from './CreateReply'
-// import ReplyCard from './ReplyCard'
 
 export default function CommentCard (props) {
   const { user, post, setDisplaySinglePost, likeUnlike } = props
@@ -43,6 +42,17 @@ export default function CommentCard (props) {
       console.log(replies)
     } catch (err) {
       console.log(err)
+    }
+  }
+  // get single user endpoint
+  // http://localhost:8000/api/users/61baaa75780cf3e51957bea1
+
+  const getUser = async (userId) => {
+    try {
+      axios
+        .get(`http://localhost:8000/api/users/${userId}`)
+    } catch (error) {
+      throw new Error(error)
     }
   }
 

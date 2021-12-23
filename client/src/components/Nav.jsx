@@ -18,7 +18,7 @@ export default function Nav() {
       <nav>
         <ul>
           <li>
-            <Link to='/home'>
+            <Link to='/'>
               Home
             </Link>
           </li>
