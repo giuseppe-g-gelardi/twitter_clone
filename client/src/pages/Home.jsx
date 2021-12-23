@@ -9,9 +9,9 @@ export default function Home() {
 
   return (
     <div>
-      <Profile />
-      {/* <CreatePost />
-      <GetUserPosts /> */}
+      {/* <Profile /> */}
+      <CreatePost />
+      <GetUserPosts />
     </div>
   )
 }

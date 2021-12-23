@@ -22,20 +22,9 @@ export default function GetUserPosts () {
     }
   }
 
-  const deletePost = async postId => {
-    try {
-      await axios.delete(
-        `http://localhost:8000/api/posts/${user._id}/posts/${postId}`
-      )
-      getPosts()
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
-
   const likeUnlike = async postId => {
     let update = {
-      userId: '61b915a14981289923106651'
+      userId: user._id
     }
     try {
       await axios.put(
@@ -55,7 +44,6 @@ export default function GetUserPosts () {
         <>
           <Button onClick={() => setDisplaySinglePost(false)}>Go Back</Button>
           <Button onClick={() => console.log(displayPost)}>Log Post</Button>
-          {/* <Button onClick={() => console.log(displayPost.replies)}>log replies?</Button> */}
           <Container>
             <CommentDisplay
               key={user._id}
@@ -74,7 +62,6 @@ export default function GetUserPosts () {
               key={post._id}
               user={user}
               post={post}
-              deletePost={deletePost}
               setDisplaySinglePost={setDisplaySinglePost}
               setDisplayPost={setDisplayPost}
               likeUnlike={likeUnlike}
@@ -120,3 +107,31 @@ export default function GetUserPosts () {
 //     throw new Error(error)
 //   }
 // }
+
+
+ // const createPost = async e => {
+  //   e.preventDefault()
+
+  //   const newPost = {
+  //     description: description
+  //   }
+
+  //   try {
+  //     await axios
+  //       .post(`http://localhost:8000/api/posts/${user._id}`, newPost)
+  //       setPosts([...posts, newPost])
+  //   } catch (error) {
+  //     throw new Error(error)
+  //   }
+  // }
+  // const deletePost = async postId => {
+  //   try {
+  //     await axios.delete(
+  //       `http://localhost:8000/api/posts/${user._id}/posts/${postId}`
+  //     )
+  //     getPosts()
+  //   } catch (error) {
+  //     throw new Error(error)
+  //   }
+  // }
+              // deletePost={deletePost}

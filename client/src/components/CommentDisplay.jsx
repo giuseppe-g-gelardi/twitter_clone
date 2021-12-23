@@ -108,7 +108,7 @@ export default function CommentCard (props) {
         </CardContent>
       </Card>
       <Container>
-        <CreateReply post={post} />
+        <CreateReply post={post} replies={replies} setReplies={setReplies} />
       </Container>
         {replies.length > 0 ? (
         replies.map(reply => (

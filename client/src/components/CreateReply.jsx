@@ -12,15 +12,23 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import UserContext from '../context/UserContext'
 
 export default function CreateReply (props) {
-  const { post } = props
+  const { post, replies, setReplies } = props
   const { user } = useContext(UserContext)
   const userId = user._id
   const [text, setText] = useState('')
 
   const api = `http://localhost:8000/api/posts/${userId}/posts/${post._id}/replies`
 
-  const refreshPage = () => {
-    window.location.reload()
+  // const refreshPage = () => {
+  //   window.location.reload()
+  // }
+
+  const getReplies = async () => {
+    try {
+      await axios.get(api)
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 
   const handleSubmit = async e => {
@@ -33,13 +41,8 @@ export default function CreateReply (props) {
     try {
       await axios
         .post(api, newReply)
-        .then(response => {
-          console.log(response)
-          refreshPage()
-        })
-        .catch(error => {
-          console.log(`Axios error: `, error)
-        })
+        setReplies([...replies, newReply])
+
     } catch (error) {
       throw new Error(error)
     }
@@ -48,15 +51,20 @@ export default function CreateReply (props) {
   useEffect(() => console.log('refresh'), [])
 
   return (
-    <Container>
-      <Card>
-        <button onClick={() => console.log(post)}>log post</button>
+    <>
+      <Card
+        style={{
+          display: 'block',
+          padding: 2,
+          marginTop: 2
+        }}
+      >
         <form onSubmit={handleSubmit}>
-          <FormControl>
+          <FormControl fullWidth={true}>
             <TextField
               style={{ marginBottom: 20 }}
               onChange={e => setText(e.target.value)}
-              label='reply to ....'
+              label={`Reply to ${user.username}`}
               variant='outlined'
               type='text'
               disableElevation={true}
@@ -75,6 +83,8 @@ export default function CreateReply (props) {
           </FormControl>
         </form>
       </Card>
-    </Container>
+    </>
   )
 }
+
+// {/* <button onClick={() => console.log(post)}>log post</button> */}

@@ -8,7 +8,6 @@ import {
   TextField
 } from '@material-ui/core'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
-
 import UserContext from '../context/UserContext'
 
 export default function CreatePost () {
@@ -17,9 +16,9 @@ export default function CreatePost () {
   const [description, setDescription] = useState([])
   const api = `http://localhost:8000/api/posts/${userId}`
 
-  const refreshPage = () => {
-    window.location.reload()
-  }
+  // const refreshPage = () => {
+  //   window.location.reload()
+  // }
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -32,7 +31,7 @@ export default function CreatePost () {
         .post(api, newPost)
         .then(response => {
           console.log(response)
-          refreshPage()
+          // refreshPage()
         })
         .catch(error => {
           console.log(`Axios error: `, error)
@@ -41,7 +40,6 @@ export default function CreatePost () {
       throw new Error(error)
     }
   }
-
   return (
     <Container>
       <Card>

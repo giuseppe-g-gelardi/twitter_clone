@@ -17,9 +17,10 @@ export default function CommentCard (props) {
 
   const likeIcons = (
     <IconButton onClick={() => likeUnlike(post._id)}>
-      {post.likes.length 
-      ? (<FavoriteIcon fontSize='small' color='primary' />) 
-      : (<FavoriteBorderIcon fontSize='small' color='primary' />
+      {post.likes.length ? (
+        <FavoriteIcon fontSize='small' color='primary' />
+      ) : (
+        <FavoriteBorderIcon fontSize='small' color='primary' />
       )}
 
       {post.likes.length ? post.likes.length : null}
