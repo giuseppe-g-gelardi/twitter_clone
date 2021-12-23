@@ -37,6 +37,11 @@ export default function Profile() {
     <div>
       <h1>Profile page test...</h1>
       <button onClick={() => console.log(user)}>LOG users id for this page</button>
+
+      <h1>hi! im {user.username}</h1>
+      <p>you can call me {user.firstname}</p>
+      <p>i live in {user.location}</p>
+      <h3>bio: {user.bio}</h3>
     </div>
   )
 }
