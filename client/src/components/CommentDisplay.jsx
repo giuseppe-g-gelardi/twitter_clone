@@ -47,14 +47,14 @@ export default function CommentCard (props) {
   // get single user endpoint
   // http://localhost:8000/api/users/61baaa75780cf3e51957bea1
 
-  const getUser = async (userId) => {
-    try {
-      axios
-        .get(`http://localhost:8000/api/users/${userId}`)
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
+  // const getUser = async (userId) => {
+  //   try {
+  //     axios
+  //       .get(`http://localhost:8000/api/users/${userId}`)
+  //   } catch (error) {
+  //     throw new Error(error)
+  //   }
+  // }
 
   const mapReplies = () => {
     replies.map(reply => console.log(reply.user[0]))

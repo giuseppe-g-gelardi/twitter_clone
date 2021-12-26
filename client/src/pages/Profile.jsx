@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import axios from "axios"
 import { useParams } from "react-router-dom"
 import CommentCard from '../components/CommentCard'
 import { Container } from '@material-ui/core'
 
+import UserContext from '../context/UserContext'
+
 export default function Profile() {
   const { userid } = useParams()
   const [user, setUser] = useState({})
+
 
   // http://localhost:8000/api/users/${userId}
   // 61c3877efbe070508dc0d2c0
@@ -39,6 +42,7 @@ export default function Profile() {
     <div>
       <h1>Profile page test...</h1>
       <button onClick={() => console.log(user)}>LOG users id for this page</button>
+      <button onClick={() => console.log(userid)}>LOG somgthing </button>
 
       <h1>hi! im {user.username}</h1>
       <p>you can call me {user.firstname}</p>

@@ -3,7 +3,6 @@ import axios from 'axios'
 import {
   Button,
   Card,
-  Container,
   FormControl,
   TextField
 } from '@material-ui/core'
@@ -19,18 +18,6 @@ export default function CreateReply (props) {
 
   const api = `http://localhost:8000/api/posts/${userId}/posts/${post._id}/replies`
 
-  // const refreshPage = () => {
-  //   window.location.reload()
-  // }
-
-  const getReplies = async () => {
-    try {
-      await axios.get(api)
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
-
   const handleSubmit = async e => {
     e.preventDefault()
 
@@ -39,10 +26,8 @@ export default function CreateReply (props) {
       user: user._id
     }
     try {
-      await axios
-        .post(api, newReply)
-        setReplies([...replies, newReply])
-
+      await axios.post(api, newReply)
+      setReplies([...replies, newReply])
     } catch (error) {
       throw new Error(error)
     }

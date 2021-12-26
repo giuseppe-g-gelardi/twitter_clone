@@ -16,6 +16,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Settings from './pages/Settings'
 import Profile from './pages/Profile'
+import UserProfile from './components/UserProfile'
 
 export default function App () {
   const auth = useAuth()
@@ -41,6 +42,11 @@ export default function App () {
               <Route path='/' element={<Home />}>
                 <Route path='/:userid' element={<Profile />} />
               </Route>
+
+              <Route path='/users' element={<UserProfile />}>
+                <Route path='/users/:id' element={<UserProfile />} />
+              </Route>
+
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
               <Route path='/settings' element={<Settings />} />
