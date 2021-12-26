@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import { ThemeProvider, StylesProvider } from '@material-ui/core'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-// import { darkTheme, lightTheme as theme } from './components/theme/Theme'
+// import { darkTheme, lightTheme } from './components/theme/Theme'
 import { lightTheme as theme } from './components/theme/Theme'
 import { UserProvider, useAuth } from './context/UserContext'
 // import Routing from './components/Routing'
@@ -58,5 +58,4 @@ export default function App () {
     </UserProvider>
   )
 }
-// TODO update this to use username instead of id
-// <Route path='/:username' element={<Profile />} />
+

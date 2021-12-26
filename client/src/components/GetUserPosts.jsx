@@ -22,16 +22,6 @@ export default function GetUserPosts () {
     }
   }
 
-  const getSinglePost = async postId => {
-    try {
-      await axios
-        .get(`http://localhost:8000/api/posts/${user._id}/posts/${postId}`)
-        .then(response => `${setDisplayPost(postId)}${setDisplaySinglePost(true)}`)
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
-
   const likeUnlike = async postId => {
     let update = {
       userId: user._id
@@ -145,3 +135,12 @@ export default function GetUserPosts () {
   //   }
   // }
               // deletePost={deletePost}
+  // const getSinglePost = async postId => {
+  //   try {
+  //     await axios
+  //       .get(`http://localhost:8000/api/posts/${user._id}/posts/${postId}`)
+  //       .then(response => `${setDisplayPost(postId)}${setDisplaySinglePost(true)}`)
+  //   } catch (error) {
+  //     throw new Error(error)
+  //   }
+  // }

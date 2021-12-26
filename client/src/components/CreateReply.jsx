@@ -11,12 +11,12 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import UserContext from '../context/UserContext'
 
 export default function CreateReply (props) {
-  const { post, replies, setReplies } = props
+  const { post, replies, setReplies, userProfile } = props
   const { user } = useContext(UserContext)
   const userId = user._id
   const [text, setText] = useState('')
 
-  const api = `http://localhost:8000/api/posts/${userId}/posts/${post._id}/replies`
+  const api = `http://localhost:8000/api/posts/${userProfile._id}/posts/${post._id}/replies`
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -49,7 +49,7 @@ export default function CreateReply (props) {
             <TextField
               style={{ marginBottom: 20 }}
               onChange={e => setText(e.target.value)}
-              label={`Reply to ${user.username}`}
+              label={`Reply to ${userProfile.username}`}
               variant='outlined'
               type='text'
               disableElevation={true}

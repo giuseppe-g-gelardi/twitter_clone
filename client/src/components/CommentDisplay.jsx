@@ -16,7 +16,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import CreateReply from './CreateReply'
 
-export default function CommentCard (props) {
+export default function CommentDisplay (props) {
   const { user, post, setDisplaySinglePost, likeUnlike } = props
   const [replies, setReplies] = useState([])
 
@@ -108,7 +108,7 @@ export default function CommentCard (props) {
         </CardContent>
       </Card>
       <Container>
-        <CreateReply post={post} replies={replies} setReplies={setReplies} />
+        <CreateReply userProfile={user} post={post} replies={replies} setReplies={setReplies} />
       </Container>
         {replies.length > 0 ? (
         replies.map(reply => (

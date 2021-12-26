@@ -33,7 +33,7 @@ router.post('/register', async (req, res) => {
   }
 }) 
 
-// update user
+// ! update user
 router.put('/:id', async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
     if (req.body.password) {
@@ -57,7 +57,7 @@ router.put('/:id', async (req, res) => {
   }
 })
 
-// delete user
+// ! delete user
 // router.delete('/:id', async (req, res) => {
 //   if (req.body.userId === req.params.id || req.body.isAdmin) {
 //     try {
@@ -86,7 +86,7 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
-// get single user
+// ! get single user
 router.get('/:id', async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
@@ -99,7 +99,7 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-// get all users
+// ! get all users
 router.get('/', async (req, res) => {
   try {
     const users = await User.find()
@@ -109,7 +109,7 @@ router.get('/', async (req, res) => {
   }
 })
 
-//follow a user
+// ! follow a user
 router.put("/:id/follow", async (req, res) => {
   if (req.body.userId !== req.params.id) {
     try {
@@ -130,7 +130,7 @@ router.put("/:id/follow", async (req, res) => {
   }
 });
 
-//unfollow a user
+// ! unfollow a user
 router.put("/:id/unfollow", async (req, res) => {
   if (req.body.userId !== req.params.id) {
     try {
