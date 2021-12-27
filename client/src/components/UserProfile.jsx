@@ -18,7 +18,8 @@ export default function UserProfile() {
 
   // TODO
   // TODO verify create reply is working
-  // TODO find out why likes arent happening live // ! LIKES HAPPENING LIVE!!
+  // TODO fix single comment view infinite rerender
+  // // ! find out why likes arent happening live // ! LIKES HAPPENING LIVE!!
   // TODO consolidate comment card and comment display into one component
   // TODO start getting rid of unused/unnecessary components
   // TODO this replaces "profile," go through and get rid of whatever isnt needed
@@ -69,14 +70,10 @@ export default function UserProfile() {
 
   return (
     <div>
-
-      
-
       <h1>You are viewing another users profile</h1>
       <button onClick={() => console.log(userProfile)}>log user</button>
       <button onClick={() => console.log(user)}>logged in user</button>
       <h3>You are viewing {userProfile?.username}'s profile</h3>
-
       <>
       {displaySinglePost ? (
         <>
@@ -108,18 +105,7 @@ export default function UserProfile() {
         </Container>
       )}
     </>
-      {/* {posts && (
-        posts.map(post => (
-          <CommentCard
-            key={post._id}
-            user={userProfile}
-            post={post}
-            likeUnlike={likeUnlike}
-            setDisplaySinglePost={setDisplaySinglePost}
-            setDisplayPost={setDisplayPost}
-          />
-        ))
-      )} */}
+
     </div>
   )
 }
@@ -135,3 +121,15 @@ likeUnlike={likeUnlike}
 {/* <ul key={post._id}>
 <li>{post.description}</li>
 </ul> */}
+      {/* {posts && (
+        posts.map(post => (
+          <CommentCard
+            key={post._id}
+            user={userProfile}
+            post={post}
+            likeUnlike={likeUnlike}
+            setDisplaySinglePost={setDisplaySinglePost}
+            setDisplayPost={setDisplayPost}
+          />
+        ))
+      )} */}
