@@ -13,11 +13,12 @@ export default function UserProfile() {
   const [posts, setPosts] = useState([])
   const [displaySinglePost, setDisplaySinglePost] = useState(false)
   const [displayPost, setDisplayPost] = useState('')
+  const [likes, setLikes] = useState([])
 
 
   // TODO
   // TODO verify create reply is working
-  // TODO find out why likes arent happening live
+  // TODO find out why likes arent happening live // ! LIKES HAPPENING LIVE!!
   // TODO consolidate comment card and comment display into one component
   // TODO start getting rid of unused/unnecessary components
   // TODO this replaces "profile," go through and get rid of whatever isnt needed
@@ -25,46 +26,41 @@ export default function UserProfile() {
   // TODO 
 
   const { id } = useParams()
-  // 61baaced780cf3e51957becb // user@email.com's user._id
+  // 61baaced780cf3e51957becb // seppe / user@email.com's user._id
   const api = `http://localhost:8000/api/users/${id}`
 
-  useEffect(() => getUser(), [id])
-  useEffect(() => getPosts(), [userProfile])
-
+  useEffect(() => getUser(), [userProfile])
+  useEffect(() => getPosts(), [likes])
+  
   const getUser = async () => {
     try {
-
+      
       await axios
-        .get(api)
-        .then((response) => setUserProfile(response.data))
-        
-
-
+      .get(api)
+      .then((response) => setUserProfile(response.data))
     } catch (error) {
       throw new Error(error)
     }
   }
-
+  
   const getPosts = async () => {
     try {
       await axios
-        .get(`http://localhost:8000/api/posts/${id}/posts`)
-        .then(response => setPosts(response.data))
-        console.log(posts)
+      .get(`http://localhost:8000/api/posts/${id}/posts`)
+      .then(response => setPosts(response.data))
+      console.log(posts)
     } catch (error) {
       throw new Error(error)
     }
   }
-
+  
   const likeUnlike = async postId => {
-    let update = {
+    let newLike = {
       userId: user._id
     }
     try {
-      await axios.put(
-        `http://localhost:8000/api/posts/${userProfile._id}/posts/${postId}/likes`,
-        update
-      )
+      await axios.put(`http://localhost:8000/api/posts/${userProfile._id}/posts/${postId}/likes`, newLike)
+      .then(response => `${setLikes([...likes, newLike, response.data])}${console.log(response.data)}`)
     } catch (error) {
       throw new Error(error)
     }
@@ -79,7 +75,7 @@ export default function UserProfile() {
       <h1>You are viewing another users profile</h1>
       <button onClick={() => console.log(userProfile)}>log user</button>
       <button onClick={() => console.log(user)}>logged in user</button>
-      <h3>You are user {userProfile?.username}'s profile</h3>
+      <h3>You are viewing {userProfile?.username}'s profile</h3>
 
       <>
       {displaySinglePost ? (
