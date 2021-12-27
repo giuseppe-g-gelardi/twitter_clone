@@ -1,5 +1,5 @@
-// import { useEffect, useContext } from 'react'
 import { useEffect } from 'react'
+// import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { ThemeProvider, StylesProvider } from '@material-ui/core'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -7,7 +7,6 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 // import { darkTheme, lightTheme } from './components/theme/Theme'
 import { lightTheme as theme } from './components/theme/Theme'
 import { UserProvider, useAuth } from './context/UserContext'
-// import Routing from './components/Routing'
 
 import Layout from './components/Layout'
 import Home from './pages/Home'
@@ -20,9 +19,12 @@ import UserProfile from './components/UserProfile'
 
 export default function App () {
   const auth = useAuth()
+  
   // const [darkMode, setDarkMode] = useState(false)
   // const [isAuth, setIsAuth] = useState(false)
   // const theme = darkMode ? darkTheme : lightTheme
+
+  
 
   const checkAuth = () => {
     console.log('is Auth: ', auth)
