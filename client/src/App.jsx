@@ -48,6 +48,8 @@ export default function App () {
 
               <Route path='/users' element={<UserProfile />}>
                 <Route path='/users/:id' element={<UserProfile />} />
+                {/* single post route */}
+                {/* /users/:id/post/:postid */}
               </Route>
 
               <Route path='/login' element={<Login />} />

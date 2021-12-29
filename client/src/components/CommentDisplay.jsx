@@ -7,7 +7,8 @@ import {
   IconButton,
   CardActionArea,
   CardContent,
-  Container
+  Container,
+  Typography
 } from '@material-ui/core'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
@@ -15,10 +16,14 @@ import CommentIcon from '@mui/icons-material/Comment'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import CreateReply from './CreateReply'
+import moment from 'moment'
 
 export default function CommentDisplay (props) {
   const { user, post, setDisplaySinglePost, likeUnlike } = props
   const [replies, setReplies] = useState([])
+  const timestamp = post.createdAt
+  const posttime = moment(timestamp).fromNow()
+
 
   const likeIcons = (
     <IconButton onClick={() => likeUnlike(post._id)}>
@@ -44,31 +49,13 @@ export default function CommentDisplay (props) {
       console.log(err)
     }
   }
-  // get single user endpoint
-  // http://localhost:8000/api/users/61baaa75780cf3e51957bea1
 
-  // const getUser = async (userId) => {
-  //   try {
-  //     axios
-  //       .get(`http://localhost:8000/api/users/${userId}`)
-  //   } catch (error) {
-  //     throw new Error(error)
-  //   }
-  // }
-
-  // const mapReplies = () => {
-  //   replies.map(reply => console.log(reply.user[0]))
-  // }
-
-  useEffect(() => {
-    getReplies()
-  }, [])
+  useEffect(() => {getReplies()}, [])
 
   return (
     <>
 
       <button onClick={() => getReplies()}>getReplies()</button>
-      {/* <button onClick={() => mapReplies()}>mapReplies()</button> */}
       <Card key={post._id} style={{ padding: 2, marginTop: 2, width: '100%' }}>
         <CardHeader
           key={post._id}
@@ -93,6 +80,12 @@ export default function CommentDisplay (props) {
             marginTop: '-25px'
           }}
           >
+                    <Typography>
+{user.username} <br />
+{post.description} <br />
+{posttime}
+
+        </Typography>
           {likeIcons}
           <IconButton>
             <CardActionArea onClick={() => `${setDisplaySinglePost(false)}`}>
