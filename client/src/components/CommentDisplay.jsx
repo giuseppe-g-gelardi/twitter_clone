@@ -38,7 +38,7 @@ export default function CommentDisplay (props) {
         .get(
           `http://localhost:8000/api/posts/${user._id}/posts/${post._id}/replies`
         )
-        .then(response => setReplies(response.data))
+        .then(response => setReplies(response.data, ...replies))
       console.log(replies)
     } catch (err) {
       console.log(err)
@@ -56,19 +56,19 @@ export default function CommentDisplay (props) {
   //   }
   // }
 
-  const mapReplies = () => {
-    replies.map(reply => console.log(reply.user[0]))
-  }
+  // const mapReplies = () => {
+  //   replies.map(reply => console.log(reply.user[0]))
+  // }
 
   useEffect(() => {
     getReplies()
-  }, [user])
+  }, [])
 
   return (
     <>
 
       <button onClick={() => getReplies()}>getReplies()</button>
-      <button onClick={() => mapReplies()}>mapReplies()</button>
+      {/* <button onClick={() => mapReplies()}>mapReplies()</button> */}
       <Card key={post._id} style={{ padding: 2, marginTop: 2, width: '100%' }}>
         <CardHeader
           key={post._id}

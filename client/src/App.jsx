@@ -16,6 +16,7 @@ import Register from './pages/Register'
 import Settings from './pages/Settings'
 import Profile from './pages/Profile'
 import UserProfile from './components/UserProfile'
+import './globals.css'
 
 export default function App () {
   const auth = useAuth()

@@ -13,7 +13,6 @@ import UserContext from '../context/UserContext'
 export default function CreateReply (props) {
   const { post, replies, setReplies, userProfile } = props
   const { user } = useContext(UserContext)
-  const userId = user._id
   const [text, setText] = useState('')
 
   const api = `http://localhost:8000/api/posts/${userProfile._id}/posts/${post._id}/replies`
@@ -33,7 +32,7 @@ export default function CreateReply (props) {
     }
   }
 
-  useEffect(() => console.log('refresh'), [])
+  // useEffect(() => console.log('refresh'), [])
 
   return (
     <>

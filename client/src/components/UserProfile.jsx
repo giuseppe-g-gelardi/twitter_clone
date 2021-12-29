@@ -15,8 +15,11 @@ export default function UserProfile() {
   const [displayPost, setDisplayPost] = useState('')
   const [likes, setLikes] = useState([])
 
+  const { id } = useParams()
+  const api = `http://localhost:8000/api/users/${id}`
+  // 61baaced780cf3e51957becb // seppe / user@email.com's user._id
 
-  // TODO
+    // TODO
   // TODO verify create reply is working
   // TODO fix single comment view infinite rerender
   // // ! find out why likes arent happening live // ! LIKES HAPPENING LIVE!!
@@ -25,10 +28,6 @@ export default function UserProfile() {
   // TODO this replaces "profile," go through and get rid of whatever isnt needed
   // TODO keep doing great things
   // TODO 
-
-  const { id } = useParams()
-  // 61baaced780cf3e51957becb // seppe / user@email.com's user._id
-  const api = `http://localhost:8000/api/users/${id}`
 
   useEffect(() => getUser(), [userProfile])
   useEffect(() => getPosts(), [likes])
@@ -49,7 +48,7 @@ export default function UserProfile() {
       await axios
       .get(`http://localhost:8000/api/posts/${id}/posts`)
       .then(response => setPosts(response.data))
-      console.log(posts)
+      // console.log(posts)
     } catch (error) {
       throw new Error(error)
     }
@@ -61,7 +60,7 @@ export default function UserProfile() {
     }
     try {
       await axios.put(`http://localhost:8000/api/posts/${userProfile._id}/posts/${postId}/likes`, newLike)
-      .then(response => `${setLikes([...likes, newLike, response.data])}${console.log(response.data)}`)
+      .then(response => setLikes([...likes, newLike, response.data]))
     } catch (error) {
       throw new Error(error)
     }
