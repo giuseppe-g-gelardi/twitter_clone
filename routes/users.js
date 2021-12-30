@@ -109,6 +109,8 @@ router.get('/', async (req, res) => {
   }
 })
 
+// TODO set up follow/unfollow in one route similar to like/unlike
+
 // ! follow a user
 router.put("/:id/follow", async (req, res) => {
   if (req.body.userId !== req.params.id) {

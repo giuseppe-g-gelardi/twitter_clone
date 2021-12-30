@@ -16,6 +16,7 @@ import Register from './pages/Register'
 import Settings from './pages/Settings'
 import Profile from './pages/Profile'
 import UserProfile from './components/UserProfile'
+import SinglePost from './components/SinglePost'
 import './globals.css'
 
 export default function App () {
@@ -46,10 +47,10 @@ export default function App () {
                 <Route path='/:userid' element={<Profile />} />
               </Route>
 
-              <Route path='/users' element={<UserProfile />}>
-                <Route path='/users/:id' element={<UserProfile />} />
-                {/* single post route */}
-                {/* /users/:id/post/:postid */}
+              <Route path='/users' element={<SinglePost />}>
+                {/* <Route path='/users/:id' element={<UserProfile />} /> */}
+                <Route path='/users/:id/posts/:postid' element={<SinglePost />} />
+
               </Route>
 
               <Route path='/login' element={<Login />} />

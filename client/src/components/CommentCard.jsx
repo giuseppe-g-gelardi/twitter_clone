@@ -60,7 +60,7 @@ export default function CommentCard (props) {
 {posttime}
 
         </Typography>
-        {/* <button onClick={() => console.log(user._id, post._id)}>log post</button> */}
+        <button onClick={() => console.log(user._id, post._id)}>log post</button>
         {likeIcons}
         <IconButton>
           <CardActionArea
