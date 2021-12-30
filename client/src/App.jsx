@@ -21,12 +21,10 @@ import './globals.css'
 
 export default function App () {
   const auth = useAuth()
-  
+
   // const [darkMode, setDarkMode] = useState(false)
   // const [isAuth, setIsAuth] = useState(false)
   // const theme = darkMode ? darkTheme : lightTheme
-
-  
 
   const checkAuth = () => {
     console.log('is Auth: ', auth)
@@ -47,10 +45,9 @@ export default function App () {
                 <Route path='/:userid' element={<Profile />} />
               </Route>
 
-              <Route path='/users' element={<SinglePost />}>
-                {/* <Route path='/users/:id' element={<UserProfile />} /> */}
-                <Route path='/users/:id/posts/:postid' element={<SinglePost />} />
-
+              <Route path='/users' element={<UserProfile />}>
+                <Route path='/users/:id' element={<UserProfile />} />
+                {/* <Route path='/users/:id/posts/:postid' element={<SinglePost />} /> */}
               </Route>
 
               <Route path='/login' element={<Login />} />
@@ -64,4 +61,3 @@ export default function App () {
     </UserProvider>
   )
 }
-
