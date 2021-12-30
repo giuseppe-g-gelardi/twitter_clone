@@ -43,8 +43,6 @@ export default function CommentCard (props) {
             <MoreVertIcon />
           </IconButton>
         }
-        // title={user.username}
-        // subheader={`${post.description} ${post.createdAt}`}
       />
       <CardContent
         style={{

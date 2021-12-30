@@ -6,10 +6,21 @@ import Nav from './Nav'
 export default function Layout ({ children }) {
 
   return (
-    <Container>
-      <Nav /> 
-      <Container className='container'>{children}</Container>
-    </Container>
+
+    <div className='layout'>
+    <Nav /> 
+
+      <div className='sidebar-left'>
+
+      </div>
+      <div className='main-content'>
+      {children}
+      </div>
+      <div className='sidebar-right'>
+
+      </div>
+
+    </div>
 
   )
 }
