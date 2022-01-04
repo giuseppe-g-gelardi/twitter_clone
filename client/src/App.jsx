@@ -16,7 +16,7 @@ import Register from './pages/Register'
 import Settings from './pages/Settings'
 import Profile from './pages/Profile'
 import UserProfile from './components/UserProfile'
-import SinglePost from './components/SinglePost'
+import PrivateRoute from './components/PrivateRoute'
 import './globals.css'
 
 export default function App () {
@@ -41,18 +41,51 @@ export default function App () {
           <CssBaseline />
           <Layout>
             <Routes>
-              <Route path='/' element={<Home />}>
-                <Route path='/:userid' element={<Profile />} />
+              <Route
+                path='/'
+                element={
+                  <PrivateRoute>
+                    <Home />
+                  </PrivateRoute>
+                }
+              >
+                <Route
+                  path='/:userid'
+                  element={
+                    <PrivateRoute>
+                      <Profile />
+                    </PrivateRoute>
+                  }
+                />
               </Route>
-
-              <Route path='/users' element={<UserProfile />}>
-                <Route path='/users/:id' element={<UserProfile />} />
-                {/* <Route path='/users/:id/posts/:postid' element={<SinglePost />} /> */}
+              <Route
+                path='/users'
+                element={
+                  <PrivateRoute>
+                    <UserProfile />
+                  </PrivateRoute>
+                }
+              >
+                <Route
+                  path='/users/:id'
+                  element={
+                    <PrivateRoute>
+                      <UserProfile />
+                    </PrivateRoute>
+                  }
+                />
               </Route>
-
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
-              <Route path='/settings' element={<Settings />} />
+
+              <Route
+                path='/settings'
+                element={
+                  <PrivateRoute>
+                    <Settings />
+                  </PrivateRoute>
+                }
+              />
               <Route path='*' element={<Error />} />
             </Routes>
           </Layout>
@@ -61,3 +94,10 @@ export default function App () {
     </UserProvider>
   )
 }
+
+// {/* <Route path='/users' element={<UserProfile />}>
+//       <Route path='/users/:userid' element={<UserProfile />} />
+//     </Route> */}
+//         {/* <Route path='/users/:id/posts' element={<UserProfile />}>
+//           <Route path='/users/:id/posts/:postid' element={<SinglePost />} />
+//         </Route> */}

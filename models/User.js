@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema({
   isAdmin: { type: Boolean, default: false },
   isVerified: { type: Boolean, default: false },
   posts: { type: [ postSchema ], default: [] },
+  notifications: { type: Array, default: [] },
   theme: { type: String, default: 'light'},
   createdAt: { type: String }
 }, {timestamps: true})
