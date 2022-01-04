@@ -11,13 +11,14 @@ export default function Layout ({ children }) {
     <Nav /> 
 
       <div className='sidebar-left'>
-
+      {/* sidebar navigation */}
       </div>
       <div className='main-content'>
       {children}
       </div>
       <div className='sidebar-right'>
-
+      {/* 3 random users to follow */}
+      {/* search filter for all users */}
       </div>
 
     </div>
