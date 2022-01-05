@@ -1,6 +1,5 @@
-import { Container } from '@material-ui/core'
 import '../Layout.css'
-import Nav from './Nav'
+// import Nav from './Nav'
 import Sidebar from './Sidebar'
 import Widgets from '../Widgets'
 

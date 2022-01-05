@@ -1,5 +1,3 @@
-import React from 'react'
-// import "./Post.css"
 import { 
   Avatar,
   IconButton

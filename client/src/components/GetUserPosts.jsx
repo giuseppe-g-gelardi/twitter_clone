@@ -7,6 +7,7 @@ import CommentCard from './CommentCard'
 import CommentDisplay from './CommentDisplay'
 
 import Post from './Post'
+import SinglePost from './SinglePost'
 
 export default function GetUserPosts () {
   const { user } = useContext(UserContext)
@@ -44,8 +45,8 @@ export default function GetUserPosts () {
     <>
       {displaySinglePost ? (
         <>
-          <Button onClick={() => setDisplaySinglePost(false)}>Go Back</Button>
-          <Button onClick={() => console.log(displayPost)}>Log Post</Button>
+          {/* <Button onClick={() => setDisplaySinglePost(false)}>Go Back</Button> */}
+          {/* <Button onClick={() => console.log(displayPost)}>Log Post</Button> */}
           {/* <Container>
             <CommentDisplay
               key={user._id}
@@ -56,15 +57,15 @@ export default function GetUserPosts () {
             />
           </Container> */}
 
-          <Container>
-            <Post
-              key={user._id}
-              user={user}
-              post={displayPost}
-              setDisplaySinglePost={setDisplaySinglePost}
-              likeUnlike={likeUnlike}
-            />
-          </Container>
+          {/* <> */}
+          <SinglePost
+            key={user._id}
+            user={user}
+            post={displayPost}
+            setDisplaySinglePost={setDisplaySinglePost}
+            likeUnlike={likeUnlike}
+          />
+          {/* </> */}
         </>
       ) : (
         <>

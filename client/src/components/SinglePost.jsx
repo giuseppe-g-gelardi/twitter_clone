@@ -1,140 +1,119 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
-
-import {
-  Card,
-  CardHeader,
-  Avatar,
-  IconButton,
-  CardActionArea,
-  CardContent,
-  Typography,
-  Container
-} from '@material-ui/core'
+import { Avatar, Button, IconButton } from '@material-ui/core'
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
+import RepeatIcon from '@material-ui/icons/Repeat'
+import PublishIcon from '@material-ui/icons/Publish'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-import CommentIcon from '@mui/icons-material/Comment'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import moment from 'moment'
+import CreateReply from './CreateReply'
 
-export default function SinglePost () {
-  const [post, setPost] = useState()
-  const [likes, setLikes] = useState([])
-  const { id } = useParams()
-  const { postid } = useParams()
-  const [user, setUser] = useState([])
-  const api = `http://localhost:8000/api/posts/${id}/posts/${postid}`
-  // user._id: 61baaced780cf3e51957becb
-  // post._id: 61bf9421edeffdd6a70738a6
-
+export default function SinglePost (props) {
+  const { user, post, setDisplaySinglePost, likeUnlike } = props
+  const [replies, setReplies] = useState([])
   const timestamp = post.createdAt
   const posttime = moment(timestamp).fromNow()
 
-  useEffect(() => getPost(), [])
-  useEffect(() => getUser(), [])
-
-  const getPost = async () => {
-    try {
-      await axios.get(api).then(response => setPost(response.data))
-    } catch (error) {
-      throw new Error(error, 'Something went wrong, I think... lol')
-    }
-  }
-
-  const getUser = async () => {
-    try {
-      await axios
-        .get(`http://localhost:8000/api/users/${id}`)
-        .then(
-          response => `${setUser(response.data)}${console.log(response.data)}`
-        )
-    } catch (error) {
-      throw new Error(error, 'Something went wrong, I think... lol')
-    }
-  }
-
-  const likeUnlike = async () => {
-    let newLike = {
-      userId: user._id
-    }
-    try {
-      await axios
-        .put(`${api}/likes`, newLike)
-        .then(response => setLikes([...likes, newLike, response.data]))
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
-
   const likeIcons = (
     <IconButton onClick={() => likeUnlike(post._id)}>
-      {post.likes?.length ? (
+      {post.likes.length ? (
         <FavoriteIcon fontSize='small' color='primary' />
       ) : (
         <FavoriteBorderIcon fontSize='small' color='primary' />
       )}
 
-      {post.likes?.length ? post.likes?.length : null}
+      {post.likes.length ? post.likes.length : null}
     </IconButton>
   )
 
+  const getReplies = async () => {
+    try {
+      axios
+        .get(
+          `http://localhost:8000/api/posts/${user._id}/posts/${post._id}/replies`
+        )
+        .then(response => setReplies(response.data, ...replies))
+      console.log(replies)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    getReplies()
+  }, [])
+
   return (
-    <div>
-      <h1>single post view!</h1>
-      {/* <h2>{post[0].description}</h2> */}
-      <button onClick={() => console.log(post[0].description)}>
-        post text
-      </button>
-      <button onClick={() => console.log(post[0])}>post object</button>
-      <button onClick={() => console.log(post[0].likes)}>post likes?</button>
-      <button onClick={() => console.log(user)}>user object</button>
+    <>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          borderBottom: '1px solid grey',
+          paddingBottom: '10px'
+        }}
+      >
+        <div style={{ padding: '20px' }}>
+          <Avatar src={user.profilePicture} />
+        </div>
+        <div style={{ flex: '1', padding: '10px' }}>
+          <div className='post__header'>
+            <div style={{ fontSize: '15px', marginBottom: '5px' }}>
+              <h3>
+                {user.username}{' '}
+                <span
+                  style={{ fontWeight: '600', fontSize: '12px', color: 'gray' }}
+                >
+                  {user.isVerified && (
+                    <VerifiedUserIcon
+                      className='post__badge'
+                      style={{ fontSize: '14px', color: 'blueviolet' }}
+                    />
+                  )}
+                  @{user.username} {posttime}
+                </span>
+              </h3>
+            </div>
+            <div style={{ marginBottom: '10px', fontSize: '15px' }}>
+              <p>{post.description}</p>
+            </div>
+          </div>
 
-      <Container>
-        <Card style={{ padding: 2, marginTop: 2, width: '100%' }}>
-          <CardHeader
-            avatar={
-              <Avatar alt='/images/profilePicture' src={user.profilePicture} />
-            }
-            action={
-              <IconButton>
-                <MoreVertIcon />
-              </IconButton>
-            }
-          />
-
-          <CardContent
+          <div
             style={{
               display: 'flex',
               justifyContent: 'space-between',
-              marginLeft: '20%',
-              marginRight: '20%',
-              marginBottom: '-25px',
-              marginTop: '-25px'
+              marginTop: '10px'
             }}
           >
-            <Typography>
-              {user.username} <br />
-              {post.description} <br />
-              {posttime}
-            </Typography>
-            {/* <button onClick={() => console.log(user._id, post._id)}>
-              log post
-            </button> */}
+            <IconButton onClick={() => `${setDisplaySinglePost(false)}`}>
+              <ChatBubbleOutlineIcon fontSize='small' />
+            </IconButton>
+            <RepeatIcon fontSize='small' />
             {likeIcons}
-            <IconButton>
-              <CardActionArea onClick={() => console.log(post._id)}>
-                <ExpandMoreIcon />
-              </CardActionArea>
-            </IconButton>
-            <IconButton>
-              <CommentIcon fontSize='small' />
-              replies here
-            </IconButton>
-          </CardContent>
-        </Card>
-      </Container>
-    </div>
+            <PublishIcon fontSize='small' />
+          </div>
+        </div>
+      </div>
+      <div>
+        <CreateReply
+          userProfile={user}
+          post={post}
+          replies={replies}
+          setReplies={setReplies}
+        />
+      </div>
+      {replies.length > 0
+        ? replies.map(reply => (
+            <ul key={reply._id}>
+              <li>
+                {reply.user[0]} says: {reply.text}
+              </li>
+            </ul>
+          ))
+        : null}
+    </>
   )
 }

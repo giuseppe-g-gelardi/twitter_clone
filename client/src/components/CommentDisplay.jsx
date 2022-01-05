@@ -24,7 +24,6 @@ export default function CommentDisplay (props) {
   const timestamp = post.createdAt
   const posttime = moment(timestamp).fromNow()
 
-
   const likeIcons = (
     <IconButton onClick={() => likeUnlike(post._id)}>
       {post.likes.length ? (
@@ -50,11 +49,12 @@ export default function CommentDisplay (props) {
     }
   }
 
-  useEffect(() => {getReplies()}, [])
+  useEffect(() => {
+    getReplies()
+  }, [])
 
   return (
     <>
-
       {/* <button onClick={() => getReplies()}>getReplies()</button> */}
       <Card key={post._id} style={{ padding: 2, marginTop: 2, width: '100%' }}>
         <CardHeader
@@ -69,7 +69,7 @@ export default function CommentDisplay (props) {
           }
           title={user.username}
           subheader={post.description}
-          />
+        />
         <CardContent
           style={{
             display: 'flex',
@@ -79,13 +79,12 @@ export default function CommentDisplay (props) {
             marginBottom: '-25px',
             marginTop: '-25px'
           }}
-          >
-                    <Typography>
-{user.username} <br />
-{post.description} <br />
-{posttime}
-
-        </Typography>
+        >
+          <Typography>
+            {user.username} <br />
+            {post.description} <br />
+            {posttime}
+          </Typography>
           {likeIcons}
           <IconButton>
             <CardActionArea onClick={() => `${setDisplaySinglePost(false)}`}>
@@ -94,23 +93,29 @@ export default function CommentDisplay (props) {
           </IconButton>
           <IconButton
             onClick={() => post.replies.map(reply => console.log(reply))}
-            >
+          >
             <CommentIcon fontSize='small' />
             {post.replies.length ? post.replies.length : null}
           </IconButton>
         </CardContent>
       </Card>
       <Container>
-        <CreateReply userProfile={user} post={post} replies={replies} setReplies={setReplies} />
+        <CreateReply
+          userProfile={user}
+          post={post}
+          replies={replies}
+          setReplies={setReplies}
+        />
       </Container>
-        {replies.length > 0 ? (
-        replies.map(reply => (
-          <ul key={reply._id}>
-            <li>{reply.user[0]} says: {reply.text}</li>
-          </ul>
-        ))
-        
-        ) : null}
+      {replies.length > 0
+        ? replies.map(reply => (
+            <ul key={reply._id}>
+              <li>
+                {reply.user[0]} says: {reply.text}
+              </li>
+            </ul>
+          ))
+        : null}
     </>
   )
 }
