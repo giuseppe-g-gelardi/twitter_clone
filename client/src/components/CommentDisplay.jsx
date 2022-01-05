@@ -55,7 +55,7 @@ export default function CommentDisplay (props) {
   return (
     <>
 
-      <button onClick={() => getReplies()}>getReplies()</button>
+      {/* <button onClick={() => getReplies()}>getReplies()</button> */}
       <Card key={post._id} style={{ padding: 2, marginTop: 2, width: '100%' }}>
         <CardHeader
           key={post._id}

@@ -119,9 +119,9 @@ export default function SinglePost () {
               {post.description} <br />
               {posttime}
             </Typography>
-            <button onClick={() => console.log(user._id, post._id)}>
+            {/* <button onClick={() => console.log(user._id, post._id)}>
               log post
-            </button>
+            </button> */}
             {likeIcons}
             <IconButton>
               <CardActionArea onClick={() => console.log(post._id)}>
