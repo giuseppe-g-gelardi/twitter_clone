@@ -42,7 +42,7 @@ export default function Nav() {
           </li>
 
           <li>
-            <Link to='/' onClick={() => localStorage.removeItem('token')}>
+            <Link to='/' onClick={() => `${localStorage.removeItem('token')}${window.location.reload()}`}>
               Logout
             </Link>
           </li>

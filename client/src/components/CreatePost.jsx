@@ -44,13 +44,14 @@ export default function CreatePost () {
 
             <input
               onChange={e => setDescription(e.target.value)}
-              placeholder="What's happening?"
+              placeholder="  What's happening?"
               type='text'
               style={{
                 flex: '1',
                 marginLeft: '20px',
                 fontSize: '20px',
-                border: 'none'
+                border: 'none',
+                borderRadius: '15px'
               }}
             />
           </div>
