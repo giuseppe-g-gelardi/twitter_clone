@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Avatar, Button, IconButton } from '@material-ui/core'
+import { Avatar, IconButton } from '@material-ui/core'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
 import RepeatIcon from '@material-ui/icons/Repeat'
@@ -35,9 +35,9 @@ export default function SinglePost (props) {
           `http://localhost:8000/api/posts/${user._id}/posts/${post._id}/replies`
         )
         .then(response => setReplies(response.data, ...replies))
-      console.log(replies)
-    } catch (err) {
-      console.log(err)
+      // console.log(replies)
+    } catch (error) {
+      throw new Error(error)
     }
   }
 
@@ -61,7 +61,7 @@ export default function SinglePost (props) {
         <div style={{ flex: '1', padding: '10px' }}>
           <div className='post__header'>
             <div style={{ fontSize: '15px', marginBottom: '5px' }}>
-              <h3>
+              <h3 style={{ fontSize: '15px', marginBottom: '5px' }}>
                 {user.username}{' '}
                 <span
                   style={{ fontWeight: '600', fontSize: '12px', color: 'gray' }}
@@ -91,9 +91,15 @@ export default function SinglePost (props) {
             <IconButton onClick={() => `${setDisplaySinglePost(false)}`}>
               <ChatBubbleOutlineIcon fontSize='small' />
             </IconButton>
+            <IconButton>
+
             <RepeatIcon fontSize='small' />
+            </IconButton>
             {likeIcons}
+            <IconButton>
+
             <PublishIcon fontSize='small' />
+            </IconButton>
           </div>
         </div>
       </div>
