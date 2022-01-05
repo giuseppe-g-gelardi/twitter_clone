@@ -1,17 +1,18 @@
 import { Container } from '@material-ui/core'
 import '../Layout.css'
 import Nav from './Nav'
-
+import Sidebar from './Sidebar'
+import Widgets from '../Widgets'
 
 export default function Layout ({ children }) {
 
   return (
 
-    <div className='layout'>
-    <Nav /> 
+    <div style={{ display: 'flex', height: '100vh', maxWidth: '1300px', marginLeft: 'auto', marginRight: 'auto', padding: '10px' }}>
+    {/* <Nav />  */}
 
       <div className='sidebar-left'>
-      {/* sidebar navigation */}
+      <Sidebar />
       </div>
       <div className='main-content'>
       {children}
@@ -19,6 +20,7 @@ export default function Layout ({ children }) {
       <div className='sidebar-right'>
       {/* 3 random users to follow */}
       {/* search filter for all users */}
+      <Widgets />
       </div>
 
     </div>
