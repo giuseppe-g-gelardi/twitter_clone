@@ -6,6 +6,8 @@ import UserContext from '../context/UserContext'
 import CommentCard from './CommentCard'
 import CommentDisplay from './CommentDisplay'
 
+import Post from './Post'
+
 export default function GetUserPosts () {
   const { user } = useContext(UserContext)
   const [posts, setPosts] = useState([])
@@ -32,7 +34,7 @@ export default function GetUserPosts () {
         update
       )
     } catch (error) {
-      throw new Error(error)
+      throw new Error(error.message)
     }
   }
 
@@ -44,8 +46,18 @@ export default function GetUserPosts () {
         <>
           <Button onClick={() => setDisplaySinglePost(false)}>Go Back</Button>
           <Button onClick={() => console.log(displayPost)}>Log Post</Button>
-          <Container>
+          {/* <Container>
             <CommentDisplay
+              key={user._id}
+              user={user}
+              post={displayPost}
+              setDisplaySinglePost={setDisplaySinglePost}
+              likeUnlike={likeUnlike}
+            />
+          </Container> */}
+
+          <Container>
+            <Post
               key={user._id}
               user={user}
               post={displayPost}
@@ -55,19 +67,34 @@ export default function GetUserPosts () {
           </Container>
         </>
       ) : (
-        <Container>
+        <>
+          <>
+            {posts.map(post => (
+              <Post
+                key={post._id}
+                user={user}
+                post={post}
+                setDisplaySinglePost={setDisplaySinglePost}
+                setDisplayPost={setDisplayPost}
+                likeUnlike={likeUnlike}
+              />
+            ))}
+          </>
+
+          {/* <Container>
           <h2>my posts: </h2>
           {posts.map(post => (
             <CommentCard
-              key={post._id}
-              user={user}
-              post={post}
-              setDisplaySinglePost={setDisplaySinglePost}
-              setDisplayPost={setDisplayPost}
-              likeUnlike={likeUnlike}
+            key={post._id}
+            user={user}
+            post={post}
+            setDisplaySinglePost={setDisplaySinglePost}
+            setDisplayPost={setDisplayPost}
+            likeUnlike={likeUnlike}
             />
-          ))}
-        </Container>
+            ))}
+        </Container> */}
+        </>
       )}
     </>
   )
@@ -108,39 +135,38 @@ export default function GetUserPosts () {
 //   }
 // }
 
+// const createPost = async e => {
+//   e.preventDefault()
 
- // const createPost = async e => {
-  //   e.preventDefault()
+//   const newPost = {
+//     description: description
+//   }
 
-  //   const newPost = {
-  //     description: description
-  //   }
-
-  //   try {
-  //     await axios
-  //       .post(`http://localhost:8000/api/posts/${user._id}`, newPost)
-  //       setPosts([...posts, newPost])
-  //   } catch (error) {
-  //     throw new Error(error)
-  //   }
-  // }
-  // const deletePost = async postId => {
-  //   try {
-  //     await axios.delete(
-  //       `http://localhost:8000/api/posts/${user._id}/posts/${postId}`
-  //     )
-  //     getPosts()
-  //   } catch (error) {
-  //     throw new Error(error)
-  //   }
-  // }
-              // deletePost={deletePost}
-  // const getSinglePost = async postId => {
-  //   try {
-  //     await axios
-  //       .get(`http://localhost:8000/api/posts/${user._id}/posts/${postId}`)
-  //       .then(response => `${setDisplayPost(postId)}${setDisplaySinglePost(true)}`)
-  //   } catch (error) {
-  //     throw new Error(error)
-  //   }
-  // }
+//   try {
+//     await axios
+//       .post(`http://localhost:8000/api/posts/${user._id}`, newPost)
+//       setPosts([...posts, newPost])
+//   } catch (error) {
+//     throw new Error(error)
+//   }
+// }
+// const deletePost = async postId => {
+//   try {
+//     await axios.delete(
+//       `http://localhost:8000/api/posts/${user._id}/posts/${postId}`
+//     )
+//     getPosts()
+//   } catch (error) {
+//     throw new Error(error)
+//   }
+// }
+// deletePost={deletePost}
+// const getSinglePost = async postId => {
+//   try {
+//     await axios
+//       .get(`http://localhost:8000/api/posts/${user._id}/posts/${postId}`)
+//       .then(response => `${setDisplayPost(postId)}${setDisplaySinglePost(true)}`)
+//   } catch (error) {
+//     throw new Error(error)
+//   }
+// }
