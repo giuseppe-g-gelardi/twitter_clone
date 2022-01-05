@@ -71,7 +71,7 @@ export default function SinglePost (props) {
                       className='post__badge'
                       style={{ fontSize: '14px', color: 'blueviolet' }}
                     />
-                  )}
+                  )}{' '}
                   @{user.username} {posttime}
                 </span>
               </h3>
@@ -90,15 +90,14 @@ export default function SinglePost (props) {
           >
             <IconButton onClick={() => `${setDisplaySinglePost(false)}`}>
               <ChatBubbleOutlineIcon fontSize='small' />
+              {post.replies.length ? post.replies.length : null}
             </IconButton>
             <IconButton>
-
-            <RepeatIcon fontSize='small' />
+              <RepeatIcon fontSize='small' />
             </IconButton>
             {likeIcons}
             <IconButton>
-
-            <PublishIcon fontSize='small' />
+              <PublishIcon fontSize='small' />
             </IconButton>
           </div>
         </div>

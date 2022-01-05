@@ -49,7 +49,7 @@ export default function Post (props) {
                     className='post__badge'
                     style={{ fontSize: '14px', color: 'blueviolet' }}
                   />
-                )}
+                )}{' '}
                 @{user.username} {posttime}
               </span>
             </h3>
@@ -72,6 +72,7 @@ export default function Post (props) {
             }
           >
             <ChatBubbleOutlineIcon fontSize='small' />
+            {post.replies.length ? post.replies.length : null}
           </IconButton>
           <IconButton>
             <RepeatIcon fontSize='small' />
