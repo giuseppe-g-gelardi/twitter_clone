@@ -1,11 +1,11 @@
 import { useContext, useState, useEffect } from 'react'
 import axios from 'axios'
-import FlipMove from 'react-flip-move'
+import Post from './Post'
+import SinglePost from './SinglePost'
 
 import UserContext from '../context/UserContext'
 
-import Post from './Post'
-import SinglePost from './SinglePost'
+import { GetLoggedInPosts } from '../api/api'
 
 export default function GetUserPosts () {
   const { user } = useContext(UserContext)
@@ -19,9 +19,14 @@ export default function GetUserPosts () {
         .get(`http://localhost:8000/api/posts/${user._id}/posts`)
         .then(response => setPosts(response.data))
     } catch (error) {
-      throw new Error(error)
+      throw new Error(error.message)
     }
   }
+
+  // const getPosts = () => {
+  //   console.log('getting posts or something')
+  //   setPosts(GetLoggedInPosts(user._id)) 
+  // }
 
   const likeUnlike = async postId => {
     let update = {
