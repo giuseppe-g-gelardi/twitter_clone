@@ -40,7 +40,7 @@ export default function CreateReply (props) {
         onSubmit={handleSubmit}
         style={{ display: 'flex', flexDirection: 'column' }}
       >
-        <div style={{ padding: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ padding: '20px', display: 'flex' }}>
           <Avatar src={user.profilePicture} />
 
           <input
@@ -49,7 +49,8 @@ export default function CreateReply (props) {
             type='text'
             style={{
               flex: '1',
-              marginLeft: '20px',
+              // marginLeft: '20px',
+              margin: '5px',
               fontSize: '20px',
               border: 'none',
               borderRadius: '15px'
@@ -66,7 +67,7 @@ export default function CreateReply (props) {
             borderRadius: '30px',
             width: '80px',
             height: '40px',
-            marginTop: '20px',
+            // marginTop: '20px',
             marginLeft: 'auto'
           }}
         >
