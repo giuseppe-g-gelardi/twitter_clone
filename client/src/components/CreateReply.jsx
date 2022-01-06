@@ -1,14 +1,10 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import axios from 'axios'
-import {
-  Button,
-  Card,
-  FormControl,
-  TextField
-} from '@material-ui/core'
+import { Avatar, Button, Card, FormControl, TextField } from '@material-ui/core'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 
 import UserContext from '../context/UserContext'
+// TODO fix reply form so its all centered horizontally
 
 export default function CreateReply (props) {
   const { post, replies, setReplies, userProfile } = props
@@ -32,43 +28,52 @@ export default function CreateReply (props) {
     }
   }
 
-  // useEffect(() => console.log('refresh'), [])
-
   return (
-    <>
-      <Card
-        style={{
-          display: 'block',
-          padding: 2,
-          marginTop: 2
-        }}
+    <div
+      style={{
+        paddingBottom: '10px',
+        borderBottom: '8px solid blueviolet',
+        paddingRight: '10px',
+      }}
+    >
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: 'flex', flexDirection: 'column' }}
       >
-        <form onSubmit={handleSubmit}>
-          <FormControl fullWidth={true}>
-            <TextField
-              style={{ marginBottom: 20 }}
-              onChange={e => setText(e.target.value)}
-              label={`Reply to ${userProfile.username}`}
-              variant='outlined'
-              type='text'
-              disableElevation={true}
-              fullWidth={true}
-              required={true}
-            />
-            <Button
-              type='submit'
-              color='primary'
-              variant='contained'
-              endIcon={<KeyboardArrowRightIcon />}
-              fullWidth={true}
-            >
-              Add new Post
-            </Button>
-          </FormControl>
-        </form>
-      </Card>
-    </>
+        <div style={{ padding: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Avatar src={user.profilePicture} />
+
+          <input
+            onChange={e => setText(e.target.value)}
+            placeholder=' Send your reply'
+            type='text'
+            style={{
+              flex: '1',
+              marginLeft: '20px',
+              fontSize: '20px',
+              border: 'none',
+              borderRadius: '15px'
+            }}
+          />
+        <Button
+          type='submit'
+          style={{
+            backgroundColor: 'blueviolet',
+            border: 'none',
+            color: 'white',
+            fontWeight: '900',
+            textTransform: 'inherit',
+            borderRadius: '30px',
+            width: '80px',
+            height: '40px',
+            marginTop: '20px',
+            marginLeft: 'auto'
+          }}
+        >
+          Reply
+        </Button>
+        </div>
+      </form>
+    </div>
   )
 }
-
-// {/* <button onClick={() => console.log(post)}>log post</button> */}
