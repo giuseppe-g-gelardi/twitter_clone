@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react'
 import axios from 'axios'
-import { Avatar, Button, Card, FormControl, TextField } from '@material-ui/core'
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
+import { Avatar, Button } from '@material-ui/core'
 
 import UserContext from '../context/UserContext'
 // TODO fix reply form so its all centered horizontally

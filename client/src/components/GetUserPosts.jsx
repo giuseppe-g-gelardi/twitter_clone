@@ -5,7 +5,7 @@ import SinglePost from './SinglePost'
 
 import UserContext from '../context/UserContext'
 
-import { GetLoggedInPosts } from '../api/api'
+import { fetchPosts } from '../api/posts.ts'
 
 export default function GetUserPosts () {
   const { user } = useContext(UserContext)
@@ -13,21 +13,27 @@ export default function GetUserPosts () {
   const [displaySinglePost, setDisplaySinglePost] = useState(false)
   const [displayPost, setDisplayPost] = useState('')
 
-  const getPosts = async () => {
+  // const getPosts = async () => {
+  //   try {
+  //     await axios
+  //       .get(`http://localhost:8000/api/posts/${user._id}/posts`)
+  //       .then(response => setPosts(response.data))
+  //   } catch (error) {
+  //     throw new Error(error.message)
+  //   }
+  // }
+
+  const getPosts = async() => {
     try {
-      await axios
-        .get(`http://localhost:8000/api/posts/${user._id}/posts`)
-        .then(response => setPosts(response.data))
-    } catch (error) {
+      const userPosts = await fetchPosts(user._id)
+      setPosts(userPosts)
+      
+    } catch(error) {
       throw new Error(error.message)
     }
   }
 
-  // const getPosts = () => {
-  //   console.log('getting posts or something')
-  //   setPosts(GetLoggedInPosts(user._id)) 
-  // }
-
+  
   const likeUnlike = async postId => {
     let update = {
       userId: user._id
@@ -36,13 +42,13 @@ export default function GetUserPosts () {
       await axios.put(
         `http://localhost:8000/api/posts/${user._id}/posts/${postId}/likes`,
         update
-      )
-    } catch (error) {
-      throw new Error(error.message)
+        )
+      } catch (error) {
+        throw new Error(error.message)
+      }
     }
-  }
-
-  useEffect(() => getPosts())
+    
+    useEffect(() => getPosts())
 
   return (
     <>
