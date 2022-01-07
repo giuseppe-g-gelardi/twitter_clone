@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
-// import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import { FaUser } from 'react-icons/fa'
 
 import '../AuthForms.css'
 
-export default function LoginForm (props) {
-
+export default function LoginForm() {
   const [userEmail, setUserEmail] = useState('')
   const [userPassword, setUserPassword] = useState('')
   const navigate = useNavigate()
@@ -44,7 +41,6 @@ export default function LoginForm (props) {
       <h1>
         <FaUser /> {' '} Log In
       </h1>
-      {/* <ToastContainer /> */}
 
       <form onSubmit={handleSubmit}>
         <div>

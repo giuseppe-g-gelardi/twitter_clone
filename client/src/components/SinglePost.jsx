@@ -35,7 +35,6 @@ export default function SinglePost (props) {
           `http://localhost:8000/api/posts/${user._id}/posts/${post._id}/replies`
         )
         .then(response => setReplies(response.data, ...replies))
-      // console.log(replies)
     } catch (error) {
       throw new Error(error)
     }
@@ -111,7 +110,9 @@ export default function SinglePost (props) {
         />
       </div>
       {replies.length > 0
-        ? replies.map(reply => (
+        ? replies
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .map(reply => (
             <ul key={reply._id}>
               <li>
                 {reply.user[0]} says: {reply.text}
