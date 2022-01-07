@@ -1,6 +1,6 @@
 import '../Layout.css'
 import Sidebar from './Sidebar'
-import Widgets from './Widgets'
+import SuggestedUsers from './SuggestedUsers'
 
 export default function Layout ({ children }) {
   return (
@@ -21,7 +21,7 @@ export default function Layout ({ children }) {
       <div className='sidebar-right'>
         {/* 3 random users to follow */}
         {/* search filter for all users */}
-        <Widgets />
+        <SuggestedUsers />
       </div>
     </div>
   )

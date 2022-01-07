@@ -1,5 +1,4 @@
 import { useContext, useState, useEffect } from 'react'
-
 import Post from './Post'
 import SinglePost from './SinglePost'
 import UserContext from '../context/UserContext'

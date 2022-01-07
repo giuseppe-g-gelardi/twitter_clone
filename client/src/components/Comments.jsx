@@ -34,8 +34,6 @@ export default function Comments (props) {
     </IconButton>
   )
 
-
-
   const getReplies = async () => {
     try {
       const displayReplies = await fetchReplies(user._id, post._id)
@@ -176,15 +174,15 @@ export default function Comments (props) {
   )
 }
 
-  // const getReplies = async () => {
-  //   try {
-  //     axios
-  //       .get(
-  //         `http://localhost:8000/api/posts/${user._id}/posts/${post._id}/replies`
-  //       )
-  //       .then(response => setReplies(response.data))
-  //     console.log(replies)
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
+// const getReplies = async () => {
+//   try {
+//     axios
+//       .get(
+//         `http://localhost:8000/api/posts/${user._id}/posts/${post._id}/replies`
+//       )
+//       .then(response => setReplies(response.data))
+//     console.log(replies)
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
