@@ -1,7 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import UserContext from '../context/UserContext'
+import { Button } from '@material-ui/core'
 import { fetchUsers } from '../api/users.ts'
 
+// TODO fix link to suggested users profile
 
 export default function SuggestedUsers () {
   const { user } = useContext(UserContext)
@@ -17,25 +20,27 @@ export default function SuggestedUsers () {
     }
   }
 
-  const getRandom = (arr, n) =>{
+  const getRandom = async (arr, n) =>{
     var result = new Array(n),
         len = arr.length,
         taken = new Array(len);
-    if (n > len)
-        throw new RangeError("getRandom: more elements taken than available");
+    if (n > len) throw new RangeError("getRandom: more elements taken than available");
     while (n--) {
         var x = Math.floor(Math.random() * len);
         result[n] = arr[x in taken ? taken[x] : x];
         taken[x] = --len in taken ? taken[len] : len;
     }
     console.log(result)
-    setSuggested(result)
-    return result;
-}
+    setSuggested([...result])
+  }
   
+  function timer() {
+    setTimeout(getRandom(users, 3), 150)
+  }
+
   useEffect(() => getAllUsers(), [])
-  // useEffect(() => getRandom(users, 3))
-  // useEffect(() => suggestedUsersList())
+  useEffect(() => timer(), [])
+
 
 
   return (
@@ -55,16 +60,31 @@ export default function SuggestedUsers () {
         <h4 style={{ fontSize: '12px', fontWeight: '600' }}>
           Check out these profiles:{' '}
         </h4>
-        {/* <button onClick={() => suggestedUsersList()}>suggested</button> */}
-        <button onClick={() => getRandom(users, 3)}>suggested function</button>
-        <button onClick={() => console.log(suggested.map(user => user.username))}>suggested</button>
-        {/* <div>
+        <ul>
           {suggested.map(user => (
-            <li>
-              {user.username}
+            <li key={user._id}>
+              <Link to={`/users/${user._id}`}>{user.username}</Link>
             </li>
           ))}
-        </div> */}
+          <Button
+            onClick={() => getRandom(users, 3)}
+            type='submit'
+            style={{
+              backgroundColor: 'blueviolet',
+              border: 'none',
+              color: 'white',
+              fontWeight: '900',
+              textTransform: 'inherit',
+              borderRadius: '30px',
+              width: '80px',
+              height: '40px',
+              marginTop: '20px',
+              marginLeft: 'auto'
+            }}
+          >
+            See More
+          </Button>
+        </ul>
       </div>
     </div>
   )

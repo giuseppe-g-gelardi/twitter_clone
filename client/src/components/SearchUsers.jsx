@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import SearchIcon from '@material-ui/icons/Search'
 import { fetchUsers } from '../api/users.ts'
+import { Avatar } from '@material-ui/core'
 
 export default function SearchUsers () {
   const [users, setUsers] = useState([])
@@ -43,7 +44,18 @@ export default function SearchUsers () {
           onChange={e => setSearchTerm(e.target.value)}
         />
       </div>
+      <div
+      style={{
+        display: 'flex',
+        alignItems: 'flex-start',
+        borderBottom: '1px solid grey',
+        paddingBottom: '10px'
+      }}
+      >
+
       <ul>
+
+
         {users
           .filter(val => {
             let searchString = ''
@@ -54,18 +66,21 @@ export default function SearchUsers () {
               return val
             } else if (
               searchString.toLowerCase().includes(searchTerm.toLowerCase())
-            ) {
-              return val
-            }
-          })
-
-          .map(user => (
-            <li key={user._id}>
+              ) {
+                return val
+              }
+            })
+            
+            .map(user => (
+              <li key={user._id}>
               {/* // ! /users/:userid */}
-              <Link to={`/users/${user._id}`}>{user.username}</Link>
+              <Link to={`/users/${user._id}`}>
+                <Avatar src={user.profilePicture} />{user.username}
+              </Link>
             </li>
           ))}
       </ul>
+          </div>
     </div>
   )
 }
