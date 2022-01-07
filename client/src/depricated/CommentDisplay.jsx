@@ -15,7 +15,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import CommentIcon from '@mui/icons-material/Comment'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
-import CreateReply from './CreateReply'
+import CreateReply from '../components/CreateReply'
 import moment from 'moment'
 
 export default function CommentDisplay (props) {

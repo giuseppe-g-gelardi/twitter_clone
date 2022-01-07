@@ -10,6 +10,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import moment from 'moment'
 import CreateReply from './CreateReply'
 import Reply from './Reply'
+import { fetchReplies } from '../api/replies.ts'
 
 export default function SinglePost (props) {
   const { user, post, setDisplaySinglePost, likeUnlike } = props
@@ -37,11 +38,8 @@ export default function SinglePost (props) {
 
   const getReplies = async () => {
     try {
-      axios
-        .get(
-          `http://localhost:8000/api/posts/${user._id}/posts/${post._id}/replies`
-        )
-        .then(response => setReplies(response.data, ...replies))
+      const res = await fetchReplies(user._id, post._id)
+      setReplies(res, ...replies)
     } catch (error) {
       throw new Error(error)
     }
@@ -121,7 +119,12 @@ export default function SinglePost (props) {
         ? replies
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .map(reply => (
-              <Reply key={reply._id} user={reply.user[0]} text={reply.text} userPage={user} />
+              <Reply
+                key={reply._id}
+                user={reply.user[0]}
+                text={reply.text}
+                userPage={user}
+              />
             ))
         : null}
     </>
@@ -140,3 +143,15 @@ export default function SinglePost (props) {
 //       </ul>
 //     ))
 //   : null}
+
+// const getReplies = async () => {
+//   try {
+//     axios
+//       .get(
+//         `http://localhost:8000/api/posts/${user._id}/posts/${post._id}/replies`
+//       )
+//       .then(response => setReplies(response.data, ...replies))
+//   } catch (error) {
+//     throw new Error(error)
+//   }
+// }

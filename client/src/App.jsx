@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-// import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { ThemeProvider, StylesProvider } from '@material-ui/core'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -19,6 +18,7 @@ import Profile from './pages/Profile'
 import UserProfile from './components/UserProfile'
 import PrivateRoute from './components/PrivateRoute'
 import './globals.css'
+import Search from './pages/Search'
 
 export default function App () {
   const auth = useAuth()
@@ -50,6 +50,7 @@ export default function App () {
                   </PrivateRoute>
                 }
               >
+                
                 <Route
                   path='/:userid'
                   element={
@@ -87,6 +88,15 @@ export default function App () {
                   </PrivateRoute>
                 }
               />
+              <Route
+                path='/search'
+                element={
+                  <PrivateRoute>
+                    <Search />
+                  </PrivateRoute>
+                }
+              />
+
               <Route path='*' element={<Error />} />
             </Routes>
           </Layout>
@@ -95,10 +105,3 @@ export default function App () {
     </UserProvider>
   )
 }
-
-// {/* <Route path='/users' element={<UserProfile />}>
-//       <Route path='/users/:userid' element={<UserProfile />} />
-//     </Route> */}
-//         {/* <Route path='/users/:id/posts' element={<UserProfile />}>
-//           <Route path='/users/:id/posts/:postid' element={<SinglePost />} />
-//         </Route> */}
