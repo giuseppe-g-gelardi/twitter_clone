@@ -7,6 +7,7 @@ import SinglePost from './SinglePost'
 import Post from './Post'
 
 import { getUser } from '../api/users.ts'
+import { fetchPosts, likes as likePost } from '../api/posts.ts'
 
 export default function UserProfile () {
   const { user } = useContext(UserContext)
@@ -17,7 +18,7 @@ export default function UserProfile () {
   const [likes, setLikes] = useState([])
 
   const { id } = useParams()
-  const api = `http://localhost:8000/api/users/${id}`
+  // const api = `http://localhost:8000/api/users/${id}`
   // 61baaced780cf3e51957becb // seppe / user@email.com's user._id
 
   // TODO
@@ -36,33 +37,27 @@ export default function UserProfile () {
     }
   }
 
-  // TODO: import getposts function from api
-  const getPosts = async () => {
+  const getPosts = async() => {
     try {
-      await axios
-        .get(`http://localhost:8000/api/posts/${id}/posts`)
-        .then(response => setPosts(response.data))
+      const userPosts = await fetchPosts(id)
+      setPosts(userPosts)
+      
+    } catch(error) {
+      throw new Error(error)
+    }
+  }
+
+  const likeUnlike = async postid => {
+    let newLike = { userid: user._id }
+    try {
+      await likePost(userProfile._id, postid, newLike)
+      setLikes([...likes, newLike])
     } catch (error) {
       throw new Error(error)
     }
   }
 
-  // TODO: import likes function from api
-  const likeUnlike = async postId => {
-    let newLike = {
-      userId: user._id
-    }
-    try {
-      await axios
-        .put(
-          `http://localhost:8000/api/posts/${userProfile._id}/posts/${postId}/likes`,
-          newLike
-        )
-        .then(response => setLikes([...likes, newLike, response.data]))
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
+  
 
   useEffect(() => fetchUser(), [userProfile])
   useEffect(() => getPosts(), [likes])
@@ -119,3 +114,30 @@ export default function UserProfile () {
 //   }
 // }
 // useEffect(() => getUser(), [userProfile])
+
+  // TODO: import getposts function from api
+  // const getPosts = async () => {
+  //   try {
+  //     await axios
+  //       .get(`http://localhost:8000/api/posts/${id}/posts`)
+  //       .then(response => setPosts(response.data))
+  //   } catch (error) {
+  //     throw new Error(error)
+  //   }
+  // }
+  // // TODO: import likes function from api
+  // const likeUnlike = async postId => {
+  //   let newLike = {
+  //     userId: user._id
+  //   }
+  //   try {
+  //     await axios
+  //       .put(
+  //         `http://localhost:8000/api/posts/${userProfile._id}/posts/${postId}/likes`,
+  //         newLike
+  //       )
+  //       .then(response => setLikes([...likes, newLike, response.data]))
+  //   } catch (error) {
+  //     throw new Error(error)
+  //   }
+  // }

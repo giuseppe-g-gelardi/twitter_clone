@@ -9,6 +9,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import moment from 'moment'
 import CreateReply from './CreateReply'
+import Reply from './Reply'
 
 export default function SinglePost (props) {
   const { user, post, setDisplaySinglePost, likeUnlike } = props
@@ -115,17 +116,27 @@ export default function SinglePost (props) {
           setReplies={setReplies}
         />
       </div>
+
       {replies.length > 0
         ? replies
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        .map(reply => (
-            <ul key={reply._id}>
-              <li>
-                {reply.user[0]} says: {reply.text}
-              </li>
-            </ul>
-          ))
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .map(reply => (
+              <Reply key={reply._id} user={reply.user[0]} text={reply.text} userPage={user} />
+            ))
         : null}
     </>
   )
 }
+
+// {/* //! replies */}
+// {replies.length > 0
+//   ? replies
+//   .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+//   .map(reply => (
+//       <ul key={reply._id}>
+//         <li>
+//           {reply.user[0]} says: {reply.text}
+//         </li>
+//       </ul>
+//     ))
+//   : null}
