@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import {
   Card,
   CardHeader,
@@ -17,6 +16,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 import CreateReply from './CreateReply'
+import { fetchReplies } from '../api/replies'
 
 export default function Comments (props) {
   const { user, post, setDisplaySinglePost, likeUnlike, setDisplayPost } = props
@@ -34,22 +34,21 @@ export default function Comments (props) {
     </IconButton>
   )
 
+
+
   const getReplies = async () => {
     try {
-      axios
-        .get(
-          `http://localhost:8000/api/posts/${user._id}/posts/${post._id}/replies`
-        )
-        .then(response => setReplies(response.data))
-      console.log(replies)
-    } catch (err) {
-      console.log(err)
+      const displayReplies = await fetchReplies(user._id, post._id)
+      setReplies(displayReplies)
+    } catch (error) {
+      throw new Error(error.message)
     }
   }
 
-  const mapReplies = () => {
-    replies.map(reply => console.log(reply.user[0]))
-  }
+  // ! needed?
+  // const mapReplies = () => {
+  //   replies.map(reply => console.log(reply.user[0]))
+  // }
 
   useEffect(() => {
     getReplies()
@@ -176,3 +175,16 @@ export default function Comments (props) {
     </div>
   )
 }
+
+  // const getReplies = async () => {
+  //   try {
+  //     axios
+  //       .get(
+  //         `http://localhost:8000/api/posts/${user._id}/posts/${post._id}/replies`
+  //       )
+  //       .then(response => setReplies(response.data))
+  //     console.log(replies)
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }

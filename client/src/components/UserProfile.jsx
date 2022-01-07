@@ -29,8 +29,7 @@ export default function UserProfile() {
   // TODO keep doing great things
   // TODO 
 
-  useEffect(() => getUser(), [userProfile])
-  useEffect(() => getPosts(), [likes])
+
   
   const getUser = async () => {
     try {
@@ -66,7 +65,9 @@ export default function UserProfile() {
     }
   }
 
-
+  useEffect(() => getUser(), [userProfile])
+  useEffect(() => getPosts(), [likes])
+  
   return (
     <div>
       <h1>You are viewing another users profile</h1>
