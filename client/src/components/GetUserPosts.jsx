@@ -30,7 +30,7 @@ export default function GetUserPosts () {
       }
     }
     
-    useEffect(() => getPosts())
+    useEffect(() => getPosts(), [user])
 
   return (
     <>
