@@ -17,7 +17,7 @@ export default function GetUserPosts () {
       setPosts(userPosts)
       
     } catch(error) {
-      throw new Error(error.message)
+      throw new Error(error)
     }
   }
 

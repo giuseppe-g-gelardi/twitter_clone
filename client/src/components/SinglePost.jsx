@@ -16,6 +16,12 @@ export default function SinglePost (props) {
   const timestamp = post.createdAt
   const posttime = moment(timestamp).fromNow()
 
+  // TODO: figure out why likes dont happen in real time in single post view
+  // TODO: figure out why likes dont happen in real time in single post view
+  // TODO: figure out why likes dont happen in real time in single post view
+  // TODO: figure out why likes dont happen in real time in single post view
+  // TODO: figure out why likes dont happen in real time in single post view
+
   const likeIcons = (
     <IconButton onClick={() => likeUnlike(post._id)}>
       {post.likes.length ? (
