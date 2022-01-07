@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import UserContext from '../context/UserContext'
 import { Button } from '@material-ui/core'
 import { fetchUsers } from '../api/users.ts'
+import UserCard from './UserCard'
 
 // TODO fix link to suggested users profile
 
@@ -20,28 +21,27 @@ export default function SuggestedUsers () {
     }
   }
 
-  const getRandom = async (arr, n) =>{
+  const getRandom = async (arr, n) => {
     var result = new Array(n),
-        len = arr.length,
-        taken = new Array(len);
-    if (n > len) throw new RangeError("getRandom: more elements taken than available");
+      len = arr.length,
+      taken = new Array(len)
+    if (n > len)
+      throw new RangeError('getRandom: more elements taken than available')
     while (n--) {
-        var x = Math.floor(Math.random() * len);
-        result[n] = arr[x in taken ? taken[x] : x];
-        taken[x] = --len in taken ? taken[len] : len;
+      var x = Math.floor(Math.random() * len)
+      result[n] = arr[x in taken ? taken[x] : x]
+      taken[x] = --len in taken ? taken[len] : len
     }
     console.log(result)
     setSuggested([...result])
   }
-  
-  function timer() {
+
+  function timer () {
     setTimeout(getRandom(users, 3), 150)
   }
 
   useEffect(() => getAllUsers(), [])
   useEffect(() => timer(), [])
-
-
 
   return (
     <div style={{ flex: '0.3' }}>
@@ -62,9 +62,7 @@ export default function SuggestedUsers () {
         </h4>
         <ul>
           {suggested.map(user => (
-            <li key={user._id}>
-              <Link to={`/users/${user._id}`}>{user.username}</Link>
-            </li>
+            <UserCard user={user} />
           ))}
           <Button
             onClick={() => getRandom(users, 3)}
@@ -104,3 +102,6 @@ export default function SuggestedUsers () {
 //   {/* <SearchIcon style={{ color: 'grey' }} /> */}
 //   {/* <input placeholder='Search Twitter' type='text' /> */}
 // {/* </div> */}
+// <li key={user._id}>
+//   <Link to={`/users/${user._id}`}>{user.username}</Link>
+// </li>

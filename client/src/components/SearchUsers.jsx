@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import SearchIcon from '@material-ui/icons/Search'
 import { fetchUsers } from '../api/users.ts'
-import { Avatar } from '@material-ui/core'
+import UserCard from './UserCard'
 
 export default function SearchUsers () {
   const [users, setUsers] = useState([])
@@ -45,42 +44,31 @@ export default function SearchUsers () {
         />
       </div>
       <div
-      style={{
-        display: 'flex',
-        alignItems: 'flex-start',
-        borderBottom: '1px solid grey',
-        paddingBottom: '10px'
-      }}
+        style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          borderBottom: '1px solid grey',
+          paddingBottom: '10px'
+        }}
       >
-
-      <ul>
-
-
-        {users
-          .filter(val => {
-            let searchString = ''
-            for (let [key, value] of Object.entries(val)) {
-              searchString += `${value}\t`
-            }
-            if (searchTerm === '') {
-              return val
-            } else if (
-              searchString.toLowerCase().includes(searchTerm.toLowerCase())
-              ) {
-                return val
+        <ul>
+          {users
+            .filter(val => {
+              let searchString = ''
+              for (let [key, value] of Object.entries(val)) {
+                searchString += `${value}\t`
               }
+              if (searchTerm === '') return val
+              else if (
+                searchString.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+                return val
             })
-            
             .map(user => (
-              <li key={user._id}>
-              {/* // ! /users/:userid */}
-              <Link to={`/users/${user._id}`}>
-                <Avatar src={user.profilePicture} />{user.username}
-              </Link>
-            </li>
-          ))}
-      </ul>
-          </div>
+              <UserCard key={user._id} user={user} />
+            ))}
+        </ul>
+      </div>
     </div>
   )
 }
