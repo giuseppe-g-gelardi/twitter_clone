@@ -19,7 +19,7 @@ export default function UserCard ({ user }) {
         <div className='post__header'>
           <div style={{ fontSize: '15px', marginBottom: '5px' }}>
             <h3 style={{ fontSize: '15px', marginBottom: '5px' }}>
-              <Link to={`/users/${user._id}`}>{user.username} </Link>
+              <Link to={`/users/${user._id}`}>{user.username}</Link>
               <span
                 style={{ fontWeight: '600', fontSize: '12px', color: 'gray' }}
               >

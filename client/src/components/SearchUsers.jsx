@@ -6,9 +6,6 @@ import UserCard from './UserCard'
 export default function SearchUsers () {
   const [users, setUsers] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
-  // TODO get ALL users.
-  // TODO return users.filter('search term')
-  // TODO THEN map
 
   const getAllUsers = async () => {
     try {

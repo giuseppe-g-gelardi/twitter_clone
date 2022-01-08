@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import UserContext from '../context/UserContext'
 import { Button } from '@material-ui/core'
@@ -22,13 +22,13 @@ export default function SuggestedUsers () {
   }
 
   const getRandom = async (arr, n) => {
-    var result = new Array(n),
+    let result = new Array(n),
       len = arr.length,
       taken = new Array(len)
     if (n > len)
       throw new RangeError('getRandom: more elements taken than available')
     while (n--) {
-      var x = Math.floor(Math.random() * len)
+      let x = Math.floor(Math.random() * len)
       result[n] = arr[x in taken ? taken[x] : x]
       taken[x] = --len in taken ? taken[len] : len
     }
@@ -36,12 +36,14 @@ export default function SuggestedUsers () {
     setSuggested([...result])
   }
 
-  function timer () {
-    setTimeout(getRandom(users, 3), 150)
-  }
-
-  useEffect(() => getAllUsers(), [])
-  useEffect(() => timer(), [])
+  useEffect(() => {
+    function timer () {
+      const reset = setTimeout(() => getRandom(users, 3), 10000)
+      return reset
+    }
+    getAllUsers()
+    timer()
+  }, [suggested])
 
   return (
     <div style={{ flex: '0.3' }}>
@@ -60,9 +62,9 @@ export default function SuggestedUsers () {
         <h4 style={{ fontSize: '12px', fontWeight: '600' }}>
           Check out these profiles:{' '}
         </h4>
-        <ul>
+        <ul key={suggested._id}>
           {suggested.map(user => (
-            <UserCard user={user} />
+            <UserCard key={suggested._id} user={user} />
           ))}
           <Button
             onClick={() => getRandom(users, 3)}
@@ -80,7 +82,7 @@ export default function SuggestedUsers () {
               marginLeft: 'auto'
             }}
           >
-            See More
+            ReRoll
           </Button>
         </ul>
       </div>
@@ -105,3 +107,10 @@ export default function SuggestedUsers () {
 // <li key={user._id}>
 //   <Link to={`/users/${user._id}`}>{user.username}</Link>
 // </li>
+// function timer () {
+//   const reset = setTimeout(() => getRandom(users, 3), 10000)
+//   return reset
+// }
+
+// useEffect(() => getAllUsers(), [])
+// useEffect(() => timer(), [timer])
