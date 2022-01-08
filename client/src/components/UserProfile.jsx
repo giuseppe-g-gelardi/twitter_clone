@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
 
 import UserContext from '../context/UserContext'
 import SinglePost from './SinglePost'
@@ -8,6 +7,7 @@ import Post from './Post'
 
 import { getUser } from '../api/users.ts'
 import { fetchPosts, likes as likePost } from '../api/posts.ts'
+import ProfileHeader from './ProfileHeader'
 
 export default function UserProfile () {
   const { user } = useContext(UserContext)
@@ -20,13 +20,6 @@ export default function UserProfile () {
   const { id } = useParams()
   // const api = `http://localhost:8000/api/users/${id}`
   // 61baaced780cf3e51957becb // seppe / user@email.com's user._id
-
-  // TODO
-  // TODO consolidate comment card and comment display into one component
-  // TODO keep doing great things
-  // TODO
-
-  // TODO map replies newest => oldest, like comments
 
   const fetchUser = async () => {
     try {
@@ -65,14 +58,15 @@ export default function UserProfile () {
   return (
     <div>
       <h1>You are viewing another users profile</h1>
-      {/* <button onClick={() => console.log(userProfile)}>log user</button> */}
-      {/* <button onClick={() => console.log(user)}>logged in user</button> */}
       <h3>You are viewing {userProfile?.username}'s profile</h3>
+      {/* // TODO figure out why profile header wont render */}
+      {/* <ProfileHeader 
+        user={userProfile}
+        id={id}
+      /> */}
       <>
         {displaySinglePost ? (
           <>
-            {/* <Button onClick={() => setDisplaySinglePost(false)}>Go Back</Button> */}
-            {/* <Button onClick={() => console.log(displayPost)}>Log Post</Button> */}
             <SinglePost
               key={user._id}
               user={userProfile}
