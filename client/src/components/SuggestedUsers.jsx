@@ -1,5 +1,4 @@
-import React, { useContext, useState, useEffect, useCallback } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState, useEffect } from 'react'
 import UserContext from '../context/UserContext'
 import { Button } from '@material-ui/core'
 import { fetchUsers } from '../api/users.ts'

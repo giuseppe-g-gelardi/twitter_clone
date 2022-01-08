@@ -4,8 +4,8 @@ import { ThemeProvider, StylesProvider } from '@material-ui/core'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 // import { darkTheme, lightTheme } from './components/theme/Theme'
-// import { lightTheme as theme } from './components/theme/Theme'
-import { darkTheme as theme } from './components/theme/Theme'
+import { lightTheme as theme } from './components/theme/Theme'
+// import { darkTheme as theme } from './components/theme/Theme'
 import { UserProvider, useAuth } from './context/UserContext'
 
 import Layout from './components/Layout'
