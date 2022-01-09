@@ -35,14 +35,16 @@ export default function SuggestedUsers () {
     setSuggested([...result])
   }
 
-  useEffect(() => {
-    function timer () {
-      const reset = setTimeout(() => getRandom(users, 3), 10000)
-      return reset
-    }
-    getAllUsers()
-    timer()
-  }, [suggested])
+  // useEffect(() => {
+  //   function timer () {
+  //     const reset = setTimeout(() => getRandom(users, 3), 10000)
+  //     return reset
+  //   }
+  //   getAllUsers()
+  //   timer()
+  // }, [suggested])
+
+  useEffect(() => getAllUsers())
 
   return (
     <div style={{ flex: '0.3' }}>
@@ -61,10 +63,11 @@ export default function SuggestedUsers () {
         <h4 style={{ fontSize: '12px', fontWeight: '600' }}>
           Check out these profiles:{' '}
         </h4>
+          <div key={suggested._id}>
         <ul key={suggested._id}>
           {suggested.map(user => (
             <UserCard key={suggested._id} user={user} />
-          ))}
+            ))}
           <Button
             onClick={() => getRandom(users, 3)}
             type='submit'
@@ -80,10 +83,11 @@ export default function SuggestedUsers () {
               marginTop: '20px',
               marginLeft: 'auto'
             }}
-          >
-            ReRoll
+            >
+            See more
           </Button>
         </ul>
+            </div>
       </div>
     </div>
   )

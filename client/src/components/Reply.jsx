@@ -39,13 +39,14 @@ export default function Reply(props) {
             <span
               style={{ fontWeight: '600', fontSize: '12px', color: 'gray' }}
             >
-              {user.isVerified && (
+              
+              @{replyUser.username}{' '}
+              {replyUser.isVerified && (
                 <VerifiedUserIcon
                   className='post__badge'
                   style={{ fontSize: '14px', color: 'blueviolet' }}
                 />
-              )}{' '}
-              @{replyUser.username}
+              )}
             </span>
           </h3>
         </div>

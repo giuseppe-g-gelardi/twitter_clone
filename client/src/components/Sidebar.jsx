@@ -33,7 +33,7 @@ export default function Sidebar () {
 
   const authMenu = (
     <>
-      <Link to='/'>
+      <Link to='/home'>
         <SidebarOption active Icon={HomeIcon} text='Home' />
       </Link>
       <Link to='/search'>

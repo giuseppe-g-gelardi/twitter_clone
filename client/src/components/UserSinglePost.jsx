@@ -3,7 +3,6 @@ import { Avatar, IconButton } from '@material-ui/core'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
 import RepeatIcon from '@material-ui/icons/Repeat'
-import DeleteIcon from '@mui/icons-material/Delete';
 
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
@@ -14,8 +13,8 @@ import Reply from './Reply'
 import { fetchReplies } from '../api/replies.ts'
 
 
-export default function SinglePost (props) {
-  const { user, post, setDisplaySinglePost, likeUnlike, deletePost } = props
+export default function UserSinglePost (props) {
+  const { user, post, setDisplaySinglePost, likeUnlike } = props
   const [replies, setReplies] = useState([])
   const timestamp = post.createdAt
   const posttime = moment(timestamp).fromNow()
@@ -96,12 +95,7 @@ export default function SinglePost (props) {
               <RepeatIcon fontSize='small' />
             </IconButton>
             {likeIcons}
-            <IconButton IconButton onClick={() => `${deletePost(user._id, post._id)}${setDisplaySinglePost(false)}`}>
-              <DeleteIcon 
-                fontSize='small' 
-                color='secondary'
-              />
-            </IconButton>
+
           </div>
         </div>
       </div>

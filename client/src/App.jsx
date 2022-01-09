@@ -14,9 +14,8 @@ import Error from './pages/Error'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Settings from './pages/Settings'
-import Profile from './pages/Profile'
 import UserProfile from './components/UserProfile'
-import PrivateRoute from './components/PrivateRoute'
+// import PrivateRoute from './components/PrivateRoute'
 import './globals.css'
 import Search from './pages/Search'
 
@@ -42,6 +41,28 @@ export default function App () {
           <CssBaseline />
           <Layout>
             <Routes>
+              <Route path='/home' element={<Home />} />
+              
+              <Route path='/users' element={<UserProfile />}>
+                <Route path='/users/:id' element={<UserProfile />} />
+              </Route>
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+
+              <Route path='/settings' element={<Settings />} />
+              <Route path='/search' element={<Search />} />
+
+              <Route path='*' element={<Error />} />
+            </Routes>
+          </Layout>
+        </ThemeProvider>
+      </StylesProvider>
+    </UserProvider>
+  )
+}
+
+{
+  /* <Routes>
               <Route
                 path='/'
                 element={
@@ -97,11 +118,7 @@ export default function App () {
                 }
               />
 
+
               <Route path='*' element={<Error />} />
-            </Routes>
-          </Layout>
-        </ThemeProvider>
-      </StylesProvider>
-    </UserProvider>
-  )
+            </Routes> */
 }

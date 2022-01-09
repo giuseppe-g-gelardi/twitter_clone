@@ -51,11 +51,10 @@ export default function CreatePost () {
                 marginLeft: '20px',
                 fontSize: '20px',
                 border: 'none',
-                borderRadius: '15px'
+                borderRadius: '15px',
+                width: 'auto'
               }}
             />
-          </div>
-
           <Button
             type='submit'
             style={{
@@ -67,12 +66,14 @@ export default function CreatePost () {
               borderRadius: '30px',
               width: '80px',
               height: '40px',
-              marginTop: '20px',
+              // marginTop: '20px',
               marginLeft: 'auto'
             }}
           >
             Tweet
           </Button>
+          </div>
+
         </form>
       </div>
   )
