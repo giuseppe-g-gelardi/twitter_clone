@@ -154,7 +154,7 @@ router.get('/', async (req, res) => {
 // });
 
 // ! follow AND unfollow user. working? will test more
-router.put('/:id/followtest', async (req, res) => {
+router.put('/:id/follow', async (req, res) => {
   // return res.status(200).send('endpoint works')
   if (req.body.userid !== req.params.id) {
     try {
