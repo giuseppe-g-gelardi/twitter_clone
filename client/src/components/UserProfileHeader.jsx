@@ -14,7 +14,7 @@ export default function UserInProfileHeader () {
     getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
   }
 
-  useEffect(() => fetchUser(), [])
+  useEffect(() => fetchUser(), [id])
 
   return (
     <>

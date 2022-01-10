@@ -21,7 +21,7 @@ export default function UserPost (props) {
     getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
   }
 
-  useEffect(() => fetchUser(), [])
+  useEffect(() => fetchUser(), [fetchUser, id])
 
   const likeIcons = (
     <IconButton onClick={() => likeUnlike(post._id)}>

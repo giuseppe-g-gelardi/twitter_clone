@@ -28,7 +28,7 @@ export default function UserSinglePost (props) {
     getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
   }
 
-  useEffect(() => fetchUser(), [post])
+  useEffect(() => fetchUser(), [id, post])
 
   const getReplies = () => {
     fetchReplies(user._id, post._id).then(res => setReplies(res.data, ...replies)).catch(err => console.log(err, 'error fetching replies in user single post component'))
