@@ -29,3 +29,7 @@ export async function fetchUsers() {
 export async function getUser(userid: string | null) {
   return axios.get<User[]>(`http://localhost:8000/api/users/${userid}`)
 }
+
+export async function follow(userid: string, options: { id: string }) {
+  return axios.put(`http://localhost:8000/api/users/${userid}/follow`, options)
+}
