@@ -32,6 +32,8 @@ export default function UserProfile () {
     likePost(id, postid, newLike).then(setLikes([...likes, newLike])).catch(err => console.log(err, 'error liking or unliking post in user profile component'))
   }
 
+
+
   return (
     <div>
       <>
@@ -47,7 +49,7 @@ export default function UserProfile () {
           </>
         ) : (
           <>
-        <UserProfileHeader />
+        <UserProfileHeader loggedInUser={user} />
             {posts
               .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
               .map(post => (

@@ -1,18 +1,29 @@
 import { useState, useEffect } from 'react'
-import { Avatar } from '@material-ui/core'
+import { Avatar, Button } from '@material-ui/core'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
 import MyLocationIcon from '@mui/icons-material/MyLocation'
-import { getUser } from '../api/users.ts'
+import { getUser, follow } from '../api/users.ts'
 import { useParams } from 'react-router-dom'
 
-export default function UserInProfileHeader () {
+export default function UserInProfileHeader ({ loggedInUser }) {
   const { id } = useParams()
   const [user, setUser] = useState([])
 
+  // useEffect(() => {
+  //   console.log(loggedInUser._id, 'loggedInUserID')
+  //   console.log(id, 'ID')
+  //   console.log(user, 'user')
+  //   console.log(user._id, 'user._id')
+  // }, [id, loggedInUser._id, user])
 
   useEffect(() => {
     getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
   }, [id])
+
+  const handleFollow = () => {
+    const follower = { userid: loggedInUser._id }
+    follow(id, follower).then(res => console.log(res, res.data)).catch(err => console.log(err, 'err bruh!', err.message))
+  }
 
   return (
       <div
@@ -65,6 +76,25 @@ export default function UserInProfileHeader () {
               />
             )}{' '}
           </h1>
+          <Button
+              // onClick={() => getRandom(users, 3)}
+              onClick={() => handleFollow()}
+              type='submit'
+              style={{
+                backgroundColor: 'blueviolet',
+                border: 'none',
+                color: 'white',
+                fontWeight: '900',
+                textTransform: 'inherit',
+                borderRadius: '30px',
+                width: 'auto',
+                height: '40px',
+                marginTop: '20px',
+                marginLeft: 'auto'
+              }}
+            >
+              follow/unfollow
+            </Button>
             <h2
               style={{ fontWeight: 'normal', fontSize: '15px', color: 'gray' }}
             >

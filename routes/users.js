@@ -183,7 +183,7 @@ router.put('/:id/follow', async (req, res) => {
     // else?
   }
 
- 
+
 })
 
 // const user = await User.findById(req.params.id);
