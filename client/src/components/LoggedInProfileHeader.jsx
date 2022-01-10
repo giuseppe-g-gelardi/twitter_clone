@@ -6,8 +6,6 @@ import MyLocationIcon from '@mui/icons-material/MyLocation'
 import UserContext from '../context/UserContext'
 
 export default function LoggedInProfileHeader () {
-  // const profilepicture = user.profilePicture
-
   const { user } = useContext(UserContext)
   
   return (

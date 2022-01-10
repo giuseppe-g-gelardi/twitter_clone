@@ -13,15 +13,12 @@ export default function UserPost (props) {
   const { post, setDisplaySinglePost, setDisplayPost, likeUnlike } = props
   const timestamp = post.createdAt
   const posttime = moment(timestamp).fromNow()
-
   const { id } = useParams()
   const [user, setUser] = useState([])
 
-  const fetchUser = () => {
+  useEffect(() => {
     getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
-  }
-
-  useEffect(() => fetchUser(), [fetchUser, id])
+  }, [id, user])
 
   const likeIcons = (
     <IconButton onClick={() => likeUnlike(post._id)}>
@@ -95,3 +92,7 @@ export default function UserPost (props) {
     </div>
   )
 }
+  // const fetchUser = () => {
+  //   getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
+  // }
+  // useEffect(() => fetchUser(), [fetchUser, id])

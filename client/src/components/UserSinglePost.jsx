@@ -20,21 +20,13 @@ export default function UserSinglePost (props) {
   const [replies, setReplies] = useState([])
   const timestamp = post.createdAt
   const posttime = moment(timestamp).fromNow()
-
   const { id } = useParams()
   const [user, setUser] = useState([])
 
-  const fetchUser = () => {
+  useEffect(() => {
     getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
-  }
-
-  useEffect(() => fetchUser(), [id, post])
-
-  const getReplies = () => {
     fetchReplies(user._id, post._id).then(res => setReplies(res.data, ...replies)).catch(err => console.log(err, 'error fetching replies in user single post component'))
-  }
-
-  useEffect(() => getReplies())
+  }, [id, post, replies, user._id])
 
   // TODO: figure out why likes dont happen in real time in single post view
 
@@ -130,3 +122,13 @@ export default function UserSinglePost (props) {
     </>
   )
 }
+    // const fetchUser = () => {
+  //   getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
+  // }
+  // useEffect(() => fetchUser(), [id, post])
+
+  // const getReplies = () => {
+  //   fetchReplies(user._id, post._id).then(res => setReplies(res.data, ...replies)).catch(err => console.log(err, 'error fetching replies in user single post component'))
+  // }
+
+  // useEffect(() => getReplies())

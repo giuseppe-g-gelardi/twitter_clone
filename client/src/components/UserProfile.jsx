@@ -16,33 +16,17 @@ export default function UserProfile () {
   const [likes, setLikes] = useState([])
   const { id } = useParams()
 
-  
-  // useEffect(() => {
-    //   getUser(id).then(res => setUserProfile(res.data)).catch(err => console.log(err, 'error fetching user in userprofile component'))
-    // })
-    
-    // useEffect(() => {
-      //   fetchPosts(userProfile._id).then(res => setPosts(res.data)).catch(err => console.log(err, 'error fetching posts in userprofile component'))
-      // })
-  // const fetchUser = () => {
-  //   getUser(id)
-  //   .then(res => console.log(res.data))
-  //   .catch(err => console.log(err, 'error fetching user in userprofile component'))
-  // }
-
-  const getPosts = () => {
+  useEffect(() => {
     fetchPosts(id)
     .then(res => setPosts(res.data))
     .catch(err => console.log(err, 'error fetching posts in userprofile component'))
-  }
+  
+  })
 
   const likeUnlike = postid => {
     let newLike = { userid: user._id }
     likePost(id, postid, newLike).then(setLikes([...likes, newLike])).catch(err => console.log(err, 'error liking or unliking post in user profile component'))
   }
-
-  // useEffect(() => fetchUser(), [])
-  useEffect(() => getPosts(), [likes])
 
   return (
     <div>
@@ -77,3 +61,22 @@ export default function UserProfile () {
     </div>
   )
 }
+    // const getPosts = () => {
+  //   fetchPosts(id)
+  //   .then(res => setPosts(res.data))
+  //   .catch(err => console.log(err, 'error fetching posts in userprofile component'))
+  // }
+  // useEffect(() => fetchUser(), [])
+  // useEffect(() => getPosts(), [likes])
+  // useEffect(() => {
+    //   getUser(id).then(res => setUserProfile(res.data)).catch(err => console.log(err, 'error fetching user in userprofile component'))
+    // })
+    
+    // useEffect(() => {
+      //   fetchPosts(userProfile._id).then(res => setPosts(res.data)).catch(err => console.log(err, 'error fetching posts in userprofile component'))
+      // })
+  // const fetchUser = () => {
+  //   getUser(id)
+  //   .then(res => console.log(res.data))
+  //   .catch(err => console.log(err, 'error fetching user in userprofile component'))
+  // }
