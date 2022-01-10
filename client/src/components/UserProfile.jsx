@@ -16,12 +16,20 @@ export default function UserProfile () {
   const [likes, setLikes] = useState([])
   const { id } = useParams()
 
+
+
   useEffect(() => {
-    fetchPosts(id)
-    .then(res => setPosts(res.data))
-    .catch(err => console.log(err, 'error fetching posts in userprofile component'))
-  
-  })
+    let isCancelled = false
+    fetchPosts(id).then(res => {
+      if (!isCancelled) {
+        setPosts(res.data)
+      }
+    }).catch(err => console.log(err, ' trouble fetching posts in userprofile'))
+    return() => {
+      isCancelled = true
+    }
+  }, [id])
+
 
   const likeUnlike = postid => {
     let newLike = { userid: user._id }
@@ -80,3 +88,19 @@ export default function UserProfile () {
   //   .then(res => console.log(res.data))
   //   .catch(err => console.log(err, 'error fetching user in userprofile component'))
   // }
+  // useEffect(() => {
+  //   fetchPosts(id)
+  //   .then(res => setPosts(res.data))
+  //   .catch(err => console.log(err, 'error fetching posts in userprofile component'))
+  // })
+      // useEffect(() => {
+  //   let isCancelled = false
+  //   fetchPosts(user._id).then(res => {
+  //     if (!isCancelled) {
+  //       setPosts(res.data)
+  //     }
+  //   })
+  //   return () => {
+  //     isCancelled = true
+  //   }
+  // }, [user._id])

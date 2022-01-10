@@ -23,10 +23,37 @@ export default function UserSinglePost (props) {
   const { id } = useParams()
   const [user, setUser] = useState([])
 
-  useEffect(() => {
-    getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
-    fetchReplies(user._id, post._id).then(res => setReplies(res.data, ...replies)).catch(err => console.log(err, 'error fetching replies in user single post component'))
-  }, [id, post, replies, user._id])
+
+
+
+useEffect(() => {
+  let isCancelled = false
+  getUser(id).then(res => {
+    if (!isCancelled) {
+      setUser(res.data)
+    }
+  }).catch(err => console.log(err, ' trouble fetching user in usersinglepost'))
+  return () => {
+    isCancelled = true
+  }
+}, [id])
+
+useEffect(() => {
+  let isCancelled = false
+  fetchReplies(user._id, post._id).then(res => {
+    if (!isCancelled) {
+      setReplies(res.data, ...replies)
+    }
+  }).catch(err => console.log(err, ' trouble fetching replies in usersinglepost'))
+  return () => {
+    isCancelled = true
+  }
+}, [post._id, replies, user._id])
+
+  // useEffect(() => {
+  //   getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
+  //   fetchReplies(user._id, post._id).then(res => setReplies(res.data, ...replies)).catch(err => console.log(err, 'error fetching replies in user single post component'))
+  // }, [id, post, replies, user._id])
 
   // TODO: figure out why likes dont happen in real time in single post view
 

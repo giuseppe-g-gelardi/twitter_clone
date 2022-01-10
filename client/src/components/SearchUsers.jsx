@@ -7,9 +7,19 @@ export default function SearchUsers () {
   const [users, setUsers] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
 
+  // fetchUsers().then(res => setUsers(res.data)).catch(err => console.log(err, 'Error getting all users'))
+
   useEffect(() => {
-    fetchUsers().then(res => setUsers(res.data)).catch(err => console.log(err, 'Error getting all users'))
-  })
+    let isCancelled = false
+    fetchUsers().then(res => {
+      if (!isCancelled) {
+        setUsers(res.data)
+      }
+    })
+    return () => {
+      isCancelled = true
+    }
+  }, [])
 
   return (
     <div>

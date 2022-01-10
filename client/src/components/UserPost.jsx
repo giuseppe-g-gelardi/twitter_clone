@@ -16,9 +16,20 @@ export default function UserPost (props) {
   const { id } = useParams()
   const [user, setUser] = useState([])
 
+
   useEffect(() => {
-    getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
-  }, [id, user])
+    let isCancelled = false
+    getUser(id).then(res => {
+      if (!isCancelled) {
+        setUser(res.data)
+      }
+    }).catch(err => console.log(err))
+    return () => {
+      isCancelled = true
+    }
+  }, [id])
+
+
 
   const likeIcons = (
     <IconButton onClick={() => likeUnlike(post._id)}>
@@ -96,3 +107,11 @@ export default function UserPost (props) {
   //   getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
   // }
   // useEffect(() => fetchUser(), [fetchUser, id])
+
+    // const likeUnlike = postid => {
+  //   let newLike = { userid: user._id }
+  //   likePost(user._id, postid, newLike).then(setLikes([...likes, newLike])).catch((err) => console.log(err, 'error liking or unliking a post un logged in profile component'))
+  // }
+  // useEffect(() => {
+  //   getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
+  // }, [id, user])

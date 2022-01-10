@@ -34,11 +34,36 @@ export default function SinglePost (props) {
     </IconButton>
   )
 
-  const getReplies = () => {
-    fetchReplies(user._id, post._id).then(res => setReplies(res.data, ...replies)).catch(err => console.log(err, 'error fetching replies in single post component'))
-  }
 
-  useEffect(() => getReplies())
+  // useEffect(() => {
+  //   let isCancelled = false
+  //   getUser(id).then(res => {
+  //     if (!isCancelled) {
+  //       setUser(res.data)
+  //     }
+  //   }).catch(err => console.log(err))
+  //   return () => {
+  //     isCancelled = true
+  //   }
+  // }, [id])
+
+  // const getReplies = () => {
+  //   fetchReplies(user._id, post._id).then(res => setReplies(res.data, ...replies)).catch(err => console.log(err, 'error fetching replies in single post component'))
+  // }
+
+  // useEffect(() => getReplies())
+
+  useEffect(() => {
+    let isCancelled = false
+    fetchReplies(user._id, post._id).then(res => {
+      if (!isCancelled) {
+        setReplies(res.data, ...replies)
+      }
+    }).catch(err => console.log(err, ' error fetching replies in single post'))
+    return () => {
+      isCancelled = true
+    }
+  }, [post._id, replies, user._id])
 
   return (
     <>

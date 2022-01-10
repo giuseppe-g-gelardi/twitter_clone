@@ -14,9 +14,19 @@ export default function LoggedInProfile () {
   const [displayPost, setDisplayPost] = useState('')
   const [likes, setLikes] = useState([])
 
+  // fetchPosts(user._id).then(res => setPosts(res.data)).catch((err) => console.log(err, 'error in getposts function in logged in profile component'))
+
   useEffect(() => {
-    fetchPosts(user._id).then(res => setPosts(res.data)).catch((err) => console.log(err, 'error in getposts function in logged in profile component'))
-  })
+    let isCancelled = false
+    fetchPosts(user._id).then(res => {
+      if (!isCancelled) {
+        setPosts(res.data)
+      }
+    })
+    return () => {
+      isCancelled = true
+    }
+  }, [user._id])
 
   const likeUnlike = postid => {
     let newLike = { userid: user._id }
