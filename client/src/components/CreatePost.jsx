@@ -9,6 +9,8 @@ export default function CreatePost () {
   const [description, setDescription] = useState([])
   const api = `http://localhost:8000/api/posts/${userId}`
 
+  // TODO update this
+
   const handleSubmit = async e => {
     e.preventDefault()
 

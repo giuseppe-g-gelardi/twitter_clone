@@ -34,13 +34,11 @@ export default function Comments (props) {
     </IconButton>
   )
 
-  const getReplies = async () => {
-    try {
-      const displayReplies = await fetchReplies(user._id, post._id)
-      setReplies(displayReplies)
-    } catch (error) {
-      throw new Error(error.message)
-    }
+  const getReplies = () => {
+      fetchReplies(user._id, post._id)
+        .then((res) => setReplies(res.data))
+        .catch((err) => console.log(err))
+      console.log(replies)
   }
 
   // ! needed?

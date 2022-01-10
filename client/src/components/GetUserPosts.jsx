@@ -10,24 +10,14 @@ export default function GetUserPosts () {
   const [displaySinglePost, setDisplaySinglePost] = useState(false)
   const [displayPost, setDisplayPost] = useState('')
 
-  const getPosts = async() => {
-    try {
-      const userPosts = await fetchPosts(user._id)
-      setPosts(userPosts)
-      
-    } catch(error) {
-      throw new Error(error)
-    }
+  const getPosts = () => {
+    fetchPosts(user._id).then((res) => setPosts(res.data)).catch((err) => console.log(err))
   }
 
-  const likeUnlike = async postid => {
+  const likeUnlike = postid => {
     let update = { userId: user._id }
-    try {
-      await likes(user._id, postid, update)
-      } catch (error) {
-        throw new Error(error.message)
-      }
-    }
+    likes(user._id, postid, update).catch((err) => console.log(err))
+  }
     
     useEffect(() => getPosts(), [user])
 

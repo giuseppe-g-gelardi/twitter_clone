@@ -23,9 +23,9 @@ export type User = {
 }
 
 export async function fetchUsers() { 
-  return axios.get<User[]>(`http://localhost:8000/api/users/`).then(res => res.data)
+  return axios.get<User[]>(`http://localhost:8000/api/users/`)
 }
 
 export async function getUser(userid: string | null) {
-  return axios.get<User[]>(`http://localhost:8000/api/users/${userid}`).then(res => res.data)
+  return axios.get<User[]>(`http://localhost:8000/api/users/${userid}`)
 }

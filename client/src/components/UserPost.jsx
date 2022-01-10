@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import { Avatar, IconButton } from '@material-ui/core'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
@@ -5,11 +7,21 @@ import RepeatIcon from '@material-ui/icons/Repeat'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import moment from 'moment'
+import { getUser } from '../api/users.ts'
 
 export default function UserPost (props) {
-  const { user, post, setDisplaySinglePost, setDisplayPost, likeUnlike } = props
+  const { post, setDisplaySinglePost, setDisplayPost, likeUnlike } = props
   const timestamp = post.createdAt
   const posttime = moment(timestamp).fromNow()
+
+  const { id } = useParams()
+  const [user, setUser] = useState([])
+
+  const fetchUser = () => {
+    getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
+  }
+
+  useEffect(() => fetchUser(), [])
 
   const likeIcons = (
     <IconButton onClick={() => likeUnlike(post._id)}>

@@ -11,13 +11,8 @@ export default function SuggestedUsers () {
   const [users, setUsers] = useState([])
   const [suggested, setSuggested] = useState([])
 
-  const getAllUsers = async () => {
-    try {
-      const res = await fetchUsers()
-      setUsers(res)
-    } catch (error) {
-      throw new Error(error)
-    }
+  const getAllUsers = () => {
+    fetchUsers().then(res => setUsers(res.data)).catch(err => console.log(err, 'error fetching all users in suggested users component'))
   }
 
   const getRandom = async (arr, n) => {
@@ -35,10 +30,12 @@ export default function SuggestedUsers () {
     setSuggested([...result])
   }
 
+  // ! this calls the above function every X seconds. turn off for dev.
   // useEffect(() => {
   //   function timer () {
-  //     const reset = setTimeout(() => getRandom(users, 3), 10000)
-  //     return reset
+  //     // const reset = setTimeout(() => getRandom(users, 3), 3000)
+  //     // return reset
+  //     return setTimeout(() => getRandom(users, 3), 3000)
   //   }
   //   getAllUsers()
   //   timer()

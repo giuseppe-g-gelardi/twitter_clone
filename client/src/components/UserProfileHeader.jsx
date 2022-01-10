@@ -10,14 +10,8 @@ export default function UserInProfileHeader () {
   const { id } = useParams()
   const [user, setUser] = useState([])
 
-  const fetchUser = async () => {
-    try {
-      const pageOwner = await getUser(id)
-      setUser(pageOwner)
-      console.log(user)
-    } catch (error) {
-      throw new Error(error.message)
-    }
+  const fetchUser = () => {
+    getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
   }
 
   useEffect(() => fetchUser(), [])

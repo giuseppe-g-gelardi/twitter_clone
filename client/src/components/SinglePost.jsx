@@ -34,13 +34,8 @@ export default function SinglePost (props) {
     </IconButton>
   )
 
-  const getReplies = async () => {
-    try {
-      const res = await fetchReplies(user._id, post._id)
-      setReplies(res, ...replies)
-    } catch (error) {
-      throw new Error(error)
-    }
+  const getReplies = () => {
+    fetchReplies(user._id, post._id).then(res => setReplies(res.data, ...replies)).catch(err => console.log(err, 'error fetching replies in single post component'))
   }
 
   useEffect(() => getReplies())

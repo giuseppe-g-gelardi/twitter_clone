@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { Avatar, IconButton } from '@material-ui/core'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
@@ -11,13 +12,29 @@ import moment from 'moment'
 import CreateReply from './CreateReply'
 import Reply from './Reply'
 import { fetchReplies } from '../api/replies.ts'
+import { getUser } from '../api/users.ts'
 
 
 export default function UserSinglePost (props) {
-  const { user, post, setDisplaySinglePost, likeUnlike } = props
+  const { post, setDisplaySinglePost, likeUnlike } = props
   const [replies, setReplies] = useState([])
   const timestamp = post.createdAt
   const posttime = moment(timestamp).fromNow()
+
+  const { id } = useParams()
+  const [user, setUser] = useState([])
+
+  const fetchUser = () => {
+    getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
+  }
+
+  useEffect(() => fetchUser(), [post])
+
+  const getReplies = () => {
+    fetchReplies(user._id, post._id).then(res => setReplies(res.data, ...replies)).catch(err => console.log(err, 'error fetching replies in user single post component'))
+  }
+
+  useEffect(() => getReplies())
 
   // TODO: figure out why likes dont happen in real time in single post view
 
@@ -33,16 +50,6 @@ export default function UserSinglePost (props) {
     </IconButton>
   )
 
-  const getReplies = async () => {
-    try {
-      const res = await fetchReplies(user._id, post._id)
-      setReplies(res, ...replies)
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
-
-  useEffect(() => getReplies())
 
   return (
     <>

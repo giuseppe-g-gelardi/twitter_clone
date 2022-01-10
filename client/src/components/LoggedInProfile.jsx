@@ -14,26 +14,14 @@ export default function LoggedInProfile () {
   const [displayPost, setDisplayPost] = useState('')
   const [likes, setLikes] = useState([])
 
-  const getPosts = async () => {
-    try {
-      const userPosts = await fetchPosts(user._id)
-      setPosts(userPosts)
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
+  useEffect(() => {
+    fetchPosts(user._id).then(res => setPosts(res.data)).catch((err) => console.log(err, 'error in getposts function in logged in profile component'))
+  })
 
-  const likeUnlike = async postid => {
+  const likeUnlike = postid => {
     let newLike = { userid: user._id }
-    try {
-      await likePost(user._id, postid, newLike)
-      setLikes([...likes, newLike])
-    } catch (error) {
-      throw new Error(error)
-    }
+    likePost(user._id, postid, newLike).then(setLikes([...likes, newLike])).catch((err) => console.log(err, 'error liking or unliking a post un logged in profile component'))
   }
-
-  useEffect(() => getPosts())
 
   return (
     <div>

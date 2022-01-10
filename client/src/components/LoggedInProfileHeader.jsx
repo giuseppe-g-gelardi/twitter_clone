@@ -54,10 +54,10 @@ export default function LoggedInProfileHeader ({ user }) {
               style={{ fontSize: '14px', color: 'blueviolet' }}
             />
           )}{' '}
+        </h1>
         <h2 style={{ fontWeight: 'normal', fontSize: '15px', color: 'gray' }}>
           @{user.username}
         </h2>
-        </h1>
 
         <p style={{ fontSize: '15px', marginTop: '11px' }}>
           {user.bio ? user.bio : ''}

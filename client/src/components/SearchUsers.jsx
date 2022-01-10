@@ -7,16 +7,9 @@ export default function SearchUsers () {
   const [users, setUsers] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
 
-  const getAllUsers = async () => {
-    try {
-      const res = await fetchUsers()
-      setUsers(res)
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
-
-  useEffect(() => getAllUsers(), [])
+  useEffect(() => {
+    fetchUsers().then(res => setUsers(res.data)).catch(err => console.log(err, 'Error getting all users'))
+  })
 
   return (
     <div>
@@ -69,19 +62,3 @@ export default function SearchUsers () {
     </div>
   )
 }
-
-// .filter(val => {
-//   let searchString = ''
-//   for (let [key, value] of Object.entries(val)) {
-//     searchString += `${value}\t`
-//   }
-//   if (searchTerm === '') {
-//     return val
-//   } else if (
-//     searchString
-//       .toLowerCase()
-//       .includes(searchTerm.toLowerCase())
-//   ) {
-//     return val
-//   }
-// })
