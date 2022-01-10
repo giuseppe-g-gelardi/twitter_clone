@@ -9,14 +9,11 @@ import UserProfileHeader from './UserProfileHeader'
 
 export default function UserProfile () {
   const { user } = useContext(UserContext)
-  // const [userProfile, setUserProfile] = useState([])
   const [posts, setPosts] = useState([])
   const [displaySinglePost, setDisplaySinglePost] = useState(false)
   const [displayPost, setDisplayPost] = useState('')
   const [likes, setLikes] = useState([])
   const { id } = useParams()
-
-
 
   useEffect(() => {
     let isCancelled = false
@@ -28,8 +25,7 @@ export default function UserProfile () {
     return() => {
       isCancelled = true
     }
-  }, [id])
-
+  }, [id, posts, likes])
 
   const likeUnlike = postid => {
     let newLike = { userid: user._id }
@@ -46,6 +42,7 @@ export default function UserProfile () {
               post={displayPost}
               setDisplaySinglePost={setDisplaySinglePost}
               likeUnlike={likeUnlike}
+              likes={likes}
             />
           </>
         ) : (

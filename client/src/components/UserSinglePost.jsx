@@ -16,15 +16,12 @@ import { getUser } from '../api/users.ts'
 
 
 export default function UserSinglePost (props) {
-  const { post, setDisplaySinglePost, likeUnlike } = props
+  const { post, setDisplaySinglePost, likeUnlike, likes } = props
   const [replies, setReplies] = useState([])
   const timestamp = post.createdAt
   const posttime = moment(timestamp).fromNow()
   const { id } = useParams()
   const [user, setUser] = useState([])
-
-
-
 
 useEffect(() => {
   let isCancelled = false
@@ -36,7 +33,7 @@ useEffect(() => {
   return () => {
     isCancelled = true
   }
-}, [id])
+}, [id, replies, post, likes])
 
 useEffect(() => {
   let isCancelled = false
@@ -48,12 +45,7 @@ useEffect(() => {
   return () => {
     isCancelled = true
   }
-}, [post._id, replies, user._id])
-
-  // useEffect(() => {
-  //   getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
-  //   fetchReplies(user._id, post._id).then(res => setReplies(res.data, ...replies)).catch(err => console.log(err, 'error fetching replies in user single post component'))
-  // }, [id, post, replies, user._id])
+}, [post._id, replies, user._id, likes, post, id])
 
   // TODO: figure out why likes dont happen in real time in single post view
 
@@ -68,7 +60,6 @@ useEffect(() => {
       {post.likes.length ? post.likes.length : '0'}
     </IconButton>
   )
-
 
   return (
     <>
@@ -159,3 +150,7 @@ useEffect(() => {
   // }
 
   // useEffect(() => getReplies())
+  // useEffect(() => {
+  //   getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
+  //   fetchReplies(user._id, post._id).then(res => setReplies(res.data, ...replies)).catch(err => console.log(err, 'error fetching replies in user single post component'))
+  // }, [id, post, replies, user._id])

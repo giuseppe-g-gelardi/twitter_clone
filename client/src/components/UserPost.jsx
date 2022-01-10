@@ -27,7 +27,7 @@ export default function UserPost (props) {
     return () => {
       isCancelled = true
     }
-  }, [id])
+  }, [id, post, user])
 
 
 

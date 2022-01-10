@@ -10,12 +10,12 @@ export type Post = {
 
 export async function fetchPosts(userid: string | null) {
   return axios
-    .get<Post[]>(`http://localhost:8000/api/posts/${userid}/posts`)
+    .get(`http://localhost:8000/api/posts/${userid}/posts`)
 }
 
 export async function fetchSinglePost(userid: string | null, postid: string | null) {
   return axios
-    .get<Post[]>(`http://localhost:8000/api/posts/${userid}/posts/${postid}`)
+    .get(`http://localhost:8000/api/posts/${userid}/posts/${postid}`)
 }
 
 export async function likes(userid: string, postid: string, options: { id: string }) {

@@ -26,7 +26,7 @@ export default function LoggedInProfile () {
     return () => {
       isCancelled = true
     }
-  }, [user._id])
+  }, [user._id, likes, posts])
 
   const likeUnlike = postid => {
     let newLike = { userid: user._id }
