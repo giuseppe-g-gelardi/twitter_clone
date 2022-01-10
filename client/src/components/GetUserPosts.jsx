@@ -63,28 +63,3 @@ export default function GetUserPosts () {
     </>
   )
 }
-
-
-  // const getPosts = async () => {
-  //   try {
-  //     await axios
-  //       .get(`http://localhost:8000/api/posts/${user._id}/posts`)
-  //       .then(response => setPosts(response.data))
-  //   } catch (error) {
-  //     throw new Error(error.message)
-  //   }
-  // }
-
-    // const likeUnlike = async postId => {
-  //   let update = {
-  //     userId: user._id
-  //   }
-  //   try {
-  //     await axios.put(
-  //       `http://localhost:8000/api/posts/${user._id}/posts/${postId}/likes`,
-  //       update
-  //       )
-  //     } catch (error) {
-  //       throw new Error(error.message)
-  //     }
-  //   }

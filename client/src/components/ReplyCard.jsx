@@ -2,12 +2,8 @@ import {
   Card,
   CardHeader,
   Avatar,
-  // IconButton,
   CardContent
 } from '@material-ui/core'
-// import FavoriteIcon from '@mui/icons-material/Favorite'
-// import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-// import CommentIcon from '@mui/icons-material/Comment'
 
 export default function ReplyCard (props) {
   const { reply } = props
@@ -33,30 +29,3 @@ export default function ReplyCard (props) {
     </Card>
   )
 }
-
-// {/* {likeIcons} */}
-// {/* <IconButton>
-//   <CardActionArea onClick={() => `${setDisplaySinglePost(true)} ${setDisplayPost(post)}`}>
-//     <ExpandMoreIcon />
-//   </CardActionArea>
-// </IconButton>
-// <IconButton>
-//   <CommentIcon fontSize='small' />
-//   {post.replies.length ? post.replies.length : null}
-// </IconButton> */}
-// action={
-//   <IconButton>
-//     <MoreVertIcon />
-//   </IconButton>
-// }
-// const likeIcons = post.likes.length ? (
-//   <IconButton>
-//     <FavoriteIcon fontSize='small' color='primary' />
-//     {post.likes.length ? post.likes.length : null}
-//   </IconButton>
-// ) : (
-//   <IconButton>
-//     <FavoriteBorderIcon fontSize='small' color='primary' />
-//     {post.likes.length ? post.likes.length : null}
-//   </IconButton>
-// )

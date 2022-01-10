@@ -33,6 +33,8 @@ export default function CreateReply (props) {
         paddingBottom: '10px',
         borderBottom: '8px solid blueviolet',
         paddingRight: '10px',
+        border: '2px solid grey',
+        borderRadius: '30px'
       }}
     >
       <form
@@ -52,7 +54,8 @@ export default function CreateReply (props) {
               margin: '5px',
               fontSize: '20px',
               border: 'none',
-              borderRadius: '15px'
+              borderRadius: '15px',
+              width: 'auto'
             }}
           />
         <Button
