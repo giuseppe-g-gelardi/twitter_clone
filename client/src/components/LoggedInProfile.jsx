@@ -26,7 +26,6 @@ export default function LoggedInProfile () {
   return (
     <div>
       <>
-        <LoggedInProfileHeader user={user} id={user._id} />
 
         {displaySinglePost ? (
           <>
@@ -41,8 +40,8 @@ export default function LoggedInProfile () {
           </>
         ) : (
           <>
+        <LoggedInProfileHeader />
             <CreatePost />
-            <h2>my posts: </h2>
             {posts
               .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
               .map(post => (

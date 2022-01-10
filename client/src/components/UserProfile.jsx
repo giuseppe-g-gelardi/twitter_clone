@@ -46,9 +46,6 @@ export default function UserProfile () {
 
   return (
     <div>
-      <h1>You are viewing another users profile</h1>
-      {/* <h3>You are viewing {userProfile?.username}'s profile</h3> */}
-
       <>
         {displaySinglePost ? (
           <>
@@ -62,8 +59,6 @@ export default function UserProfile () {
         ) : (
           <>
         <UserProfileHeader />
-
-            <h2>my posts: </h2>
             {posts
               .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
               .map(post => (

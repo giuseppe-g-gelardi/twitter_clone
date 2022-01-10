@@ -6,19 +6,15 @@ import { getUser } from '../api/users.ts'
 import { useParams } from 'react-router-dom'
 
 export default function UserInProfileHeader () {
-  // const profilepicture = user.profilePicture
   const { id } = useParams()
   const [user, setUser] = useState([])
 
-  const fetchUser = () => {
-    getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
-  }
 
-  useEffect(() => fetchUser(), [id])
+  useEffect(() => {
+    getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
+  }, [id])
 
   return (
-    <>
-      <h1>hey</h1>
       <div
         style={{
           display: 'flex',
@@ -110,6 +106,11 @@ export default function UserInProfileHeader () {
           </div>
         </div>
       </div>
-    </>
   )
 }
+
+  // const fetchUser = () => {
+  //   getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
+  // }
+
+  // useEffect(() => fetchUser(), [id])

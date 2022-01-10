@@ -1,10 +1,15 @@
+import { useContext } from 'react'
 import { Avatar } from '@material-ui/core'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
 import MyLocationIcon from '@mui/icons-material/MyLocation'
 
-export default function LoggedInProfileHeader ({ user }) {
-  const profilepicture = user.profilePicture
+import UserContext from '../context/UserContext'
 
+export default function LoggedInProfileHeader () {
+  // const profilepicture = user.profilePicture
+
+  const { user } = useContext(UserContext)
+  
   return (
     <div
       style={{
@@ -22,10 +27,12 @@ export default function LoggedInProfileHeader ({ user }) {
           height: 'min(33vw, 199px)',
           position: 'relative',
           background: '#f5f8fa'
+          // background: 'grey',
+          // borderRadius: '25px'
         }}
       >
         <Avatar
-          src={profilepicture}
+          src={user.profilePicture}
           style={{
             width: '135px',
             height: '135px',
