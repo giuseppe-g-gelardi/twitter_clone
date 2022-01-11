@@ -15,7 +15,7 @@ import { fetchReplies } from '../api/replies.ts'
 
 
 export default function SinglePost (props) {
-  const { user, post, setDisplaySinglePost, likeUnlike, deletePost } = props
+  const { user, post, setDisplaySinglePost, likeUnlike, deletePost, key } = props
   const [replies, setReplies] = useState([])
   const timestamp = post.createdAt
   const posttime = moment(timestamp).fromNow()
@@ -48,7 +48,7 @@ export default function SinglePost (props) {
 
   return (
     <>
-      <div
+      <div key={key}
         style={{
           display: 'flex',
           alignItems: 'flex-start',

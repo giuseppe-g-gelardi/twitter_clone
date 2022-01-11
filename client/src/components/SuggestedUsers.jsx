@@ -11,9 +11,6 @@ export default function SuggestedUsers () {
   const [users, setUsers] = useState([])
   const [suggested, setSuggested] = useState([])
 
-  // const getAllUsers = () => {
-  //   fetchUsers().then(res => setUsers(res.data)).catch(err => console.log(err, 'error fetching all users in suggested users component'))
-  // }
 
   useEffect(() => {
     fetchUsers()
@@ -44,15 +41,11 @@ export default function SuggestedUsers () {
   // ! this calls the above function every X seconds. turn off for dev.
   // useEffect(() => {
   //   function timer () {
-  //     // const reset = setTimeout(() => getRandom(users, 3), 3000)
-  //     // return reset
   //     return setTimeout(() => getRandom(users, 3), 3000)
   //   }
   //   getAllUsers()
   //   timer()
   // }, [suggested])
-
-  // useEffect(() => getAllUsers())
 
   return (
     <div style={{ flex: '0.3' }}>
@@ -126,3 +119,7 @@ export default function SuggestedUsers () {
 
 // useEffect(() => getAllUsers(), [])
 // useEffect(() => timer(), [timer])
+
+  // const getAllUsers = () => {
+  //   fetchUsers().then(res => setUsers(res.data)).catch(err => console.log(err, 'error fetching all users in suggested users component'))
+  // }

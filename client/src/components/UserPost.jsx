@@ -29,8 +29,6 @@ export default function UserPost (props) {
     }
   }, [id, post, user])
 
-
-
   const likeIcons = (
     <IconButton onClick={() => likeUnlike(post._id)}>
       {post.likes.length ? (

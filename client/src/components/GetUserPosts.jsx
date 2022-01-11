@@ -19,7 +19,7 @@ export default function GetUserPosts () {
     likes(user._id, postid, update).catch((err) => console.log(err))
   }
     
-    useEffect(() => getPosts(), [user])
+  useEffect(() => getPosts(), [user])
 
   return (
     <>
@@ -35,7 +35,6 @@ export default function GetUserPosts () {
         </>
       ) : (
         <>
-
           {posts
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .map(post => (

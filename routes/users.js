@@ -57,20 +57,6 @@ router.put('/:id', async (req, res) => {
   }
 })
 
-// ! delete user
-// router.delete('/:id', async (req, res) => {
-//   if (req.body.userId === req.params.id || req.body.isAdmin) {
-//     try {
-//       const user = await User.findByIdAndDelete(req.params.id)
-//       res.status(200).json('account has been deleted successfully')
-//     } catch (err) {
-//       return res.status(500).json(err)
-//     }
-//   } else {
-//     return res.status(403).json('you can only delete your account')
-//   }
-// })
-
 // ! delete user 
 router.delete('/:id', async (req, res) => {
   try {
@@ -108,6 +94,64 @@ router.get('/', async (req, res) => {
     return res.status(500).json(err)
   }
 })
+
+// ! get all users that you follow and their posts
+router.get('/:id/feed', async (req, res) => {
+  try {
+    let feed = []
+    const user = await User.findById(req.params.id)
+    const following = await User.find({'_id': {$in: user.following}})
+    following.forEach(u => {
+      u.posts.forEach(post => {
+        feed.push({ 
+          user: {
+            id: u._id,
+            username: u.username,
+            profilePicture: u.profilePicture,
+            verified: u.isVerified
+        }, post: post })
+      })
+    })
+    
+    return res.send(feed)
+  } catch (err) {
+    res.status(500).send(err.message)
+  }
+})
+
+// ! follow AND unfollow user. working? will test more
+router.put('/:id/follow', async (req, res) => {
+  // return res.status(200).send('endpoint works')
+  if (req.body.userid !== req.params.id) {
+    try {
+      const user = await User.findById(req.params.id)
+      const currentUser = await User.findById(req.body.userid)
+
+      let message;
+      if (user.followers.includes(req.body.userid)) {
+        user.followers.pull(req.body.userid)
+        currentUser.following.pull(req.params.id)
+        message = 'You are no longer following this user'
+      } else {
+        user.followers.push(req.body.userid)
+        currentUser.following.push(req.params.id)
+        message = 'You are now following this user'
+      }
+      await user.save()
+      await currentUser.save()
+      return res.status(200).send(message)
+      
+  } catch (err) {
+    res.status(500).send('ERR BRUH')
+  }
+
+  } else {
+    res.status(403).send(err.message)
+  }
+})
+
+module.exports = router
+
 
 // TODO set up follow/unfollow in one route similar to like/unlike
 
@@ -153,47 +197,16 @@ router.get('/', async (req, res) => {
 //   }
 // });
 
-// ! follow AND unfollow user. working? will test more
-router.put('/:id/follow', async (req, res) => {
-  // return res.status(200).send('endpoint works')
-  if (req.body.userid !== req.params.id) {
-    try {
-      const user = await User.findById(req.params.id)
-      const currentUser = await User.findById(req.body.userid)
-
-      let message;
-      if (user.followers.includes(req.body.userid)) {
-        user.followers.pull(req.body.userid)
-        currentUser.following.pull(req.params.id)
-        message = 'You are no longer following this user'
-      } else {
-        user.followers.push(req.body.userid)
-        currentUser.following.push(req.params.id)
-        message = 'You are now following this user'
-      }
-      await user.save()
-      await currentUser.save()
-      return res.status(200).send(message)
-      
-  } catch (err) {
-    res.status(500).send('ERR BRUH')
-  }
-
-  } else {
-    // else?
-  }
-
-
-})
-
-// const user = await User.findById(req.params.id);
-// const currentUser = await User.findById(req.body.userId);
-// if (!user.followers.includes(req.body.userId)) {
-//   await user.updateOne({ $push: { followers: req.body.userId } });
-//   await currentUser.updateOne({ $push: { following: req.params.id } });
-//   res.status(200).json("user has been followed");
-// } else {
-//   res.status(403).json("you allready follow this user");
-// }
-
-module.exports = router
+// ! delete user
+// router.delete('/:id', async (req, res) => {
+//   if (req.body.userId === req.params.id || req.body.isAdmin) {
+//     try {
+//       const user = await User.findByIdAndDelete(req.params.id)
+//       res.status(200).json('account has been deleted successfully')
+//     } catch (err) {
+//       return res.status(500).json(err)
+//     }
+//   } else {
+//     return res.status(403).json('you can only delete your account')
+//   }
+// })

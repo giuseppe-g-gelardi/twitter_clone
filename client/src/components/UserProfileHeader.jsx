@@ -9,13 +9,6 @@ export default function UserInProfileHeader ({ loggedInUser }) {
   const { id } = useParams()
   const [user, setUser] = useState([])
 
-  // useEffect(() => {
-  //   console.log(loggedInUser._id, 'loggedInUserID')
-  //   console.log(id, 'ID')
-  //   console.log(user, 'user')
-  //   console.log(user._id, 'user._id')
-  // }, [id, loggedInUser._id, user])
-
   useEffect(() => {
     getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
   }, [id])
@@ -128,10 +121,8 @@ export default function UserInProfileHeader ({ loggedInUser }) {
           <div style={{ display: 'block' }}>
             <span style={{ fontSize: '15px', color: 'gray' }}>
               <strong>{user.posts?.length} Posts, </strong>
-            </span>
-
-            <span style={{ fontSize: '15px', color: 'gray' }}>
-              <strong>{user.followers?.length}</strong> Followers
+              <strong>{' '}{user.following?.length}{' '}Following,</strong> 
+              <strong>{' '}{user.followers?.length}{' '}Followers</strong>
             </span>
           </div>
         </div>

@@ -15,9 +15,12 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Settings from './pages/Settings'
 import UserProfile from './components/UserProfile'
+import Following from './pages/Following'
+import Followers from './pages/Followers'
+import FollowingFeed from './components/FollowingFeed'
+import Search from './pages/Search'
 // import PrivateRoute from './components/PrivateRoute'
 import './globals.css'
-import Search from './pages/Search'
 
 export default function App () {
   const auth = useAuth()
@@ -42,6 +45,10 @@ export default function App () {
           <Layout>
             <Routes>
               <Route path='/home' element={<Home />} />
+
+              <Route path='/followers' element={<Followers />} />
+              <Route path='/following' element={<Following />} />
+              <Route path='/feed' element={<FollowingFeed />} />
               
               <Route path='/users' element={<UserProfile />}>
                 <Route path='/users/:id' element={<UserProfile />} />

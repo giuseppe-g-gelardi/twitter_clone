@@ -18,6 +18,7 @@ export default function LoggedInProfile () {
 
   useEffect(() => {
     let isCancelled = false
+    if (!user._id) return
     fetchPosts(user._id).then(res => {
       if (!isCancelled) {
         setPosts(res.data)
@@ -40,7 +41,7 @@ export default function LoggedInProfile () {
         {displaySinglePost ? (
           <>
             <SinglePost
-              key={user._id}
+              key={displayPost._id}
               user={user}
               post={displayPost}
               setDisplaySinglePost={setDisplaySinglePost}

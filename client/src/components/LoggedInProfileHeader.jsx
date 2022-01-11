@@ -86,10 +86,8 @@ export default function LoggedInProfileHeader () {
         <div style={{ display: 'block' }}>
           <span style={{ fontSize: '15px', color: 'gray' }}>
             <strong>{user.posts?.length} Posts, </strong>
-          </span>
-
-          <span style={{ fontSize: '15px', color: 'gray' }}>
-            <strong>{user.followers?.length}</strong> Followers
+            <strong>{' '}{user.following?.length}{' '}Following,</strong> 
+            <strong>{' '}{user.followers?.length}{' '}Followers</strong> 
           </span>
         </div>
       </div>

@@ -172,7 +172,7 @@ router.post('/:userId/posts/:postId/replies', async (req, res) => {
     return res.send(user)
   
   } catch(err) {
-    return res.status(500).send(`Internal Server Error: ${err}`);
+    return res.status(500).send(`Internal Server Error: ${err.message}`);
   }
 })
 

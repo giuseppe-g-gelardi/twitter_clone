@@ -33,3 +33,7 @@ export async function getUser(userid: string | null) {
 export async function follow(userid: string, options: { userid: string }) {
   return axios.put(`http://localhost:8000/api/users/${userid}/follow`, options)
 }
+
+export async function feed(userid: string) {
+  return axios.get<User[]>(`http://localhost:8000/api/users/${userid}/feed`)
+}
