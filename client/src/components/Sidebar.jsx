@@ -24,7 +24,7 @@ export default function Sidebar () {
   const auth = useAuth()
 
   const authMenu = (
-    <div style={{ marginLeft: '15px'}}>
+    <div style={{ marginLeft: 'auto'}}>
       <Link to='/home'>
         <SidebarOption active Icon={HomeIcon} text='Home' />
       </Link>
@@ -33,6 +33,9 @@ export default function Sidebar () {
       </Link>
       <Link to='/feed'>
         <SidebarOption Icon={HomeIcon} text='Feed' />
+      </Link>
+      <Link to='/fray'>
+        <SidebarOption Icon={HomeIcon} text='The Fray' />
       </Link>
       <Link to='/following'>
         <SidebarOption Icon={HomeIcon} text='Following' />

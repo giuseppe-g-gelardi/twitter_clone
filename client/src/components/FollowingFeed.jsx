@@ -1,70 +1,42 @@
 import { useContext, useState, useEffect } from 'react'
-
 import UserContext from '../context/UserContext'
-import UserPost from './UserPost'
-import { fetchPosts } from '../api/posts.ts'
 import { feed } from '../api/users.ts'
+import FollowingFeedPosts from './FollowingFeedPosts'
 
 export default function FollowingFeed () {
   const { user } = useContext(UserContext)
   const [postsWithUserInfo, setPostsWithUserInfo] = useState([])
-  const [followingPosts, setFollowingPosts] = useState([])
 
   useEffect(() => {
     if (!user._id) return
     feed(user._id)
       .then(res => setPostsWithUserInfo(res.data))
       .catch(err => err, ' error getting feed')
-  }, [user])
+  }, [user, postsWithUserInfo])
 
   return (
     <div>
-      <h1>feed from the people i follow</h1>
-      <h1>following</h1>
+      <div>
+        <span
+          style={{ display: 'flex', marginTop: '15px', marginBottom: '15px' }}
+        >
+          <strong>Hey, {user.username}!</strong>
+          <p>sup?</p>
+        </span>
+        <p style={{ display: 'flex' }}>
+          Check out what your friends are saying!
+        </p>
+      </div>
       {postsWithUserInfo
-      .sort((a, b) => new Date(b.post.createdAt) - new Date(a.post.createdAt))
-      .map(comboObject => (
-        <li key={comboObject.post._id}>
-          <strong>
-          {comboObject.user.username}{' says: '}
-          </strong>
-          {comboObject.post.description}
-          {/* @{new Date(comboObject.post.createdAt) } */}
-        </li>
-      ))}
+        .sort((a, b) => new Date(b.post.createdAt) - new Date(a.post.createdAt))
+        .map(comboObject => (
+          <FollowingFeedPosts
+            post={comboObject.post}
+            user={comboObject.user}
+            loggedInUser={user}
+          />
+        ))}
     </div>
   )
 }
 
-// return (
-//   <>
-//     {displaySinglePost ? (
-//       <>
-//         <SinglePost
-//           key={user._id}
-//           user={user}
-//           post={displayPost}
-//           setDisplaySinglePost={setDisplaySinglePost}
-//           likeUnlike={likeUnlike}
-//         />
-//       </>
-//     ) : (
-//       <>
-//         {posts
-//          // .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-//          postsWithUserInfo.sort((a, b) => new Date(b.post.createdAt) - new Date(a.post.createdAt))
-//         .map(post => (
-//           <Post
-//           key={post._id}
-//           user={user}
-//           post={post}
-//           setDisplaySinglePost={setDisplaySinglePost}
-//           setDisplayPost={setDisplayPost}
-//           likeUnlike={likeUnlike}
-//           />
-//           ))}
-//       </>
-//     )}
-//   </>
-// )
-//
