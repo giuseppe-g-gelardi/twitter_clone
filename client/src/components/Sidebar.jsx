@@ -1,5 +1,5 @@
 import React from 'react'
-import TwitterIcon from '@material-ui/icons/Twitter'
+// import TwitterIcon from '@material-ui/icons/Twitter'
 import '../SidebarOption.css'
 import HomeIcon from '@material-ui/icons/Home'
 import { Link } from 'react-router-dom'
@@ -64,21 +64,22 @@ export default function Sidebar () {
   return (
     <div
       style={{
+        // width: '25%',
         borderRight: '1px solid var(--blue)',
         flex: '0.3',
         marginTop: '20px',
-        paddingLeft: '20px',
+        // paddingLeft: '20px',
         paddingRight: '20px'
       }}
     >
-      <TwitterIcon
+      {/* <TwitterIcon
         style={{
           color: 'blueviolet',
           fontSize: '30px !important',
           marginLeft: '20px',
           marginBottom: '20px'
         }}
-      />
+      /> */}
 
       {auth ? authMenu : noAuthMenu}
     </div>
