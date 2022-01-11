@@ -1,9 +1,7 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import TwitterIcon from '@material-ui/icons/Twitter'
-// import SidebarOption from "./SidebarOption";
 import '../SidebarOption.css'
 import HomeIcon from '@material-ui/icons/Home'
-import UserContext from '../context/UserContext'
 import { Link } from 'react-router-dom'
 
 export const SidebarOption = ({ active, text, Icon }) => {
@@ -16,15 +14,13 @@ export const SidebarOption = ({ active, text, Icon }) => {
 }
 
 export default function Sidebar () {
-  const { user } = useContext(UserContext)
-
   const useAuth = () => {
     return localStorage.getItem('token') ? true : false
   }
   const auth = useAuth()
 
   const authMenu = (
-    <div style={{ marginLeft: 'auto'}}>
+    <div style={{ marginLeft: 'auto' }}>
       <Link to='/home'>
         <SidebarOption active Icon={HomeIcon} text='Home' />
       </Link>

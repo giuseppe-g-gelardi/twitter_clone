@@ -11,6 +11,12 @@ export default function SuggestedUsers () {
   const [users, setUsers] = useState([])
   const [suggested, setSuggested] = useState([])
 
+  const useAuth = () => {
+    return localStorage.getItem('token') ? true : false
+  }
+
+  const auth = useAuth()
+
   useEffect(() => {
     fetchUsers()
       .then(res => setUsers(res.data))
@@ -38,15 +44,15 @@ export default function SuggestedUsers () {
   }
 
   // ! this calls the above function every X seconds. turn off for dev.
-  // useEffect(() => {
-  //   function timer () {
-  //     return setTimeout(() => getRandom(users, 3), 3000)
-  //   }
-  //   fetchUsers()
-  //   timer()
-  // }, [suggested])
+  useEffect(() => {
+    function timer () {
+      return setTimeout(() => getRandom(users, 3), 3000)
+    }
+    fetchUsers()
+    timer()
+  }, [suggested])
 
-  return (
+  const authDisplay = (
     <div style={{ flex: '0.3' }}>
       <div
         style={{
@@ -92,33 +98,20 @@ export default function SuggestedUsers () {
       </div>
     </div>
   )
+
+  const noAuthDisplay = null
+
+  return (
+    <div
+      style={{
+        borderRight: '1px solid var(--blue)',
+        flex: '0.3',
+        marginTop: '20px',
+        paddingLeft: '20px',
+        paddingRight: '20px'
+      }}
+    >
+      {auth ? authDisplay : noAuthDisplay}
+    </div>
+  )
 }
-
-// {/* <div
-//   style={{
-//     display: 'flex',
-//     alignItems: 'center',
-//     backgroundColor: '#f5f8fa',
-//     padding: '10px',
-//     borderRadius: '20px',
-//     marginTop: '10px',
-//     marginLeft: '20px'
-//   }}
-// >
-//   {/* <SearchIcon style={{ color: 'grey' }} /> */}
-//   {/* <input placeholder='Search Twitter' type='text' /> */}
-// {/* </div> */}
-// <li key={user._id}>
-//   <Link to={`/users/${user._id}`}>{user.username}</Link>
-// </li>
-// function timer () {
-//   const reset = setTimeout(() => getRandom(users, 3), 10000)
-//   return reset
-// }
-
-// useEffect(() => getAllUsers(), [])
-// useEffect(() => timer(), [timer])
-
-  // const getAllUsers = () => {
-  //   fetchUsers().then(res => setUsers(res.data)).catch(err => console.log(err, 'error fetching all users in suggested users component'))
-  // }
