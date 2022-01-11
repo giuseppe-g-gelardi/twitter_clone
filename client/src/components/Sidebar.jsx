@@ -40,9 +40,6 @@ export default function Sidebar () {
       <Link to='/following'>
         <SidebarOption Icon={HomeIcon} text='Following' />
       </Link>
-      <Link to='/followers'>
-        <SidebarOption Icon={HomeIcon} text='Followers' />
-      </Link>
       <Link to='/settings'>
         <SidebarOption Icon={HomeIcon} text='Settings' />
       </Link>

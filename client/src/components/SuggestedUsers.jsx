@@ -11,7 +11,6 @@ export default function SuggestedUsers () {
   const [users, setUsers] = useState([])
   const [suggested, setSuggested] = useState([])
 
-
   useEffect(() => {
     fetchUsers()
       .then(res => setUsers(res.data))
@@ -43,7 +42,7 @@ export default function SuggestedUsers () {
   //   function timer () {
   //     return setTimeout(() => getRandom(users, 3), 3000)
   //   }
-  //   getAllUsers()
+  //   fetchUsers()
   //   timer()
   // }, [suggested])
 

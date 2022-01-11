@@ -143,6 +143,17 @@ router.get('/:id/feed', async (req, res) => {
   }
 })
 
+router.get('/:id/following', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+    const following = await User.find({'_id': {$in: user.following}})
+
+    return res.status(200).send(following)
+  } catch (err) {
+    res.status(500).send(err.message)
+  }
+})
+
 // ! follow AND unfollow user. working? will test more
 router.put('/:id/follow', async (req, res) => {
   // return res.status(200).send('endpoint works')

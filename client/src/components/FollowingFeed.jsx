@@ -31,6 +31,7 @@ export default function FollowingFeed () {
         .sort((a, b) => new Date(b.post.createdAt) - new Date(a.post.createdAt))
         .map(comboObject => (
           <FollowingFeedPosts
+            key={comboObject.post._id}
             post={comboObject.post}
             user={comboObject.user}
             loggedInUser={user}

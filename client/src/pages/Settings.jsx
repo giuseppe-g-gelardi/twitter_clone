@@ -9,6 +9,7 @@ import UpdateLocation from "../components/user/UpdateLocation";
 import UpdateBio from "../components/user/UpdateBio";
 import UpdatePicture from "../components/user/UpdatePicture";
 import UpdateBanner from "../components/user/UpdateBanner";
+import DeleteAccount from "../components/user/DeleteAccount";
 
 export default function Settings() {
   const { user } = useContext(UserContext)
@@ -30,6 +31,7 @@ export default function Settings() {
         <UpdatePicture />
         <h2>verified user: {user.isVerified ? 'verified' : 'you are not verified'}</h2>
         <h2>Protected profile: {user.protected ? 'protected' : 'public'}</h2>
+        <DeleteAccount />
       </div>
     </div>
   )
