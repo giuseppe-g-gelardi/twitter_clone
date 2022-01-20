@@ -13,6 +13,16 @@ router.get('/', async (req, res) => {
   }
 })
 
+// * get single reply
+router.get('/:replyid', async (req, res) => {
+  try {
+    const reply = await Reply.findById(req.params.replyid)
+    res.status(200).send(reply)
+  } catch (error) {
+    return res.status(500).send(`Internal Server Error: ${error}`)
+  }
+})
+
 // * add new reply
 router.post('/', async (req, res) => {
   try {
