@@ -4,6 +4,7 @@ const { replySchema } = require('./Reply')
 const postSchema = new mongoose.Schema({
   description: { type: String, maxlength: 140 },
   replies: { type: [replySchema], default: [] },
+  user: { type: [ mongoose.Types.ObjectId ] },
   likes: { type: [ mongoose.Types.ObjectId ], default: [] },
   img: { type: String }
 }, { timestamps: true })

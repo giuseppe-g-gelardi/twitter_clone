@@ -3,10 +3,6 @@ const { Post } = require('../models/Post')
 const { Reply } = require('../models/Reply')
 const { User } = require('../models/User')
 
-// ? post requests
-// ? post requests
-// ? post requests
-
 // ! get all {user} posts
 // * VERIFIED WORKING
 router.get('/:id/posts', async (req, res) => {
@@ -81,17 +77,28 @@ router.post('/:userId', async (req, res) => {
   }
 })
 
-// ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // 
-// ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // 
-// ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // 
-// ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // 
-// ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // 
-// ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // 
-// ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // ! // 
+router.post('/', async (req, res) => {
+  try {
+    const post = new Post({
+      description: req.body.description,
+      user: req.body.userid
+    })
 
-// ? replies
-// ? replies
-// ? replies
+    await post.save()
+    return res.send(post)
+  } catch (error) {
+    return res.status(500).send(`Internal Server Error: ${error}`)
+  }
+})
+
+router.get('/', async (req, res) => {
+  try {
+    const posts = await Post.find()
+    return res.send(posts)
+  } catch (error) {
+    return res.status(500).send(`Unable to fetch posts! ${error}`)
+  }
+})
 
 // ! get all replies to a post
 // * VERIFIED WORKING

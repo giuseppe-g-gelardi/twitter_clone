@@ -95,30 +95,6 @@ router.get('/', async (req, res) => {
   }
 })
 
-// ! not functioning properly
-// router.get('/fray', async (req, res) => {
-//   try {
-//     let fray = []
-//     const users = await User.find()
-//     users.forEach(user => {
-//       user.posts.forEach(post => {
-//         fray.push({
-//           user: {
-//             id: user._id,
-//             username: user.username,
-//             profilePicture: user.profilePicture,
-//             verified: user.isVerified
-//           }, post: post })
-//       })
-//     })
-
-//     return res.status(200).send(fray)
-
-//   } catch (err) {
-//     return res.status(500).send(err.message)
-//   }
-// })
-
 // ! get all users that you follow and their posts
 router.get('/:id/feed', async (req, res) => {
   try {
@@ -243,5 +219,28 @@ module.exports = router
 //     }
 //   } else {
 //     return res.status(403).json('you can only delete your account')
+//   }
+// })
+// ! not functioning properly
+// router.get('/fray', async (req, res) => {
+//   try {
+//     let fray = []
+//     const users = await User.find()
+//     users.forEach(user => {
+//       user.posts.forEach(post => {
+//         fray.push({
+//           user: {
+//             id: user._id,
+//             username: user.username,
+//             profilePicture: user.profilePicture,
+//             verified: user.isVerified
+//           }, post: post })
+//       })
+//     })
+
+//     return res.status(200).send(fray)
+
+//   } catch (err) {
+//     return res.status(500).send(err.message)
 //   }
 // })
