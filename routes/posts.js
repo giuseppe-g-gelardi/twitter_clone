@@ -3,6 +3,86 @@ const { Post } = require('../models/Post')
 const { Reply } = require('../models/Reply')
 const { User } = require('../models/User')
 
+// ! start rework
+
+// * get all posts
+router.get('/', async (req, res) => {
+  try {
+    const posts = await Post.find()
+    return res.send(posts)
+  } catch (error) {
+    return res.status(500).send(`Unable to fetch posts! ${error}`)
+  }
+})
+
+// * get single post
+router.get('/:postid', async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postid)
+    res.status(200).send(post)
+  } catch (error) {
+    return res.status(500).send(`Unable to fetch post! ${error}`)
+  }
+})
+
+
+// router.get('/:id', async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.id)
+//     const { password, updatedAt, ...other } = user._doc
+//     res.status(200).json(other)
+//     // this will get everthing but password and updated at since they are unnecessary
+//     // res.status(200).json(user)
+//   } catch (err) {
+//     res.status(500).json(err)
+//   }
+// })
+
+
+
+
+
+
+// * add new post
+router.post('/', async (req, res) => {
+  try {
+    const post = new Post({
+      description: req.body.description,
+      user: req.body.userid
+    })
+
+    await post.save()
+    return res.send(post)
+  } catch (error) {
+    return res.status(500).send(`Internal Server Error: ${error}`)
+  }
+})
+
+
+// ! end rework
+
+
+
+// ?
+// ?
+// ?
+// ?
+// ?
+// ?
+// ?
+
+
+// ! start old backend structure
+
+
+
+
+
+
+
+
+
+
 // ! get all {user} posts
 // * VERIFIED WORKING
 router.get('/:id/posts', async (req, res) => {
@@ -74,29 +154,6 @@ router.post('/:userId', async (req, res) => {
 
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
-  }
-})
-
-router.post('/', async (req, res) => {
-  try {
-    const post = new Post({
-      description: req.body.description,
-      user: req.body.userid
-    })
-
-    await post.save()
-    return res.send(post)
-  } catch (error) {
-    return res.status(500).send(`Internal Server Error: ${error}`)
-  }
-})
-
-router.get('/', async (req, res) => {
-  try {
-    const posts = await Post.find()
-    return res.send(posts)
-  } catch (error) {
-    return res.status(500).send(`Unable to fetch posts! ${error}`)
   }
 })
 
