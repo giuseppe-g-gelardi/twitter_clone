@@ -2,6 +2,7 @@ const express = require('express')
 const userRoute = require('./routes/users')
 const authRoute = require('./routes/auth')
 const postRoute = require('./routes/posts')
+const replyRoute = require('./routes/replies')
 const dbConnect = require('./connect/dbConnect')
 const cors = require('cors')
 
@@ -18,6 +19,7 @@ app.use(express.json())
 app.use('/api/auth', authRoute)
 app.use('/api/users', userRoute)
 app.use('/api/posts', postRoute)
+app.use('/api/replies', replyRoute)
 
 
 
