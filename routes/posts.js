@@ -25,24 +25,6 @@ router.get('/:postid', async (req, res) => {
   }
 })
 
-
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const user = await User.findById(req.params.id)
-//     const { password, updatedAt, ...other } = user._doc
-//     res.status(200).json(other)
-//     // this will get everthing but password and updated at since they are unnecessary
-//     // res.status(200).json(user)
-//   } catch (err) {
-//     res.status(500).json(err)
-//   }
-// })
-
-
-
-
-
-
 // * add new post
 router.post('/', async (req, res) => {
   try {
@@ -58,8 +40,17 @@ router.post('/', async (req, res) => {
   }
 })
 
-
 // ! end rework
+// ! end rework
+// ! end rework
+// ! end rework
+// ! end rework
+// ! end rework
+// ! end rework
+// ! end rework
+// ! end rework
+// ! end rework
+
 
 
 

@@ -119,6 +119,7 @@ router.get('/:id/feed', async (req, res) => {
   }
 })
 
+// ! get following
 router.get('/:id/following', async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
