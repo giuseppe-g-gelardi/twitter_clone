@@ -52,6 +52,19 @@ router.post('/', async (req, res) => {
   }
 })
 
+// * delete a post
+router.delete('/:postid', async (req, res) => {
+  try {
+    const post = await Post.findByIdAndRemove(req.params.postid)
+    if (!post) return res.status(400).send(`Unable to find post ${post}`)
+
+    return res.status(200).send(`post ${post} successfully deleted`)
+
+  } catch (error) {
+    return res.status(500).send(`unable to delete post ${error}`)
+  }
+})
+
 // ! end rework
 // ! end rework
 // ! end rework
@@ -86,29 +99,29 @@ router.post('/', async (req, res) => {
 
 
 
-// ! get all {user} posts
-// * VERIFIED WORKING
-router.get('/:id/posts', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id)
-    res.status(200).send(user.posts)
-  } catch (err) {
-    res.status(500).json(err)
-  }
-})
+// // ! get all {user} posts
+// // * VERIFIED WORKING
+// router.get('/:id/posts', async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.id)
+//     res.status(200).send(user.posts)
+//   } catch (err) {
+//     res.status(500).json(err)
+//   }
+// })
 
-//! get single post
-// * VERIFIED WORKING
-router.get('/:userId/posts/:postId', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.userId)
-    const posts = await user.posts.filter(post => post._id.toString() === req.params.postId.toString())
+// //! get single post
+// // * VERIFIED WORKING
+// router.get('/:userId/posts/:postId', async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.userId)
+//     const posts = await user.posts.filter(post => post._id.toString() === req.params.postId.toString())
     
-    res.status(200).send(posts)
-  } catch (err) {
-    res.status(500).json(err)
-  }
-})
+//     res.status(200).send(posts)
+//   } catch (err) {
+//     res.status(500).json(err)
+//   }
+// })
 
 // ! delete a post
 // * VERIFIED WORKING
@@ -136,112 +149,112 @@ router.delete('/:userId/posts/:postId', async (req, res) => {
   }
 })
 
-// ! add new post
-// * VERIFIED WORKING
-router.post('/:userId', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.userId)
-    if (!user)
-      return res
-        .status(400)
-        .send(`The user with id "${req.params.userId}" does not exist`)
+// // ! add new post
+// // * VERIFIED WORKING
+// router.post('/:userId', async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.userId)
+//     if (!user)
+//       return res
+//         .status(400)
+//         .send(`The user with id "${req.params.userId}" does not exist`)
 
-    const post = new Post({
-      description: req.body.description
-    })
+//     const post = new Post({
+//       description: req.body.description
+//     })
 
-    user.posts.push(post)
+//     user.posts.push(post)
 
-    await user.save()
-    return res.send(user.posts)
+//     await user.save()
+//     return res.send(user.posts)
 
-  } catch (ex) {
-    return res.status(500).send(`Internal Server Error: ${ex}`);
-  }
-})
+//   } catch (ex) {
+//     return res.status(500).send(`Internal Server Error: ${ex}`);
+//   }
+// })
 
-// ! get all replies to a post
-// * VERIFIED WORKING
-router.get('/:userId/posts/:postId/replies', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.userId)
-    if (!user)
-      return res
-        .status(400)
-        .send(`The user with id "${req.params.userId}" does not exist`)
+// // ! get all replies to a post
+// // * VERIFIED WORKING
+// router.get('/:userId/posts/:postId/replies', async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.userId)
+//     if (!user)
+//       return res
+//         .status(400)
+//         .send(`The user with id "${req.params.userId}" does not exist`)
 
-    let post = user.posts.id(req.params.postId)
-    if (!post)
-      return res
-        .status(400)
-        .send(`The post with id "${req.params.postId}" does not exist`)    
+//     let post = user.posts.id(req.params.postId)
+//     if (!post)
+//       return res
+//         .status(400)
+//         .send(`The post with id "${req.params.postId}" does not exist`)    
 
-    let replies = post.replies
+//     let replies = post.replies
 
-    res.status(200).send(replies)
-  } catch (err) {
-    res.status(500).json(err)
-  }
-})
+//     res.status(200).send(replies)
+//   } catch (err) {
+//     res.status(500).json(err)
+//   }
+// })
 
-// ! get single reply on a post
-// * VERIFIED WORKING
-router.get('/:userId/posts/:postId/replies/:replyId', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.userId)
-    if (!user)
-      return res
-        .status(400)
-        .send(`The user with id "${req.params.userId}" does not exist`)
+// // ! get single reply on a post
+// // * VERIFIED WORKING
+// router.get('/:userId/posts/:postId/replies/:replyId', async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.userId)
+//     if (!user)
+//       return res
+//         .status(400)
+//         .send(`The user with id "${req.params.userId}" does not exist`)
 
-    let post = user.posts.id(req.params.postId)
-    if (!post)
-      return res
-        .status(400)
-        .send(`The post with id "${req.params.postId}" does not exist`)    
+//     let post = user.posts.id(req.params.postId)
+//     if (!post)
+//       return res
+//         .status(400)
+//         .send(`The post with id "${req.params.postId}" does not exist`)    
 
-    let reply = post.replies.id(req.params.replyId)
-    if (!reply)
-      return res
-        .status(400)
-        .send(`The reply with id "${req.params.replyId}" does not exist`)
+//     let reply = post.replies.id(req.params.replyId)
+//     if (!reply)
+//       return res
+//         .status(400)
+//         .send(`The reply with id "${req.params.replyId}" does not exist`)
 
-    res.status(200).send(reply)
-  } catch (err) {
-    res.status(500).json(err)
-  }
-})
+//     res.status(200).send(reply)
+//   } catch (err) {
+//     res.status(500).json(err)
+//   }
+// })
 
-// ! post new reply to a post
-// * VERIFIED WORKING
-router.post('/:userId/posts/:postId/replies', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.userId)
-    if (!user)
-      return res
-        .status(400)
-        .send(`The user with id "${req.params.userId}" does not exist`)
+// // ! post new reply to a post
+// // * VERIFIED WORKING
+// router.post('/:userId/posts/:postId/replies', async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.userId)
+//     if (!user)
+//       return res
+//         .status(400)
+//         .send(`The user with id "${req.params.userId}" does not exist`)
 
-    let post = user.posts.id(req.params.postId)
-    if (!post)
-      return res
-        .status(400)
-        .send(`The post with id "${req.params.postId}" does not exist`)
+//     let post = user.posts.id(req.params.postId)
+//     if (!post)
+//       return res
+//         .status(400)
+//         .send(`The post with id "${req.params.postId}" does not exist`)
 
-    let reply = new Reply({
-      text: req.body.text,
-      user: req.body.user
-    })
+//     let reply = new Reply({
+//       text: req.body.text,
+//       user: req.body.user
+//     })
     
-    post = await post.replies.push(reply)
+//     post = await post.replies.push(reply)
 
-    await user.save()
-    return res.send(user)
+//     await user.save()
+//     return res.send(user)
   
-  } catch(err) {
-    return res.status(500).send(`Internal Server Error: ${err.message}`);
-  }
-})
+//   } catch(err) {
+//     return res.status(500).send(`Internal Server Error: ${err.message}`);
+//   }
+// })
 
 // ! delete single reply
 // * VERIFIED WORKING
