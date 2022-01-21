@@ -19,11 +19,12 @@ router.get('/', async (req, res) => {
 router.get('/:postid', async (req, res) => {
   try {
     const post = await Post.findById(req.params.postid)
-    res.status(200).send(post)
+    return res.status(200).send(post)
   } catch (error) {
     return res.status(500).send(`Unable to fetch post! ${error}`)
   }
 })
+
 
 // * add new post
 router.post('/', async (req, res) => {
