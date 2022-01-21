@@ -23,6 +23,16 @@ router.get('/:replyid', async (req, res) => {
   }
 })
 
+// * get all replies to a specific post
+router.get('/:postid/replies', async (req, res) => {
+  try {
+    const replies = (await Reply.find()).filter(reply => reply.post.toString() === req.params.postid)
+    return res.status(200).send(replies)
+  } catch (error) {
+    return res.status(500).send(`Unable to fetch replies: ${error}`)
+  }
+})
+
 // * add new reply
 router.post('/', async (req, res) => {
   try {
