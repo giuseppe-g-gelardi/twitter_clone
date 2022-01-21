@@ -15,7 +15,18 @@ router.get('/', async (req, res) => {
   }
 })
 
-// * get single post
+// * get all USER posts
+router.get('/:userid/posts', async (req, res) => {
+  try {
+    const posts = (await Post.find()).filter(post => post.user.toString() === req.params.userid)
+
+    return res.status(200).send(posts)
+  } catch (error) {
+    return res.status(500).send(`Unable to fetch posts: ${error}`)
+  }
+})
+
+// * get single posts
 router.get('/:postid', async (req, res) => {
   try {
     const post = await Post.findById(req.params.postid)
