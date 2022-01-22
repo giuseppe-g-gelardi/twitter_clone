@@ -9,6 +9,7 @@ const { User } = require('../models/User')
 router.get('/', async (req, res) => {
   try {
     const posts = await Post.find()
+    if (!posts) return res.status(400).send(`Unable to fetch posts`)
     return res.send(posts)
   } catch (error) {
     return res.status(500).send(`Unable to fetch posts! ${error}`)
@@ -19,6 +20,7 @@ router.get('/', async (req, res) => {
 router.get('/:userid/posts', async (req, res) => {
   try {
     const posts = (await Post.find()).filter(post => post.user.toString() === req.params.userid)
+    if (!posts) return res.status(400).send(`Unable to find users posts`)
 
     return res.status(200).send(posts)
   } catch (error) {
@@ -30,6 +32,7 @@ router.get('/:userid/posts', async (req, res) => {
 router.get('/:postid', async (req, res) => {
   try {
     const post = await Post.findById(req.params.postid)
+    if (!post) return res.status(400).send(`Unable to find post`)
     return res.status(200).send(post)
   } catch (error) {
     return res.status(500).send(`Unable to fetch post! ${error}`)
@@ -64,6 +67,49 @@ router.delete('/:postid', async (req, res) => {
     return res.status(500).send(`unable to delete post ${error}`)
   }
 })
+
+
+
+
+
+// // ! get likes
+// router.get('/:postid/likes', async (req, res) => {
+//   try {
+
+//   } catch (error) {
+//     return res.status(500).send(`unable to find likes`)
+//   }
+// })
+
+
+
+// // ! get all likes to a post
+// // * VERIFIED WORKING
+// router.get('/:userId/posts/:postId/likes', async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.userId)
+//     if (!user)
+//       return res
+//         .status(400)
+//         .send(`The user with id "${req.params.userId}" does not exist`)
+
+//     let post = user.posts.id(req.params.postId)
+//     if (!post)
+//       return res
+//         .status(400)
+//         .send(`The post with id "${req.params.postId}" does not exist`)    
+
+//     let likes = post.likes
+
+//     res.status(200).send(likes)
+//   } catch (err) {
+//     res.status(500).json(err)
+//   }
+// })
+
+
+
+
 
 // ! end rework
 // ! end rework
@@ -123,31 +169,31 @@ router.delete('/:postid', async (req, res) => {
 //   }
 // })
 
-// ! delete a post
-// * VERIFIED WORKING
-router.delete('/:userId/posts/:postId', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.userId)
-    if (!user)
-      return res
-        .status(400)
-        .send(`The user with id "${req.params.userId}" does not exist`)
+// // ! delete a post
+// // * VERIFIED WORKING
+// router.delete('/:userId/posts/:postId', async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.userId)
+//     if (!user)
+//       return res
+//         .status(400)
+//         .send(`The user with id "${req.params.userId}" does not exist`)
 
-    let post = user.posts.id(req.params.postId)
-    if (!post)
-      return res
-        .status(400)
-        .send(`The post with id "${req.params.postId}" does not exist`)
+//     let post = user.posts.id(req.params.postId)
+//     if (!post)
+//       return res
+//         .status(400)
+//         .send(`The post with id "${req.params.postId}" does not exist`)
 
-    post = await post.remove()
+//     post = await post.remove()
 
-    await user.save()
-    return res.send(user)
+//     await user.save()
+//     return res.send(user)
   
-  } catch(err) {
-    return res.status(500).send(`Internal Server Error: ${ex}`);
-  }
-})
+//   } catch(err) {
+//     return res.status(500).send(`Internal Server Error: ${ex}`);
+//   }
+// })
 
 // // ! add new post
 // // * VERIFIED WORKING
