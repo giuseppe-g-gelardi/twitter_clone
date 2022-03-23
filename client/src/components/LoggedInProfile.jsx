@@ -14,36 +14,34 @@ export default function LoggedInProfile () {
   const [displayPost, setDisplayPost] = useState('')
   const [likes, setLikes] = useState([])
 
-  const getPosts = async () => {
-    try {
-      const userPosts = await fetchPosts(user._id)
-      setPosts(userPosts)
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
+  // fetchPosts(user._id).then(res => setPosts(res.data)).catch((err) => console.log(err, 'error in getposts function in logged in profile component'))
 
-  const likeUnlike = async postid => {
+  useEffect(() => {
+    let isCancelled = false
+    if (!user._id) return
+    fetchPosts(user._id).then(res => {
+      if (!isCancelled) {
+        setPosts(res.data)
+      }
+    })
+    return () => {
+      isCancelled = true
+    }
+  }, [user._id, likes, posts])
+
+  const likeUnlike = postid => {
     let newLike = { userid: user._id }
-    try {
-      await likePost(user._id, postid, newLike)
-      setLikes([...likes, newLike])
-    } catch (error) {
-      throw new Error(error)
-    }
+    likePost(user._id, postid, newLike).then(setLikes([...likes, newLike])).catch((err) => console.log(err, 'error liking or unliking a post un logged in profile component'))
   }
-
-  useEffect(() => getPosts())
 
   return (
     <div>
       <>
-        <LoggedInProfileHeader user={user} id={user._id} />
 
         {displaySinglePost ? (
           <>
             <SinglePost
-              key={user._id}
+              key={displayPost._id}
               user={user}
               post={displayPost}
               setDisplaySinglePost={setDisplaySinglePost}
@@ -53,8 +51,8 @@ export default function LoggedInProfile () {
           </>
         ) : (
           <>
+        <LoggedInProfileHeader />
             <CreatePost />
-            <h2>my posts: </h2>
             {posts
               .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
               .map(post => (

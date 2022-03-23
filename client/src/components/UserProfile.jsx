@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 
 import UserContext from '../context/UserContext'
-import { getUser } from '../api/users.ts'
 import { fetchPosts, likes as likePost } from '../api/posts.ts'
 import UserSinglePost from './UserSinglePost'
 import UserPost from './UserPost'
@@ -10,69 +9,53 @@ import UserProfileHeader from './UserProfileHeader'
 
 export default function UserProfile () {
   const { user } = useContext(UserContext)
-  const [userProfile, setUserProfile] = useState(null)
   const [posts, setPosts] = useState([])
   const [displaySinglePost, setDisplaySinglePost] = useState(false)
   const [displayPost, setDisplayPost] = useState('')
   const [likes, setLikes] = useState([])
   const { id } = useParams()
 
-  const fetchUser = async () => {
-    try {
-      const pageOwner = await getUser(id)
-      setUserProfile(pageOwner)
-    } catch (error) {
-      throw new Error(error.message)
+  useEffect(() => {
+    let isCancelled = false
+    fetchPosts(id).then(res => {
+      if (!isCancelled) {
+        setPosts(res.data)
+      }
+    }).catch(err => console.log(err, ' trouble fetching posts in userprofile'))
+    return() => {
+      isCancelled = true
     }
-  }
+  }, [id, posts, likes])
 
-  const getPosts = async () => {
-    try {
-      const userPosts = await fetchPosts(userProfile._id)
-      setPosts(userPosts)
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
-
-  const likeUnlike = async postid => {
+  const likeUnlike = postid => {
     let newLike = { userid: user._id }
-    try {
-      await likePost(userProfile._id, postid, newLike)
-      setLikes([...likes, newLike])
-    } catch (error) {
-      throw new Error(error)
-    }
+    likePost(id, postid, newLike).then(setLikes([...likes, newLike])).catch(err => console.log(err, 'error liking or unliking post in user profile component'))
   }
 
-  useEffect(() => fetchUser(), [userProfile])
-  useEffect(() => getPosts())
+
 
   return (
     <div>
-      <h1>You are viewing another users profile</h1>
-      <h3>You are viewing {userProfile?.username}'s profile</h3>
-
       <>
-        <UserProfileHeader />
         {displaySinglePost ? (
           <>
             <UserSinglePost
-              user={userProfile}
+              user={id}
               post={displayPost}
               setDisplaySinglePost={setDisplaySinglePost}
               likeUnlike={likeUnlike}
+              likes={likes}
             />
           </>
         ) : (
           <>
-            <h2>my posts: </h2>
+        <UserProfileHeader loggedInUser={user} />
             {posts
               .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
               .map(post => (
                 <UserPost
                   key={post._id}
-                  user={userProfile}
+                  user={id}
                   post={post}
                   setDisplaySinglePost={setDisplaySinglePost}
                   setDisplayPost={setDisplayPost}
@@ -85,3 +68,38 @@ export default function UserProfile () {
     </div>
   )
 }
+    // const getPosts = () => {
+  //   fetchPosts(id)
+  //   .then(res => setPosts(res.data))
+  //   .catch(err => console.log(err, 'error fetching posts in userprofile component'))
+  // }
+  // useEffect(() => fetchUser(), [])
+  // useEffect(() => getPosts(), [likes])
+  // useEffect(() => {
+    //   getUser(id).then(res => setUserProfile(res.data)).catch(err => console.log(err, 'error fetching user in userprofile component'))
+    // })
+    
+    // useEffect(() => {
+      //   fetchPosts(userProfile._id).then(res => setPosts(res.data)).catch(err => console.log(err, 'error fetching posts in userprofile component'))
+      // })
+  // const fetchUser = () => {
+  //   getUser(id)
+  //   .then(res => console.log(res.data))
+  //   .catch(err => console.log(err, 'error fetching user in userprofile component'))
+  // }
+  // useEffect(() => {
+  //   fetchPosts(id)
+  //   .then(res => setPosts(res.data))
+  //   .catch(err => console.log(err, 'error fetching posts in userprofile component'))
+  // })
+      // useEffect(() => {
+  //   let isCancelled = false
+  //   fetchPosts(user._id).then(res => {
+  //     if (!isCancelled) {
+  //       setPosts(res.data)
+  //     }
+  //   })
+  //   return () => {
+  //     isCancelled = true
+  //   }
+  // }, [user._id])

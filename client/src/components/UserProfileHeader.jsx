@@ -1,30 +1,24 @@
 import { useState, useEffect } from 'react'
-import { Avatar } from '@material-ui/core'
+import { Avatar, Button } from '@material-ui/core'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
 import MyLocationIcon from '@mui/icons-material/MyLocation'
-import { getUser } from '../api/users.ts'
+import { getUser, follow } from '../api/users.ts'
 import { useParams } from 'react-router-dom'
 
-export default function UserInProfileHeader () {
-  // const profilepicture = user.profilePicture
+export default function UserInProfileHeader ({ loggedInUser }) {
   const { id } = useParams()
   const [user, setUser] = useState([])
 
-  const fetchUser = async () => {
-    try {
-      const pageOwner = await getUser(id)
-      setUser(pageOwner)
-      console.log(user)
-    } catch (error) {
-      throw new Error(error.message)
-    }
+  useEffect(() => {
+    getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
+  }, [id])
+
+  const handleFollow = () => {
+    const follower = { userid: loggedInUser._id }
+    follow(id, follower).then(res => console.log(res, res.data)).catch(err => console.log(err, 'err bruh!', err.message))
   }
 
-  useEffect(() => fetchUser(), [])
-
   return (
-    <>
-      <h1>hey</h1>
       <div
         style={{
           display: 'flex',
@@ -75,6 +69,25 @@ export default function UserInProfileHeader () {
               />
             )}{' '}
           </h1>
+          <Button
+              // onClick={() => getRandom(users, 3)}
+              onClick={() => handleFollow()}
+              type='submit'
+              style={{
+                backgroundColor: 'blueviolet',
+                border: 'none',
+                color: 'white',
+                fontWeight: '900',
+                textTransform: 'inherit',
+                borderRadius: '30px',
+                width: 'auto',
+                height: '40px',
+                marginTop: '20px',
+                marginLeft: 'auto'
+              }}
+            >
+              follow/unfollow
+            </Button>
             <h2
               style={{ fontWeight: 'normal', fontSize: '15px', color: 'gray' }}
             >
@@ -108,14 +121,17 @@ export default function UserInProfileHeader () {
           <div style={{ display: 'block' }}>
             <span style={{ fontSize: '15px', color: 'gray' }}>
               <strong>{user.posts?.length} Posts, </strong>
-            </span>
-
-            <span style={{ fontSize: '15px', color: 'gray' }}>
-              <strong>{user.followers?.length}</strong> Followers
+              <strong>{' '}{user.following?.length}{' '}Following,</strong> 
+              <strong>{' '}{user.followers?.length}{' '}Followers</strong>
             </span>
           </div>
         </div>
       </div>
-    </>
   )
 }
+
+  // const fetchUser = () => {
+  //   getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
+  // }
+
+  // useEffect(() => fetchUser(), [id])

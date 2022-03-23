@@ -8,7 +8,6 @@ export type Reply = {
 export async function fetchReplies(userid: string | null, postid: string | null) {
   return axios
     .get<Reply[]>(`http://localhost:8000/api/posts/${userid}/posts/${postid}/replies`)
-    .then(res => res.data)
 }
 
 

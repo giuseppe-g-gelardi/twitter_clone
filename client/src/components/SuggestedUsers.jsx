@@ -11,14 +11,22 @@ export default function SuggestedUsers () {
   const [users, setUsers] = useState([])
   const [suggested, setSuggested] = useState([])
 
-  const getAllUsers = async () => {
-    try {
-      const res = await fetchUsers()
-      setUsers(res)
-    } catch (error) {
-      throw new Error(error)
-    }
+  const useAuth = () => {
+    return localStorage.getItem('token') ? true : false
   }
+
+  const auth = useAuth()
+
+  useEffect(() => {
+    fetchUsers()
+      .then(res => setUsers(res.data))
+      .catch(err =>
+        console.log(
+          err,
+          'error fetching all users in suggested users component'
+        )
+      )
+  }, [suggested])
 
   const getRandom = async (arr, n) => {
     let result = new Array(n),
@@ -35,18 +43,16 @@ export default function SuggestedUsers () {
     setSuggested([...result])
   }
 
-  // useEffect(() => {
-  //   function timer () {
-  //     const reset = setTimeout(() => getRandom(users, 3), 10000)
-  //     return reset
-  //   }
-  //   getAllUsers()
-  //   timer()
-  // }, [suggested])
+  // ! this calls the above function every X seconds. turn off for dev.
+  useEffect(() => {
+    function timer () {
+      return setTimeout(() => getRandom(users, 3), 3000)
+    }
+    fetchUsers()
+    timer()
+  }, [suggested])
 
-  useEffect(() => getAllUsers())
-
-  return (
+  const authDisplay = (
     <div style={{ flex: '0.3' }}>
       <div
         style={{
@@ -63,57 +69,49 @@ export default function SuggestedUsers () {
         <h4 style={{ fontSize: '12px', fontWeight: '600' }}>
           Check out these profiles:{' '}
         </h4>
-          <div key={suggested._id}>
-        <ul key={suggested._id}>
-          {suggested.map(user => (
-            <UserCard key={suggested._id} user={user} />
+
+        <div>
+          <ul>
+            {suggested.map(user => (
+              <UserCard key={user._id} user={user} />
             ))}
-          <Button
-            onClick={() => getRandom(users, 3)}
-            type='submit'
-            style={{
-              backgroundColor: 'blueviolet',
-              border: 'none',
-              color: 'white',
-              fontWeight: '900',
-              textTransform: 'inherit',
-              borderRadius: '30px',
-              width: '80px',
-              height: '40px',
-              marginTop: '20px',
-              marginLeft: 'auto'
-            }}
+            <Button
+              onClick={() => getRandom(users, 3)}
+              type='submit'
+              style={{
+                backgroundColor: 'blueviolet',
+                border: 'none',
+                color: 'white',
+                fontWeight: '900',
+                textTransform: 'inherit',
+                borderRadius: '30px',
+                width: '80px',
+                height: '40px',
+                marginTop: '20px',
+                marginLeft: 'auto'
+              }}
             >
-            See more
-          </Button>
-        </ul>
-            </div>
+              See more
+            </Button>
+          </ul>
+        </div>
       </div>
     </div>
   )
+
+  const noAuthDisplay = null
+
+  return (
+    <div
+      style={{
+        borderRight: '1px solid var(--blue)',
+        flex: '0.3',
+        marginTop: '20px',
+        paddingLeft: '20px',
+        paddingRight: '20px'
+      }}
+    >
+      {auth ? authDisplay : noAuthDisplay}
+    </div>
+  )
 }
-
-// {/* <div
-//   style={{
-//     display: 'flex',
-//     alignItems: 'center',
-//     backgroundColor: '#f5f8fa',
-//     padding: '10px',
-//     borderRadius: '20px',
-//     marginTop: '10px',
-//     marginLeft: '20px'
-//   }}
-// >
-//   {/* <SearchIcon style={{ color: 'grey' }} /> */}
-//   {/* <input placeholder='Search Twitter' type='text' /> */}
-// {/* </div> */}
-// <li key={user._id}>
-//   <Link to={`/users/${user._id}`}>{user.username}</Link>
-// </li>
-// function timer () {
-//   const reset = setTimeout(() => getRandom(users, 3), 10000)
-//   return reset
-// }
-
-// useEffect(() => getAllUsers(), [])
-// useEffect(() => timer(), [timer])

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Avatar, IconButton } from '@material-ui/core'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
@@ -7,27 +7,18 @@ import RepeatIcon from '@material-ui/icons/Repeat'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import moment from 'moment'
-import { getUser } from '../api/users.ts'
+import { likes as likePost } from '../api/posts.ts'
 
-export default function UserPost (props) {
-  const { post, setDisplaySinglePost, setDisplayPost, likeUnlike } = props
+export default function FollowingFeedPosts(props) {
+  const { post, setDisplaySinglePost, setDisplayPost, user, loggedInUser } = props
   const timestamp = post.createdAt
   const posttime = moment(timestamp).fromNow()
-  const { id } = useParams()
-  const [user, setUser] = useState([])
-
-
-  useEffect(() => {
-    let isCancelled = false
-    getUser(id).then(res => {
-      if (!isCancelled) {
-        setUser(res.data)
-      }
-    }).catch(err => console.log(err))
-    return () => {
-      isCancelled = true
-    }
-  }, [id, post, user])
+  const [likes, setLikes] = useState([])
+  
+  const likeUnlike = postid => {
+    let newLike = { userid: loggedInUser._id }
+    likePost(user.id, postid, newLike).then(setLikes([...likes, newLike])).catch(err => console.log(err, 'error liking or unliking post in user profile component'))
+  }
 
   const likeIcons = (
     <IconButton onClick={() => likeUnlike(post._id)}>
@@ -36,7 +27,6 @@ export default function UserPost (props) {
       ) : (
         <FavoriteBorderIcon fontSize='small' color='primary' />
       )}
-
       {post.likes.length ? post.likes.length : '0'}
     </IconButton>
   )
@@ -57,11 +47,13 @@ export default function UserPost (props) {
         <div className='post__header'>
           <div style={{ fontSize: '15px', marginBottom: '5px' }}>
             <h3 style={{ fontSize: '15px', marginBottom: '5px' }}>
+              <Link to={`/users/${user.id}`}>
               {user.username}{' '}
+              </Link>
               <span
                 style={{ fontWeight: '600', fontSize: '12px', color: 'gray' }}
               >
-                {user.isVerified && (
+                {user.verified && (
                   <VerifiedUserIcon
                     className='post__badge'
                     style={{ fontSize: '14px', color: 'blueviolet' }}
@@ -101,15 +93,16 @@ export default function UserPost (props) {
     </div>
   )
 }
-  // const fetchUser = () => {
-  //   getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
-  // }
-  // useEffect(() => fetchUser(), [fetchUser, id])
-
-    // const likeUnlike = postid => {
-  //   let newLike = { userid: user._id }
-  //   likePost(user._id, postid, newLike).then(setLikes([...likes, newLike])).catch((err) => console.log(err, 'error liking or unliking a post un logged in profile component'))
-  // }
+  // const { id } = useParams()
+  // const [displayUser, setDisplayUser] = useState([])
   // useEffect(() => {
-  //   getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
-  // }, [id, user])
+  //   let isCancelled = false
+  //   getUser(user.id).then(res => {
+  //     if (!isCancelled) {
+  //       setDisplayUser(res.data)
+  //     }
+  //   }).catch(err => console.log(err))
+  //   return () => {
+  //     isCancelled = true
+  //   }
+  // }, [user.id])

@@ -17,10 +17,8 @@ export default function Layout ({ children }) {
       <div className='sidebar-left'>
         <Sidebar />
       </div>
-      <div className='main-content'>{children}</div>
+      <div className='main-content' style={{ width: '50%'}}>{children}</div>
       <div className='sidebar-right'>
-        {/* 3 random users to follow */}
-        {/* search filter for all users */}
         <SuggestedUsers />
       </div>
     </div>

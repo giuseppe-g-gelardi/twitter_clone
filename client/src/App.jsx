@@ -15,9 +15,12 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Settings from './pages/Settings'
 import UserProfile from './components/UserProfile'
-// import PrivateRoute from './components/PrivateRoute'
-import './globals.css'
+import Following from './pages/Following'
+import FollowingFeed from './components/FollowingFeed'
 import Search from './pages/Search'
+import Fray from './pages/Fray'
+import PrivateRoute from './components/PrivateRoute'
+import './globals.css'
 
 export default function App () {
   const auth = useAuth()
@@ -41,16 +44,78 @@ export default function App () {
           <CssBaseline />
           <Layout>
             <Routes>
-              <Route path='/home' element={<Home />} />
-              
-              <Route path='/users' element={<UserProfile />}>
-                <Route path='/users/:id' element={<UserProfile />} />
+              <Route
+                path='/home'
+                element={
+                  <PrivateRoute>
+                    <Home />
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path='/following'
+                element={
+                  <PrivateRoute>
+                    <Following />
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path='/feed'
+                element={
+                  <PrivateRoute>
+                    <FollowingFeed />
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path='/fray'
+                element={
+                  <PrivateRoute>
+                    <Fray />
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path='/users'
+                element={
+                  <PrivateRoute>
+                    <UserProfile />
+                  </PrivateRoute>
+                }
+              >
+                <Route
+                  path='/users/:id'
+                  element={
+                    <PrivateRoute>
+                      <UserProfile />
+                    </PrivateRoute>
+                  }
+                />
               </Route>
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
 
-              <Route path='/settings' element={<Settings />} />
-              <Route path='/search' element={<Search />} />
+              <Route
+                path='/settings'
+                element={
+                  <PrivateRoute>
+                    <Settings />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path='/search'
+                element={
+                  <PrivateRoute>
+                    <Search />
+                  </PrivateRoute>
+                }
+              />
 
               <Route path='*' element={<Error />} />
             </Routes>

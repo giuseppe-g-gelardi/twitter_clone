@@ -23,9 +23,26 @@ export type User = {
 }
 
 export async function fetchUsers() { 
-  return axios.get<User[]>(`http://localhost:8000/api/users/`).then(res => res.data)
+  return axios.get<User[]>(`http://localhost:8000/api/users/`)
 }
 
 export async function getUser(userid: string | null) {
-  return axios.get<User[]>(`http://localhost:8000/api/users/${userid}`).then(res => res.data)
+  return axios.get<User[]>(`http://localhost:8000/api/users/${userid}`)
 }
+
+export async function follow(userid: string, options: { userid: string }) {
+  return axios.put(`http://localhost:8000/api/users/${userid}/follow`, options)
+}
+
+export async function feed(userid: string) {
+  return axios.get<User[]>(`http://localhost:8000/api/users/${userid}/feed`)
+}
+
+export async function following(userid: string) {
+  return axios.get(`http://localhost:8000/api/users/${userid}/following`)
+}
+
+// export async function deleteUser(userid: string, options: { id: string }) {
+//   return axios.delete(`http://localhost:8000/api/users/${userid}`, options)
+// }
+

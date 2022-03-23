@@ -7,14 +7,8 @@ export default function Reply(props) {
   const [replyUser, setReplyUser] = useState({})
   const { user, text, userPage } = props
 
-
-  const fetchUser = async () => {
-    try {
-      const replyOwner = await getUser(user)
-      setReplyUser(replyOwner)
-    } catch (error) {
-      throw new Error(error)
-    }
+  const fetchUser = () => {
+    getUser(user).then(res => setReplyUser(res.data)).catch(err => console.log(err))
   }
 
   useEffect(() => fetchUser(), [userPage])

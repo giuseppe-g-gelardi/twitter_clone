@@ -14,30 +14,31 @@ import Reply from './Reply'
 import { fetchReplies } from '../api/replies.ts'
 import { getUser } from '../api/users.ts'
 
-
-export default function UserSinglePost (props) {
-  const { post, setDisplaySinglePost, likeUnlike, likes } = props
+export default function FollowingFeedSinglePost(props) {
+  const { post, setDisplaySinglePost, likeUnlike, likes, user } = props
   const [replies, setReplies] = useState([])
-  const timestamp = post.createdAt
-  const posttime = moment(timestamp).fromNow()
+  // const timestamp = post.createdAt
+  // const posttime = moment(timestamp).fromNow()
   const { id } = useParams()
-  const [user, setUser] = useState([])
+  // const [user, setUser] = useState([])
+  const [displayUser, setDisplayUser] = useState([])
+
 
 useEffect(() => {
   let isCancelled = false
   getUser(id).then(res => {
     if (!isCancelled) {
-      setUser(res.data)
+      setDisplayUser(res.data)
     }
   }).catch(err => console.log(err, ' trouble fetching user in usersinglepost'))
   return () => {
     isCancelled = true
   }
-}, [id, replies, post, likes])
+}, [])
 
 useEffect(() => {
   let isCancelled = false
-  fetchReplies(user._id, post._id).then(res => {
+  fetchReplies(user.id, post.id).then(res => {
     if (!isCancelled) {
       setReplies(res.data, ...replies)
     }
@@ -45,19 +46,19 @@ useEffect(() => {
   return () => {
     isCancelled = true
   }
-}, [post._id, replies, user._id, likes, post, id])
+}, [])
 
   // TODO: figure out why likes dont happen in real time in single post view
 
   const likeIcons = (
     <IconButton onClick={() => likeUnlike(post._id)}>
-      {post.likes.length ? (
+      {post.likes?.length ? (
         <FavoriteIcon fontSize='small' color='primary' />
       ) : (
         <FavoriteBorderIcon fontSize='small' color='primary' />
       )}
 
-      {post.likes.length ? post.likes.length : '0'}
+      {post.likes?.length ? post.likes?.length : '0'}
     </IconButton>
   )
 
@@ -72,23 +73,23 @@ useEffect(() => {
         }}
       >
         <div style={{ padding: '20px' }}>
-          <Avatar src={user.profilePicture} />
+          <Avatar src={displayUser?.profilePicture} />
         </div>
         <div style={{ flex: '1', padding: '10px' }}>
           <div className='post__header'>
             <div style={{ fontSize: '15px', marginBottom: '5px' }}>
               <h3 style={{ fontSize: '15px', marginBottom: '5px' }}>
-                {user.username}{' '}
+                {displayUser.username}{' '}
                 <span
                   style={{ fontWeight: '600', fontSize: '12px', color: 'gray' }}
                 >
-                  {user.isVerified && (
+                  {user.verified && (
                     <VerifiedUserIcon
                       className='post__badge'
                       style={{ fontSize: '14px', color: 'blueviolet' }}
                     />
                   )}{' '}
-                  @{user.username} {posttime}
+                  @{displayUser.username} {moment(post.createdAt).fromNow()}
                 </span>
               </h3>
             </div>
@@ -106,7 +107,7 @@ useEffect(() => {
           >
             <IconButton onClick={() => `${setDisplaySinglePost(false)}`}>
               <ChatBubbleOutlineIcon fontSize='small' color='primary' />
-              {post.replies.length ? post.replies.length : '0'}
+              {post.replies?.length ? post.replies?.length : '0'}
             </IconButton>
             <IconButton>
               <RepeatIcon fontSize='small' />
@@ -140,17 +141,4 @@ useEffect(() => {
     </>
   )
 }
-    // const fetchUser = () => {
-  //   getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
-  // }
-  // useEffect(() => fetchUser(), [id, post])
 
-  // const getReplies = () => {
-  //   fetchReplies(user._id, post._id).then(res => setReplies(res.data, ...replies)).catch(err => console.log(err, 'error fetching replies in user single post component'))
-  // }
-
-  // useEffect(() => getReplies())
-  // useEffect(() => {
-  //   getUser(id).then(res => setUser(res.data)).catch(err => console.log(err, 'error fetching user in userprofileheader component'))
-  //   fetchReplies(user._id, post._id).then(res => setReplies(res.data, ...replies)).catch(err => console.log(err, 'error fetching replies in user single post component'))
-  // }, [id, post, replies, user._id])

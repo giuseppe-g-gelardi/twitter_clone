@@ -36,12 +36,10 @@ export default function LoginForm() {
   }
 
   return (
-
     <div className='auth'>
       <h1>
         <FaUser /> {' '} Log In
       </h1>
-
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor='email'>Email Address</label>

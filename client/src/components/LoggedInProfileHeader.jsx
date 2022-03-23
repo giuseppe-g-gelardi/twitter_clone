@@ -1,10 +1,13 @@
+import { useContext } from 'react'
 import { Avatar } from '@material-ui/core'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
 import MyLocationIcon from '@mui/icons-material/MyLocation'
 
-export default function LoggedInProfileHeader ({ user }) {
-  const profilepicture = user.profilePicture
+import UserContext from '../context/UserContext'
 
+export default function LoggedInProfileHeader () {
+  const { user } = useContext(UserContext)
+  
   return (
     <div
       style={{
@@ -22,10 +25,12 @@ export default function LoggedInProfileHeader ({ user }) {
           height: 'min(33vw, 199px)',
           position: 'relative',
           background: '#f5f8fa'
+          // background: 'grey',
+          // borderRadius: '25px'
         }}
       >
         <Avatar
-          src={profilepicture}
+          src={user.profilePicture}
           style={{
             width: '135px',
             height: '135px',
@@ -54,10 +59,10 @@ export default function LoggedInProfileHeader ({ user }) {
               style={{ fontSize: '14px', color: 'blueviolet' }}
             />
           )}{' '}
+        </h1>
         <h2 style={{ fontWeight: 'normal', fontSize: '15px', color: 'gray' }}>
           @{user.username}
         </h2>
-        </h1>
 
         <p style={{ fontSize: '15px', marginTop: '11px' }}>
           {user.bio ? user.bio : ''}
@@ -81,10 +86,8 @@ export default function LoggedInProfileHeader ({ user }) {
         <div style={{ display: 'block' }}>
           <span style={{ fontSize: '15px', color: 'gray' }}>
             <strong>{user.posts?.length} Posts, </strong>
-          </span>
-
-          <span style={{ fontSize: '15px', color: 'gray' }}>
-            <strong>{user.followers?.length}</strong> Followers
+            <strong>{' '}{user.following?.length}{' '}Following,</strong> 
+            <strong>{' '}{user.followers?.length}{' '}Followers</strong> 
           </span>
         </div>
       </div>

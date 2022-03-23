@@ -15,7 +15,7 @@ import { fetchReplies } from '../api/replies.ts'
 
 
 export default function SinglePost (props) {
-  const { user, post, setDisplaySinglePost, likeUnlike, deletePost } = props
+  const { user, post, setDisplaySinglePost, likeUnlike, deletePost, key } = props
   const [replies, setReplies] = useState([])
   const timestamp = post.createdAt
   const posttime = moment(timestamp).fromNow()
@@ -34,20 +34,21 @@ export default function SinglePost (props) {
     </IconButton>
   )
 
-  const getReplies = async () => {
-    try {
-      const res = await fetchReplies(user._id, post._id)
-      setReplies(res, ...replies)
-    } catch (error) {
-      throw new Error(error)
+  useEffect(() => {
+    let isCancelled = false
+    fetchReplies(user._id, post._id).then(res => {
+      if (!isCancelled) {
+        setReplies(res.data, ...replies)
+      }
+    }).catch(err => console.log(err, ' error fetching replies in single post'))
+    return () => {
+      isCancelled = true
     }
-  }
-
-  useEffect(() => getReplies())
+  }, [post._id, replies, user._id, user, post])
 
   return (
     <>
-      <div
+      <div key={key}
         style={{
           display: 'flex',
           alignItems: 'flex-start',
@@ -129,3 +130,22 @@ export default function SinglePost (props) {
     </>
   )
 }
+
+
+  // useEffect(() => {
+  //   let isCancelled = false
+  //   getUser(id).then(res => {
+  //     if (!isCancelled) {
+  //       setUser(res.data)
+  //     }
+  //   }).catch(err => console.log(err))
+  //   return () => {
+  //     isCancelled = true
+  //   }
+  // }, [id])
+
+  // const getReplies = () => {
+  //   fetchReplies(user._id, post._id).then(res => setReplies(res.data, ...replies)).catch(err => console.log(err, 'error fetching replies in single post component'))
+  // }
+
+  // useEffect(() => getReplies())
